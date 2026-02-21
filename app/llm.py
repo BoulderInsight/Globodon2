@@ -58,7 +58,9 @@ def embed_text(text: str) -> np.ndarray:
 
 def generate_recommendation(tar_text: str, cluster_label: str,
                             solution_breakdown: dict, avg_manhours: float,
-                            corrective_actions: list[str]) -> str:
+                            corrective_actions: list[str]) -> dict:
+    """Generate a structured JSON recommendation. Returns a dict with structured
+    fields, or a dict with just 'raw_text' if JSON parsing fails."""
     top_actions = "\n".join(f"- {a}" for a in corrective_actions[:5])
     breakdown_str = ", ".join(f"{k}: {v}%" for k, v in solution_breakdown.items())
 
@@ -71,13 +73,42 @@ Based on similar past cases classified as "{cluster_label}", here's what we know
 - Past corrective actions that worked:
 {top_actions}
 
-Given this specific TAR and the historical data:
-1. What is the most likely root cause?
-2. What should the maintainer try first?
-3. What parts should they have on hand?
-4. Estimated time to resolution?
+Respond with ONLY a JSON object (no markdown fences, no commentary) with these fields:
+- "root_cause": 1-2 sentence root cause analysis
+- "recommended_actions": array of ordered step strings the maintainer should follow
+- "parts_needed": array of part numbers or materials needed
+- "estimated_hours": estimated manhours as a string (e.g. "4-6" or "8")
+- "action_plan": 1-2 sentence summary of the overall plan
+- "references": array of any IETM references, TAR JCNs, or technical manual citations
 
-Be specific and actionable. Reference the historical data."""
+Be specific and actionable. Reference the historical data. JSON only."""
 
+    # Single LLM call — try JSON parse, fall back to raw text
     raw = call_ollama(CLASSIFY_MODEL, prompt)
-    return strip_think_blocks(raw).strip()
+    cleaned = strip_think_blocks(raw).strip()
+
+    # Attempt JSON extraction (same logic as call_ollama_json)
+    parsed = None
+    for start_char, end_char in [("{", "}"), ("[", "]")]:
+        s = cleaned.find(start_char)
+        e = cleaned.rfind(end_char)
+        if s != -1 and e != -1 and e > s:
+            try:
+                parsed = json.loads(cleaned[s:e + 1])
+                break
+            except json.JSONDecodeError:
+                continue
+
+    if parsed and isinstance(parsed, dict) and "root_cause" in parsed:
+        return {
+            "structured": True,
+            "root_cause": str(parsed.get("root_cause", "")),
+            "recommended_actions": [str(a) for a in parsed.get("recommended_actions", []) if a],
+            "parts_needed": [str(p) for p in parsed.get("parts_needed", []) if p],
+            "estimated_hours": str(parsed.get("estimated_hours", "")),
+            "action_plan": str(parsed.get("action_plan", "")),
+            "references": [str(r) for r in parsed.get("references", []) if r],
+        }
+
+    # Fallback: return the raw text from the same call
+    return {"structured": False, "raw_text": cleaned}

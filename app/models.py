@@ -58,7 +58,7 @@ class SearchResponse(BaseModel):
 
 
 class RecommendResponse(BaseModel):
-    recommendation: str = ""
+    recommendation: dict = {}
 
 
 class StatsResponse(BaseModel):

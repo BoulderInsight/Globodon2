@@ -11,7 +11,7 @@ On-premises maintenance intelligence platform for V-22 Osprey that integrates in
 **V-22 TAR Intelligence System** — AI-powered maintenance decision support. Three-tab web application:
 
 1. **Fleet Analytics** (complete) — visualizes batch analysis results: 10 problem categories with solution breakdowns, 20 high-failure parts with AI summaries. Horizontal bar charts, expandable detail cards, all from API data.
-2. **TAR Lookup** (complete) — paste a TAR, get sub-second results: problem category match, similar past cases with MAF corrective actions, parts cross-reference, optional AI recommendation.
+2. **TAR Lookup** (complete) — TAR Queue panel (browsable, filterable list) + paste input. Click a TAR or search manually → sub-second diagnosis + auto-triggered structured AI recommendation. No manual "Get Recommendation" button; fires automatically after every search.
 3. **TPDR Intelligence** (complete) — automatic detection of systems needing Technical Publications Deficiency Reports: trend acceleration, comeback detection, scored candidates with AI-generated justifications.
 
 **Current scope:** This is a demo built against a sample of the full database (~15K TARs, ~1.8M MAFs). Architecture is designed to scale to the full dataset with a vector database swap.
@@ -109,7 +109,7 @@ pip install -r requirements.txt
 3. **Map to cluster** — majority vote of top-k neighbors → cluster profile
 4. **Retrieve MAF context** — linked corrective actions from pre-indexed JCN→MAF dict
 5. **Cross-reference parts** — check against `part_failure_analysis.json`
-6. **(Optional) AI recommendation** — send context to `qwen2.5:32b` for tailored advice
+6. **AI recommendation** (auto-triggered) — send context to `qwen2.5:32b`, returns structured JSON (root_cause, recommended_actions, parts_needed, estimated_hours, action_plan, references); falls back to raw text if JSON parse fails
 
 **Two speed paths:**
 - **Fast path** (steps 1–5): <1 second, no LLM call needed
@@ -137,7 +137,7 @@ Results cached to `.cache/tpdr_analysis.json` (24-hour expiry).
 
 **TAR Lookup:**
 - `POST /api/search` — core RAG search, returns cluster match + similar TARs + MAF actions
-- `POST /api/recommend` — AI recommendation based on search results
+- `POST /api/recommend` — AI recommendation; returns `{ recommendation: { structured: true, root_cause, recommended_actions, parts_needed, estimated_hours, action_plan, references } }` or `{ recommendation: { structured: false, raw_text } }` on parse failure
 - `GET /api/tars/recent?limit=50&work_center=&activity=&priority=&search=` — browsable TAR list, sorted by date descending
 - `GET /api/tars/filters` — unique values for work_center, activity, priority dropdowns
 - `GET /` — serve frontend
@@ -164,7 +164,7 @@ Results cached to `.cache/tpdr_analysis.json` (24-hour expiry).
 ## Key Implementation Details
 
 - Frontend is a single HTML file, zero external JS dependencies, no framework, no build step
-- Frontend is ~4K lines — must be read in chunks (offset/limit) when using Read tool
+- Frontend is ~5K lines — must be read in chunks (offset/limit) when using Read tool
 - MAF file is read in 100K-row chunks (`pd.read_csv(..., chunksize=100_000)`) due to 1.8M row size
 - `call_ollama_json()` strips deepseek-r1's `<think>...</think>` blocks before parsing JSON
 - `call_ollama()` has retry logic with exponential backoff and a configurable delay (`LLM_DELAY`)
@@ -174,6 +174,10 @@ Results cached to `.cache/tpdr_analysis.json` (24-hour expiry).
 - `submit_date` mixed formats — always parse with `pd.to_datetime(..., errors='coerce')`
 - `buno` of "I-level" = not aircraft-specific, exclude from per-aircraft analysis
 - Tab switching uses lazy-load pattern: Fleet Analytics and TPDR data fetch on first tab activation
+- AI recommendation auto-fires after every search; uses a generation counter (`recommendGeneration`) to discard stale responses — no AbortController needed
+- TAR Queue lazy-loads on first TAR Lookup tab activation (default tab, so loads on page init); filters via `/api/tars/recent`, row click populates textarea and auto-triggers `performSearch()`
+- `generate_recommendation()` in `app/llm.py` returns a dict (not a string) — single LLM call with inline JSON extraction, falls back to `raw_text`
+- Frontend renders structured recommendations as sectioned card (`.rec-card`); falls back to basic markdown-to-DOM conversion for `raw_text`
 - All state stored client-side or in .cache/ JSON files, no database required for demo
 - **Validating JS syntax** (no server needed): extract the `<script>` block from index.html and pass it through Node's syntax check with `node --check`
 
