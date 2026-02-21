@@ -159,9 +159,13 @@ Results cached to `.cache/tpdr_analysis.json` (24-hour expiry).
 **part_failure_analysis.json** part fields:
 `part_number`, `failure_count`, `ai_summary`
 
+**TPDR recommendation fields** (from `/api/tpdr/recommendations`):
+`uns`, `score`, `total_tars`, `aircraft_count`, `acceleration_ratio`, `comeback_count`, `monthly_counts` (array), `months_labels` (array), `affected_aircraft` (array), `activities` (array), `example_comebacks` (array), `justification`, `linked_cluster`, `sample_tars` (array)
+
 ## Key Implementation Details
 
 - Frontend is a single HTML file, zero external JS dependencies, no framework, no build step
+- Frontend is ~4K lines — must be read in chunks (offset/limit) when using Read tool
 - MAF file is read in 100K-row chunks (`pd.read_csv(..., chunksize=100_000)`) due to 1.8M row size
 - `call_ollama_json()` strips deepseek-r1's `<think>...</think>` blocks before parsing JSON
 - `call_ollama()` has retry logic with exponential backoff and a configurable delay (`LLM_DELAY`)
@@ -172,6 +176,13 @@ Results cached to `.cache/tpdr_analysis.json` (24-hour expiry).
 - `buno` of "I-level" = not aircraft-specific, exclude from per-aircraft analysis
 - Tab switching uses lazy-load pattern: Fleet Analytics and TPDR data fetch on first tab activation
 - All state stored client-side or in .cache/ JSON files, no database required for demo
+- **Validating JS syntax** (no server needed): extract the `<script>` block from index.html and pass it through Node's syntax check with `node --check`
+
+**localStorage keys** (all prefixed `tars_`):
+- `tars_tarFlags` — TAR Lookup "Not Related" flags: `{ "JCN": { flagged: true, timestamp: "ISO" } }`
+- `tars_tpdrWorkflow` — TPDR candidate states: `{ "UNS_CODE": { state: "filed"|"deferred", timestamp, note } }`
+- `tars_tpdrThresholds` — TPDR filter values: `{ minTotalTars, minAircraft, minAcceleration, minComebacks, minScore, minMonthlyRate }`
+- `tars_tpdrSelectedActivities` — TPDR activity/unit multi-select filter (array of activity strings, or null)
 
 ## Known High-Signal Patterns
 
