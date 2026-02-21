@@ -1807,7 +1807,8 @@
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
-    .threshold-field input {
+    .threshold-field input,
+    .threshold-field select {
       background: var(--bg-input);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-sm);
@@ -1817,7 +1818,8 @@
       padding: 8px 10px;
       width: 100%;
     }
-    .threshold-field input:focus {
+    .threshold-field input:focus,
+    .threshold-field select:focus {
       border-color: var(--accent-blue);
       outline: none;
       box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
@@ -1893,6 +1895,61 @@
     }
     .threshold-link-btn:hover {
       color: var(--text-secondary);
+    }
+    .threshold-summary {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .threshold-summary .tv {
+      font-family: var(--font-mono);
+      color: var(--accent-cyan);
+      font-weight: 600;
+    }
+    .threshold-tip {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 14px;
+      height: 14px;
+      font-size: 0.5625rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      cursor: help;
+      margin-left: 4px;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+    .threshold-tip .threshold-tiptext {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      bottom: calc(100% + 6px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.6875rem;
+      font-weight: 400;
+      white-space: nowrap;
+      padding: 4px 8px;
+      pointer-events: none;
+      transition: opacity 0.15s;
+      z-index: 10;
+    }
+    .threshold-tip:hover .threshold-tiptext {
+      visibility: visible;
+      opacity: 1;
+    }
+    .threshold-field label {
+      display: flex;
+      align-items: center;
     }
     @media (max-width: 900px) {
       .threshold-grid { grid-template-columns: repeat(2, 1fr); }
@@ -3150,9 +3207,8 @@
         minTotalTars: 10,
         minAircraft: 3,
         minAcceleration: 1.5,
-        minComebacks: 0,
-        minScore: 0,
-        minMonthlyRate: 0,
+        minComebacks: 1,
+        minMonthlyRate: 2,
         recentWindow: 6
       };
 
@@ -3206,7 +3262,6 @@
         if ((rec.aircraft_count || 0) < thresholds.minAircraft) return false;
         if ((rec.acceleration_ratio || 0) < thresholds.minAcceleration) return false;
         if ((rec.comeback_count || 0) < thresholds.minComebacks) return false;
-        if ((rec.score || 0) < thresholds.minScore) return false;
         if (thresholds.minMonthlyRate > 0 && getMonthlyRate(rec, thresholds.recentWindow) < thresholds.minMonthlyRate) return false;
         var selActs = getSelectedActivities();
         if (selActs && selActs.length > 0) {
@@ -3565,13 +3620,52 @@
         })(toggleBtn, panelContent);
 
         var fields = [
-          { key: "minTotalTars", label: "Min Total TARs", min: 1, max: 500, step: 1 },
-          { key: "minAircraft", label: "Min Aircraft Affected", min: 1, max: 100, step: 1 },
-          { key: "minAcceleration", label: "Min Acceleration Rate", min: 0.5, max: 20, step: 0.5 },
-          { key: "minComebacks", label: "Min Comebacks", min: 0, max: 50, step: 1 },
-          { key: "minScore", label: "Min Score", min: 0, max: 500, step: 1 },
-          { key: "minMonthlyRate", label: "Min Monthly Rate", min: 0, max: 100, step: 0.5 }
+          { key: "minTotalTars", label: "Min Total TARs", min: 1, max: 500, step: 1, tip: "Minimum number of related TARs filed for this system" },
+          { key: "minAircraft", label: "Min Aircraft Affected", min: 1, max: 100, step: 1, tip: "Minimum number of different aircraft reporting this problem" },
+          { key: "minAcceleration", label: "Min Acceleration Rate", min: 0.5, max: 20, step: 0.5, tip: "How much faster TARs are coming in. 2.0x = doubled, 3.0x = tripled" },
+          { key: "minComebacks", label: "Min Comebacks", min: 0, max: 50, step: 1, tip: "Times the same aircraft had the same problem again within 90 days" },
+          { key: "minMonthlyRate", label: "Min Monthly Rate", min: 0, max: 100, step: 0.5, tip: "Average TARs per month during the recent window" }
         ];
+
+        // Summary sentence with live-updating values
+        function makeTv(text) {
+          return h("span", { className: "tv" }, [text]);
+        }
+        var svWindow = makeTv(String(thresholds.recentWindow) + " months");
+        var svTars = makeTv(String(thresholds.minTotalTars));
+        var svAircraft = makeTv(String(thresholds.minAircraft));
+        var svAccel = makeTv(String(thresholds.minAcceleration) + "x");
+        var svComebacks = makeTv(String(thresholds.minComebacks));
+        var svRate = makeTv(String(thresholds.minMonthlyRate));
+
+        var summaryEl = h("div", { className: "threshold-summary" }, [
+          "A system is flagged as a TPDR candidate when, within the last ", svWindow,
+          ", it has at least ", svTars,
+          " TARs that the AI grouped as related, across at least ", svAircraft,
+          " aircraft, with the problem accelerating at ", svAccel,
+          " or faster, at least ", svComebacks,
+          " comeback where the initial fix did not hold, and a submission rate of at least ", svRate,
+          " TARs per month."
+        ]);
+        panelContent.appendChild(summaryEl);
+
+        function updateSummary() {
+          var t = getThresholds();
+          svWindow.textContent = String(t.recentWindow) + " months";
+          svTars.textContent = String(t.minTotalTars);
+          svAircraft.textContent = String(t.minAircraft);
+          svAccel.textContent = String(t.minAcceleration) + "x";
+          svComebacks.textContent = String(t.minComebacks);
+          svRate.textContent = String(t.minMonthlyRate);
+        }
+
+        function makeTip(text) {
+          var icon = h("span", { className: "threshold-tip" }, [
+            "?",
+            h("span", { className: "threshold-tiptext" }, [text])
+          ]);
+          return icon;
+        }
 
         var grid = h("div", { className: "threshold-grid" });
         var inputs = {};
@@ -3593,12 +3687,13 @@
               var current = getThresholds();
               current[key] = val;
               setThresholds(current);
+              updateSummary();
               renderTPDRCandidates(tpdrData.recommendations);
             });
           })(inp, f.key);
 
           grid.appendChild(h("div", { className: "threshold-field" }, [
-            h("label", null, [f.label]),
+            h("label", null, [f.label, makeTip(f.tip)]),
             inp
           ]));
         });
@@ -3613,10 +3708,11 @@
           var current = getThresholds();
           current.recentWindow = parseInt(windowSelect.value, 10);
           setThresholds(current);
+          updateSummary();
           renderTPDRCandidates(tpdrData.recommendations);
         });
         grid.appendChild(h("div", { className: "threshold-field" }, [
-          h("label", null, ["Recent Window"]),
+          h("label", null, ["Recent Window", makeTip("How far back to look when calculating monthly submission rate")]),
           windowSelect
         ]));
 
