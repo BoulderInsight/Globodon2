@@ -1378,6 +1378,188 @@
         padding: 10px 14px;
       }
     }
+    /* ===================================================================
+       FLEET ANALYTICS TAB
+       =================================================================== */
+    .fleet-stats-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .fleet-stat-box {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .fleet-stat-box__value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      line-height: 1.2;
+    }
+
+    .fleet-stat-box__label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    .fleet-bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      transition: background var(--transition-fast);
+    }
+
+    .fleet-bar-row:hover {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .fleet-bar-row__label {
+      width: 280px;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .fleet-bar-row__track {
+      flex: 1;
+      height: 24px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .fleet-bar-row__fill {
+      height: 100%;
+      border-radius: var(--radius-sm);
+      transition: width var(--transition-slow);
+      min-width: 2px;
+    }
+
+    .fleet-bar-row__value {
+      width: 64px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-label);
+      font-family: var(--font-mono);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .fleet-detail {
+      margin: 4px 0 16px 12px;
+      border-left: 3px solid var(--accent-blue);
+      padding: 16px 20px;
+      background: var(--bg-tertiary);
+      border-radius: 0 var(--radius-md) var(--radius-md) 0;
+    }
+
+    .fleet-detail__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .fleet-detail__section {
+      margin-bottom: 16px;
+    }
+
+    .fleet-detail__section:last-child {
+      margin-bottom: 0;
+    }
+
+    .fleet-detail__section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-label);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .fleet-insight-box {
+      background: var(--bg-secondary);
+      border-left: 3px solid var(--accent-purple);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 12px 16px;
+      margin-top: 16px;
+    }
+
+    .fleet-insight-box__label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--accent-purple);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .fleet-insight-box__text {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .fleet-parts-badge {
+      display: inline-flex;
+      padding: 3px 8px;
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.25);
+      border-radius: var(--radius-sm);
+      font-size: 0.6875rem;
+      font-family: var(--font-mono);
+      color: var(--accent-amber);
+    }
+
+    .fleet-jcn-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .fleet-jcn-list li {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--accent-cyan);
+      padding: 2px 0;
+    }
+
+    @media (max-width: 900px) {
+      .fleet-stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .fleet-bar-row__label {
+        width: 180px;
+      }
+      .fleet-detail__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .fleet-stats-row {
+        grid-template-columns: 1fr 1fr;
+      }
+      .fleet-bar-row__label {
+        width: 120px;
+        font-size: 0.75rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1433,6 +1615,10 @@
 
   <!-- TAB NAVIGATION -->
   <nav class="tab-nav" role="tablist" aria-label="Application views">
+    <button class="tab-btn" id="tabBtnFleet" role="tab" aria-selected="false" aria-controls="tabFleetAnalytics">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1" y="9" width="3" height="6" rx="0.5" fill="currentColor" opacity="0.6"/><rect x="5.5" y="5" width="3" height="10" rx="0.5" fill="currentColor" opacity="0.8"/><rect x="10" y="2" width="3" height="13" rx="0.5" fill="currentColor"/></svg>
+      Fleet Analytics
+    </button>
     <button class="tab-btn tab-btn--active" id="tabBtnLookup" role="tab" aria-selected="true" aria-controls="tabLookup">
       <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="2"/><path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       TAR Lookup
@@ -1447,6 +1633,45 @@
        MAIN CONTENT
        ================================================================ -->
   <main id="main-content" class="app-main" tabindex="-1">
+
+    <div id="tabFleetAnalytics" class="hidden" role="tabpanel" aria-labelledby="tabBtnFleet">
+      <section class="section" aria-labelledby="fleet-overview-heading">
+        <div class="card">
+          <div class="card__header">
+            <div class="card__header-left">
+              <span class="card__header-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none"><rect x="1" y="10" width="3.5" height="7" rx="0.5" stroke="currentColor" stroke-width="1.5"/><rect x="7.25" y="5" width="3.5" height="12" rx="0.5" stroke="currentColor" stroke-width="1.5"/><rect x="13.5" y="1" width="3.5" height="16" rx="0.5" stroke="currentColor" stroke-width="1.5"/></svg>
+              </span>
+              <h2 class="card__title" id="fleet-overview-heading">Fleet Analytics</h2>
+            </div>
+          </div>
+          <div class="card__body" id="fleetBody">
+            <div class="state-message state-message--loading" id="fleetLoading">
+              <div class="state-message__icon"><div class="spinner spinner--large" role="status"><span class="sr-only">Loading fleet analytics</span></div></div>
+              <p class="state-message__text">Loading fleet analytics data...</p>
+            </div>
+            <div class="hidden" id="fleetError">
+              <div class="state-message state-message--error" role="alert">
+                <p class="state-message__text" id="fleetErrorText">Failed to load fleet analytics data.</p>
+              </div>
+            </div>
+            <div class="hidden" id="fleetResults">
+              <div id="fleetStatsRow" class="fleet-stats-row"></div>
+
+              <div class="fleet-detail__section">
+                <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Problem Categories</div>
+                <div id="fleetClustersChart"></div>
+              </div>
+
+              <div class="fleet-detail__section" style="margin-top: 32px;">
+                <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Top Failing Parts</div>
+                <div id="fleetPartsChart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div><!-- tabFleetAnalytics -->
 
     <div id="tabLookup" role="tabpanel" aria-labelledby="tabBtnLookup">
 
@@ -2385,11 +2610,20 @@
       var tpdrLoaded = false;
       var tpdrExpandedCards = {};
 
+      var fleetData = null;
+      var fleetLoaded = false;
+
       var tpdrDom = {
+        tabBtnFleet: document.getElementById("tabBtnFleet"),
         tabBtnLookup: document.getElementById("tabBtnLookup"),
         tabBtnTPDR: document.getElementById("tabBtnTPDR"),
+        tabFleetAnalytics: document.getElementById("tabFleetAnalytics"),
         tabLookup: document.getElementById("tabLookup"),
         tabTPDR: document.getElementById("tabTPDR"),
+        fleetLoading: document.getElementById("fleetLoading"),
+        fleetError: document.getElementById("fleetError"),
+        fleetErrorText: document.getElementById("fleetErrorText"),
+        fleetResults: document.getElementById("fleetResults"),
         tpdrLoading: document.getElementById("tpdrLoading"),
         tpdrError: document.getElementById("tpdrError"),
         tpdrErrorText: document.getElementById("tpdrErrorText"),
@@ -2402,22 +2636,24 @@
          TAB SWITCHING
          ---------------------------------------------------------------- */
       function switchTab(tabName) {
-        if (tabName === "lookup") {
-          tpdrDom.tabBtnLookup.classList.add("tab-btn--active");
-          tpdrDom.tabBtnLookup.setAttribute("aria-selected", "true");
-          tpdrDom.tabBtnTPDR.classList.remove("tab-btn--active");
-          tpdrDom.tabBtnTPDR.setAttribute("aria-selected", "false");
-          show(tpdrDom.tabLookup);
-          hide(tpdrDom.tabTPDR);
-        } else {
-          tpdrDom.tabBtnTPDR.classList.add("tab-btn--active");
-          tpdrDom.tabBtnTPDR.setAttribute("aria-selected", "true");
-          tpdrDom.tabBtnLookup.classList.remove("tab-btn--active");
-          tpdrDom.tabBtnLookup.setAttribute("aria-selected", "false");
-          hide(tpdrDom.tabLookup);
-          show(tpdrDom.tabTPDR);
-          if (!tpdrLoaded) loadTPDRData();
-        }
+        var tabs = {
+          fleet:  { btn: tpdrDom.tabBtnFleet,  panel: tpdrDom.tabFleetAnalytics },
+          lookup: { btn: tpdrDom.tabBtnLookup, panel: tpdrDom.tabLookup },
+          tpdr:   { btn: tpdrDom.tabBtnTPDR,   panel: tpdrDom.tabTPDR }
+        };
+        Object.keys(tabs).forEach(function(key) {
+          if (key === tabName) {
+            tabs[key].btn.classList.add("tab-btn--active");
+            tabs[key].btn.setAttribute("aria-selected", "true");
+            show(tabs[key].panel);
+          } else {
+            tabs[key].btn.classList.remove("tab-btn--active");
+            tabs[key].btn.setAttribute("aria-selected", "false");
+            hide(tabs[key].panel);
+          }
+        });
+        if (tabName === "tpdr" && !tpdrLoaded) loadTPDRData();
+        if (tabName === "fleet" && !fleetLoaded) loadFleetData();
       }
 
       /* ----------------------------------------------------------------
@@ -2750,6 +2986,270 @@
       }
 
       /* ----------------------------------------------------------------
+         FLEET ANALYTICS -- LOAD DATA
+         ---------------------------------------------------------------- */
+      async function loadFleetData() {
+        show(tpdrDom.fleetLoading);
+        hide(tpdrDom.fleetError);
+        hide(tpdrDom.fleetResults);
+
+        try {
+          var clusters = await apiGet("/api/clusters");
+          var parts = await apiGet("/api/parts");
+          var stats = await apiGet("/api/stats");
+
+          fleetData = { clusters: clusters, parts: parts, stats: stats };
+          fleetLoaded = true;
+
+          hide(tpdrDom.fleetLoading);
+          renderFleetStats(stats);
+          renderFleetClusters(clusters);
+          renderFleetParts(parts);
+          show(tpdrDom.fleetResults);
+        } catch (e) {
+          hide(tpdrDom.fleetLoading);
+          tpdrDom.fleetErrorText.textContent = "Failed to load fleet analytics: " + e.message;
+          show(tpdrDom.fleetError);
+        }
+      }
+
+      /* ----------------------------------------------------------------
+         FLEET ANALYTICS -- RENDER STATS
+         ---------------------------------------------------------------- */
+      function renderFleetStats(stats) {
+        var container = document.getElementById("fleetStatsRow");
+        if (!container) return;
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        var items = [
+          { value: formatNumber(stats.total_tars), label: "TARs Analyzed" },
+          { value: formatNumber(stats.total_mafs), label: "MAF Records" },
+          { value: String(stats.cluster_count), label: "Problem Categories" },
+          { value: String(stats.parts_tracked), label: "Parts Tracked" }
+        ];
+
+        items.forEach(function(item) {
+          container.appendChild(h("div", { className: "fleet-stat-box" }, [
+            h("div", { className: "fleet-stat-box__value" }, [item.value]),
+            h("div", { className: "fleet-stat-box__label" }, [item.label])
+          ]));
+        });
+      }
+
+      /* ----------------------------------------------------------------
+         FLEET ANALYTICS -- RENDER CLUSTERS CHART
+         ---------------------------------------------------------------- */
+      function renderFleetClusters(clusters) {
+        var container = document.getElementById("fleetClustersChart");
+        if (!container) return;
+        while (container.firstChild) container.removeChild(container.firstChild);
+        if (!clusters || clusters.length === 0) return;
+
+        var sorted = clusters.slice().sort(function(a, b) { return b.occurrences - a.occurrences; });
+        var maxCount = sorted[0].occurrences;
+
+        var chartColors = [
+          "var(--bar-replace)", "var(--bar-inspect)", "var(--bar-adjust)",
+          "var(--bar-repair)", "var(--bar-other)", "var(--accent-blue)",
+          "var(--accent-cyan)", "var(--accent-green)", "var(--accent-amber)",
+          "var(--accent-purple)"
+        ];
+
+        sorted.forEach(function(cluster, idx) {
+          var pct = (cluster.occurrences / maxCount) * 100;
+          var color = chartColors[idx % chartColors.length];
+          var detailId = "fleet-cluster-detail-" + idx;
+
+          var row = h("div", {
+            className: "fleet-bar-row",
+            tabindex: "0",
+            role: "button",
+            ariaExpanded: "false",
+            ariaControls: detailId
+          }, [
+            h("div", { className: "fleet-bar-row__label", title: cluster.problem }, [cluster.problem]),
+            h("div", { className: "fleet-bar-row__track" }, [
+              h("div", { className: "fleet-bar-row__fill", style: { width: pct + "%", background: color } })
+            ]),
+            h("div", { className: "fleet-bar-row__value" }, [formatNumber(cluster.occurrences)])
+          ]);
+
+          var detail = h("div", { id: detailId, className: "fleet-detail hidden" });
+          buildFleetClusterDetail(detail, cluster);
+
+          (function(r, d) {
+            function toggle() {
+              if (d.classList.contains("hidden")) {
+                show(d);
+                r.setAttribute("aria-expanded", "true");
+              } else {
+                hide(d);
+                r.setAttribute("aria-expanded", "false");
+              }
+            }
+            r.addEventListener("click", toggle);
+            r.addEventListener("keydown", function(e) {
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+            });
+          })(row, detail);
+
+          container.appendChild(row);
+          container.appendChild(detail);
+        });
+      }
+
+      /* ----------------------------------------------------------------
+         FLEET ANALYTICS -- BUILD CLUSTER DETAIL CARD
+         ---------------------------------------------------------------- */
+      function buildFleetClusterDetail(container, cluster) {
+        var grid = h("div", { className: "fleet-detail__grid" });
+
+        // Left column: solution breakdown + stats
+        var leftCol = h("div");
+
+        if (cluster.solution_breakdown) {
+          var breakdownSection = h("div", { className: "fleet-detail__section" }, [
+            h("div", { className: "fleet-detail__section-title" }, ["Solution Breakdown"])
+          ]);
+
+          var entries = Object.keys(cluster.solution_breakdown).map(function(key) {
+            return { action: key, pct: cluster.solution_breakdown[key] };
+          }).sort(function(a, b) { return b.pct - a.pct; });
+
+          entries.forEach(function(entry, idx) {
+            breakdownSection.appendChild(h("div", { className: "solution-item" }, [
+              h("span", { className: "solution-item__label" }, [entry.action]),
+              h("div", { className: "solution-item__bar-track" }, [
+                h("div", { className: "solution-item__bar-fill", style: { width: entry.pct + "%", background: getBarColor(idx) } })
+              ]),
+              h("span", { className: "solution-item__pct" }, [entry.pct.toFixed(1) + "%"])
+            ]));
+          });
+
+          leftCol.appendChild(breakdownSection);
+        }
+
+        var statsSection = h("div", { className: "fleet-detail__section" }, [
+          h("div", { className: "fleet-detail__section-title" }, ["Details"])
+        ]);
+
+        if (cluster.occurrences) {
+          statsSection.appendChild(h("div", { style: { marginBottom: "4px", fontSize: "0.8125rem", color: "var(--text-secondary)" } }, [
+            h("strong", { style: { color: "var(--accent-cyan)", fontFamily: "var(--font-mono)" } }, [formatNumber(cluster.occurrences)]),
+            " occurrences"
+          ]));
+        }
+        if (cluster.average_manhours) {
+          statsSection.appendChild(h("div", { style: { marginBottom: "4px", fontSize: "0.8125rem", color: "var(--text-secondary)" } }, [
+            h("strong", { style: { color: "var(--accent-amber)", fontFamily: "var(--font-mono)" } }, [String(cluster.average_manhours)]),
+            " avg manhours"
+          ]));
+        }
+
+        leftCol.appendChild(statsSection);
+        grid.appendChild(leftCol);
+
+        // Right column: parts + sample JCNs
+        var rightCol = h("div");
+
+        if (cluster.parts_commonly_involved && cluster.parts_commonly_involved.length > 0) {
+          var partsSection = h("div", { className: "fleet-detail__section" }, [
+            h("div", { className: "fleet-detail__section-title" }, ["Parts Commonly Involved"])
+          ]);
+          var partsList = h("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px" } });
+          cluster.parts_commonly_involved.forEach(function(p) {
+            partsList.appendChild(h("span", { className: "fleet-parts-badge" }, [p]));
+          });
+          partsSection.appendChild(partsList);
+          rightCol.appendChild(partsSection);
+        }
+
+        if (cluster.sample_tar_jcns && cluster.sample_tar_jcns.length > 0) {
+          var jcnSection = h("div", { className: "fleet-detail__section" }, [
+            h("div", { className: "fleet-detail__section-title" }, ["Sample JCNs"])
+          ]);
+          var jcnList = h("ul", { className: "fleet-jcn-list" });
+          cluster.sample_tar_jcns.forEach(function(jcn) {
+            jcnList.appendChild(h("li", null, [jcn]));
+          });
+          jcnSection.appendChild(jcnList);
+          rightCol.appendChild(jcnSection);
+        }
+
+        grid.appendChild(rightCol);
+        container.appendChild(grid);
+
+        if (cluster.typical_solution) {
+          container.appendChild(h("div", { className: "fleet-insight-box" }, [
+            h("div", { className: "fleet-insight-box__label" }, ["AI Insight"]),
+            h("div", { className: "fleet-insight-box__text" }, [cluster.typical_solution])
+          ]));
+        }
+      }
+
+      /* ----------------------------------------------------------------
+         FLEET ANALYTICS -- RENDER PARTS CHART
+         ---------------------------------------------------------------- */
+      function renderFleetParts(parts) {
+        var container = document.getElementById("fleetPartsChart");
+        if (!container) return;
+        while (container.firstChild) container.removeChild(container.firstChild);
+        if (!parts || parts.length === 0) return;
+
+        var maxCount = parts[0].failure_count;
+
+        parts.forEach(function(part, idx) {
+          var pct = (part.failure_count / maxCount) * 100;
+          var opacity = 0.4 + (pct / 100) * 0.6;
+          var detailId = "fleet-part-detail-" + idx;
+
+          var row = h("div", {
+            className: "fleet-bar-row",
+            tabindex: "0",
+            role: "button",
+            ariaExpanded: "false",
+            ariaControls: detailId
+          }, [
+            h("div", { className: "fleet-bar-row__label", title: part.part_number, style: { fontFamily: "var(--font-mono)", color: "var(--accent-amber)" } }, [part.part_number]),
+            h("div", { className: "fleet-bar-row__track" }, [
+              h("div", { className: "fleet-bar-row__fill", style: { width: pct + "%", background: "var(--accent-amber)", opacity: String(opacity) } })
+            ]),
+            h("div", { className: "fleet-bar-row__value" }, [formatNumber(part.failure_count)])
+          ]);
+
+          var detail = h("div", { id: detailId, className: "fleet-detail hidden", style: { borderLeftColor: "var(--accent-amber)" } });
+
+          detail.appendChild(h("div", { style: { marginBottom: "8px" } }, [
+            h("strong", { style: { color: "var(--accent-amber)", fontFamily: "var(--font-mono)", fontSize: "1rem" } }, [part.part_number]),
+            h("span", { style: { color: "var(--text-muted)", marginLeft: "12px", fontSize: "0.8125rem" } }, [formatNumber(part.failure_count) + " failures"])
+          ]));
+
+          if (part.ai_summary) {
+            detail.appendChild(h("div", { style: { fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: "1.6" } }, [part.ai_summary]));
+          }
+
+          (function(r, d) {
+            function toggle() {
+              if (d.classList.contains("hidden")) {
+                show(d);
+                r.setAttribute("aria-expanded", "true");
+              } else {
+                hide(d);
+                r.setAttribute("aria-expanded", "false");
+              }
+            }
+            r.addEventListener("click", toggle);
+            r.addEventListener("keydown", function(e) {
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+            });
+          })(row, detail);
+
+          container.appendChild(row);
+          container.appendChild(detail);
+        });
+      }
+
+      /* ----------------------------------------------------------------
          EVENT HANDLERS
          ---------------------------------------------------------------- */
 
@@ -2774,6 +3274,7 @@
       });
 
       // Tab navigation
+      tpdrDom.tabBtnFleet.addEventListener("click", function() { switchTab("fleet"); });
       tpdrDom.tabBtnLookup.addEventListener("click", function() { switchTab("lookup"); });
       tpdrDom.tabBtnTPDR.addEventListener("click", function() { switchTab("tpdr"); });
       if (tpdrDom.tpdrRefreshBtn) {
