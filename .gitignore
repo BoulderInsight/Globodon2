@@ -1,0 +1,9 @@
+# Data files (too large for git)
+TAR_Data.csv
+maf.csv
+
+# Embedding cache
+.cache/
+
+# Analysis output
+analysis_results.json
