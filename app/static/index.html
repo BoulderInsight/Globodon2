@@ -1,0 +1,1981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>V-22 TAR Intelligence System</title>
+  <style>
+    /* ===================================================================
+       CSS VARIABLES -- Color Scheme
+       =================================================================== */
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --bg-card: #1e293b;
+      --bg-card-hover: #253348;
+      --bg-input: #0f172a;
+
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --text-label: #cbd5e1;
+
+      --accent-blue: #38bdf8;
+      --accent-cyan: #22d3ee;
+      --accent-green: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-red: #f87171;
+      --accent-purple: #a78bfa;
+
+      --border-color: #334155;
+      --border-focus: #38bdf8;
+
+      --bar-replace: #38bdf8;
+      --bar-inspect: #22d3ee;
+      --bar-adjust: #34d399;
+      --bar-repair: #fbbf24;
+      --bar-other: #a78bfa;
+
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: "SF Mono", "Fira Code", "Fira Mono", "Roboto Mono", Consolas, "Courier New", monospace;
+
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
+      --shadow-elevated: 0 4px 6px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+
+      --transition-fast: 150ms ease;
+      --transition-normal: 250ms ease;
+      --transition-slow: 400ms ease;
+    }
+
+    /* ===================================================================
+       RESET & BASE
+       =================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ===================================================================
+       SKIP LINK -- Accessibility
+       =================================================================== */
+    .skip-link {
+      position: absolute;
+      top: -50px;
+      left: 0;
+      background: var(--accent-blue);
+      color: var(--bg-primary);
+      padding: 8px 16px;
+      z-index: 10000;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: top var(--transition-fast);
+    }
+
+    .skip-link:focus {
+      top: 0;
+    }
+
+    /* ===================================================================
+       FOCUS STYLES -- Accessibility
+       =================================================================== */
+    *:focus-visible {
+      outline: 2px solid var(--border-focus);
+      outline-offset: 2px;
+    }
+
+    *:focus:not(:focus-visible) {
+      outline: none;
+    }
+
+    /* ===================================================================
+       HEADER
+       =================================================================== */
+    .app-header {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding: 16px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .app-header__title-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .app-header__icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .app-header__icon svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    .app-header__title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+    }
+
+    .app-header__subtitle {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--accent-blue);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .app-header__stats {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .stat-item__value {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+    }
+
+    .stat-item__label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stats-divider {
+      width: 1px;
+      height: 32px;
+      background: var(--border-color);
+    }
+
+    /* ===================================================================
+       STATUS INDICATOR
+       =================================================================== */
+    .status-indicator {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .status-indicator__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .status-indicator__dot--offline {
+      background: var(--accent-red);
+      animation: none;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+
+    /* ===================================================================
+       MAIN LAYOUT
+       =================================================================== */
+    .app-main {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 24px 32px 48px;
+    }
+
+    /* ===================================================================
+       SECTIONS & CARDS
+       =================================================================== */
+    .section {
+      margin-bottom: 24px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transition: opacity var(--transition-normal);
+    }
+
+    .card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(255,255,255,0.02);
+    }
+
+    .card__header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card__header-icon {
+      color: var(--accent-blue);
+      display: flex;
+      align-items: center;
+    }
+
+    .card__header-icon svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    .card__title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-label);
+    }
+
+    .card__body {
+      padding: 20px;
+    }
+
+    /* ===================================================================
+       INPUT SECTION
+       =================================================================== */
+    .input-section .card__body {
+      padding: 20px;
+    }
+
+    .textarea-label {
+      display: block;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .tar-textarea {
+      width: 100%;
+      min-height: 120px;
+      padding: 14px 16px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 0.9375rem;
+      line-height: 1.6;
+      resize: vertical;
+      transition: border-color var(--transition-fast);
+    }
+
+    .tar-textarea::placeholder {
+      color: var(--text-muted);
+    }
+
+    .tar-textarea:focus {
+      border-color: var(--accent-blue);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+    }
+
+    .sample-tars {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .sample-tars__label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .sample-tar-btn {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      padding: 5px 10px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: var(--font-sans);
+      max-width: 280px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .sample-tar-btn:hover {
+      background: var(--bg-card-hover);
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+
+    .action-buttons {
+      margin-top: 16px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border: 1px solid transparent;
+      border-radius: var(--radius-md);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .btn--primary {
+      background: var(--accent-blue);
+      color: var(--bg-primary);
+    }
+
+    .btn--primary:hover:not(:disabled) {
+      background: #7dd3fc;
+    }
+
+    .btn--primary:active:not(:disabled) {
+      background: #0ea5e9;
+    }
+
+    .btn--secondary {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-secondary);
+    }
+
+    .btn--secondary:hover:not(:disabled) {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    /* ===================================================================
+       SPINNER
+       =================================================================== */
+    .spinner {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      border: 2px solid transparent;
+      border-top-color: currentColor;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+
+    .spinner--large {
+      width: 32px;
+      height: 32px;
+      border-width: 3px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===================================================================
+       EMPTY / LOADING / ERROR STATES
+       =================================================================== */
+    .state-message {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 48px 24px;
+      gap: 12px;
+      text-align: center;
+    }
+
+    .state-message__icon {
+      color: var(--text-muted);
+    }
+
+    .state-message__icon svg {
+      width: 40px;
+      height: 40px;
+    }
+
+    .state-message__text {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      max-width: 420px;
+      line-height: 1.6;
+    }
+
+    .state-message--error .state-message__icon {
+      color: var(--accent-red);
+    }
+
+    .state-message--error .state-message__text {
+      color: var(--accent-red);
+    }
+
+    .state-message--loading .state-message__icon {
+      color: var(--accent-blue);
+    }
+
+    /* ===================================================================
+       DIAGNOSIS PANEL
+       =================================================================== */
+    .diagnosis-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .diagnosis-left,
+    .diagnosis-right {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .diagnosis-category {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      line-height: 1.3;
+    }
+
+    .diagnosis-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .diagnosis-stat {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      padding: 10px 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .diagnosis-stat__value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      line-height: 1.2;
+    }
+
+    .diagnosis-stat__label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Confidence Bar */
+    .confidence-bar {
+      margin-top: 4px;
+    }
+
+    .confidence-bar__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+
+    .confidence-bar__label {
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+    }
+
+    .confidence-bar__value {
+      font-size: 0.875rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .confidence-bar__track {
+      height: 8px;
+      background: var(--bg-tertiary);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .confidence-bar__fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width var(--transition-slow);
+    }
+
+    /* Solution Breakdown */
+    .solution-breakdown__title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-label);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .solution-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .solution-item__label {
+      width: 100px;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      text-transform: capitalize;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .solution-item__bar-track {
+      flex: 1;
+      height: 20px;
+      background: var(--bg-tertiary);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .solution-item__bar-fill {
+      height: 100%;
+      border-radius: var(--radius-sm);
+      transition: width var(--transition-slow);
+      min-width: 2px;
+    }
+
+    .solution-item__pct {
+      width: 48px;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-label);
+      font-family: var(--font-mono);
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* Parts List */
+    .parts-list__title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-label);
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .parts-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .parts-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .parts-list li:last-child {
+      border-bottom: none;
+    }
+
+    .part-number {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--accent-amber);
+    }
+
+    .part-failures {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .part-summary {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-style: italic;
+      margin-left: auto;
+      max-width: 280px;
+      text-align: right;
+    }
+
+    /* ===================================================================
+       INSIGHT TEXT
+       =================================================================== */
+    .insight-text {
+      margin-top: 16px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .insight-text__title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-label);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .insight-text__body {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    /* ===================================================================
+       SIMILAR CASES
+       =================================================================== */
+    .cases-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .case-card {
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: border-color var(--transition-fast);
+    }
+
+    .case-card:hover {
+      border-color: rgba(56, 189, 248, 0.3);
+    }
+
+    .case-card__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.02);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    .case-card__header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .similarity-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+    }
+
+    .similarity-badge--high {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-green);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .similarity-badge--medium {
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-blue);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .similarity-badge--low {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .case-jcn {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .case-cluster-label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      padding: 2px 8px;
+      background: rgba(255,255,255,0.05);
+      border-radius: var(--radius-sm);
+    }
+
+    .case-card__body {
+      padding: 12px 16px;
+    }
+
+    .case-subject {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .case-issue {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 12px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .maf-actions {
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding-top: 10px;
+    }
+
+    .maf-actions__title {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .maf-action {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 12px;
+      align-items: start;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      font-size: 0.8125rem;
+    }
+
+    .maf-action:last-child {
+      border-bottom: none;
+    }
+
+    .maf-action__text {
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .maf-action__hours {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .maf-action__parts {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--accent-amber);
+      white-space: nowrap;
+    }
+
+    .show-more-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      width: 100%;
+      padding: 10px;
+      margin-top: 12px;
+      background: transparent;
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      font-size: 0.8125rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .show-more-btn:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-secondary);
+      background: rgba(56, 189, 248, 0.04);
+    }
+
+    /* ===================================================================
+       AI RECOMMENDATION
+       =================================================================== */
+    .recommendation-text {
+      font-size: 0.9375rem;
+      color: var(--text-primary);
+      line-height: 1.8;
+      white-space: pre-wrap;
+    }
+
+    /* ===================================================================
+       FOOTER
+       =================================================================== */
+    .app-footer {
+      border-top: 1px solid var(--border-color);
+      padding: 20px 32px;
+      text-align: center;
+    }
+
+    .footer-powered {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .footer-tech {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .tech-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-sm);
+      font-size: 0.6875rem;
+      font-family: var(--font-mono);
+      color: var(--text-muted);
+    }
+
+    .footer-separator {
+      color: var(--text-muted);
+      font-size: 0.6875rem;
+    }
+
+    .footer-classification {
+      margin-top: 8px;
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+    }
+
+    /* ===================================================================
+       HIDDEN (Utility)
+       =================================================================== */
+    .hidden {
+      display: none;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ===================================================================
+       RESPONSIVE
+       =================================================================== */
+    @media (max-width: 900px) {
+      .app-header {
+        padding: 12px 16px;
+      }
+
+      .app-header__stats {
+        gap: 12px;
+      }
+
+      .stats-divider {
+        display: none;
+      }
+
+      .app-main {
+        padding: 16px;
+      }
+
+      .diagnosis-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .diagnosis-stats {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .maf-action {
+        grid-template-columns: 1fr;
+        gap: 4px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .app-header__stats {
+        display: none;
+      }
+
+      .diagnosis-stats {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .sample-tar-btn {
+        max-width: 200px;
+      }
+    }
+
+    /* ===================================================================
+       REDUCED MOTION
+       =================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+
+      html {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Skip link for keyboard navigation -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- ================================================================
+       HEADER
+       ================================================================ -->
+  <header class="app-header" role="banner">
+    <div class="app-header__title-group">
+      <div class="app-header__icon" aria-hidden="true">
+        <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="32" height="32" rx="6" stroke="#38bdf8" stroke-width="2"/>
+          <path d="M10 18h16M18 10v16M12 12l12 12M24 12L12 24" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
+          <circle cx="18" cy="18" r="5" stroke="#22d3ee" stroke-width="2"/>
+          <circle cx="18" cy="18" r="1.5" fill="#22d3ee"/>
+        </svg>
+      </div>
+      <div>
+        <div class="app-header__title">V-22 TAR Intelligence System</div>
+        <div class="app-header__subtitle">Maintenance Decision Support</div>
+      </div>
+    </div>
+
+    <div class="app-header__stats" id="headerStats" role="status" aria-label="Database statistics">
+      <div class="stat-item">
+        <span class="stat-item__value" id="statTars">--</span>
+        <span class="stat-item__label">TARs Indexed</span>
+      </div>
+      <div class="stats-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-item__value" id="statMafs">--</span>
+        <span class="stat-item__label">Maintenance Records</span>
+      </div>
+      <div class="stats-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-item__value" id="statClusters">--</span>
+        <span class="stat-item__label">Problem Categories</span>
+      </div>
+      <div class="stats-divider" aria-hidden="true"></div>
+      <div class="stat-item">
+        <span class="stat-item__value" id="statParts">--</span>
+        <span class="stat-item__label">Parts Tracked</span>
+      </div>
+      <div class="stats-divider" aria-hidden="true"></div>
+      <div class="status-indicator">
+        <span class="status-indicator__dot" id="statusDot" aria-hidden="true"></span>
+        <span id="statusText">Connecting...</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================================================================
+       MAIN CONTENT
+       ================================================================ -->
+  <main id="main-content" class="app-main" tabindex="-1">
+
+    <!-- INPUT SECTION -->
+    <section class="section input-section" aria-labelledby="input-heading">
+      <div class="card">
+        <div class="card__header">
+          <div class="card__header-left">
+            <span class="card__header-icon" aria-hidden="true">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M9 1.5v15M1.5 9h15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <h2 class="card__title" id="input-heading">TAR Input</h2>
+          </div>
+        </div>
+        <div class="card__body">
+          <label for="tarInput" class="textarea-label">Enter TAR description or paste a Technical Assistance Request for analysis</label>
+          <textarea
+            id="tarInput"
+            class="tar-textarea"
+            placeholder="Describe the maintenance issue, fault, or discrepancy. Include details such as component, symptom, and when the issue was observed..."
+            rows="5"
+            aria-describedby="tarInputHelp"
+          ></textarea>
+          <div id="tarInputHelp" class="sr-only">
+            Enter a TAR description to search historical maintenance data. You can also select a sample TAR below to auto-fill. Press Ctrl+Enter or Cmd+Enter to search.
+          </div>
+
+          <div class="sample-tars">
+            <span class="sample-tars__label">Sample TARs:</span>
+            <button
+              type="button"
+              class="sample-tar-btn"
+              data-tar="FADEC channel A fault during ground turn, posted F(P) three times on download. LH engine slow to respond to throttle inputs."
+              aria-label="Load sample: FADEC channel A fault"
+            >FADEC Channel A Fault</button>
+            <button
+              type="button"
+              class="sample-tar-btn"
+              data-tar="Water intrusion discovered in LH wing root area during phase inspection. Standing water approximately 2 inches deep in lower cavity."
+              aria-label="Load sample: Water intrusion in wing root"
+            >Water Intrusion - Wing Root</button>
+            <button
+              type="button"
+              class="sample-tar-btn"
+              data-tar="RH proprotor gearbox chip detector illuminated during flight. Debris found on mag plug during post-flight inspection."
+              aria-label="Load sample: Gearbox chip detector"
+            >Gearbox Chip Detector</button>
+          </div>
+
+          <div class="action-buttons">
+            <button type="button" class="btn btn--primary" id="btnSearch" aria-describedby="searchDesc">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="2"/><path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              Search Historical Data
+            </button>
+            <span id="searchDesc" class="sr-only">Searches 15,000+ historical TARs and maintenance records for similar cases</span>
+
+            <button type="button" class="btn btn--secondary" id="btnRecommend" disabled aria-describedby="recommendDesc">
+              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/></svg>
+              Get AI Recommendation
+            </button>
+            <span id="recommendDesc" class="sr-only">Generates an AI-powered maintenance recommendation based on search results. Available after search completes.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DIAGNOSIS SECTION -->
+    <section class="section" aria-labelledby="diagnosis-heading" id="diagnosisSection">
+      <div class="card" id="diagnosisCard">
+        <div class="card__header">
+          <div class="card__header-left">
+            <span class="card__header-icon" aria-hidden="true">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M9 1.5L16.5 16.5H1.5L9 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 7v3.5M9 13v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+            <h2 class="card__title" id="diagnosis-heading">Diagnosis</h2>
+          </div>
+          <span id="diagnosisTimer" class="tech-badge hidden" aria-live="polite"></span>
+        </div>
+        <div class="card__body" id="diagnosisBody">
+          <div class="state-message" id="diagnosisEmpty">
+            <div class="state-message__icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="32" height="32" rx="6" stroke="currentColor" stroke-width="2"/><path d="M14 20h12M20 14v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/></svg>
+            </div>
+            <p class="state-message__text">Enter a TAR description above and search to see diagnosis results based on historical maintenance data.</p>
+          </div>
+          <div class="hidden" id="diagnosisLoading">
+            <div class="state-message state-message--loading">
+              <div class="state-message__icon"><div class="spinner spinner--large" role="status"><span class="sr-only">Searching historical database</span></div></div>
+              <p class="state-message__text">Analyzing TAR against historical database...</p>
+            </div>
+          </div>
+          <div class="hidden" id="diagnosisError">
+            <div class="state-message state-message--error" role="alert">
+              <div class="state-message__icon" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2"/><path d="M14 14l12 12M26 14L14 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <p class="state-message__text" id="diagnosisErrorText">An error occurred during search.</p>
+            </div>
+          </div>
+          <div class="hidden" id="diagnosisResults" role="region" aria-label="Diagnosis results"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SIMILAR CASES SECTION -->
+    <section class="section" aria-labelledby="cases-heading" id="casesSection">
+      <div class="card" id="casesCard">
+        <div class="card__header">
+          <div class="card__header-left">
+            <span class="card__header-icon" aria-hidden="true">
+              <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+            </span>
+            <h2 class="card__title" id="cases-heading">Similar Past Cases</h2>
+          </div>
+          <span id="casesCount" class="tech-badge hidden" aria-live="polite"></span>
+        </div>
+        <div class="card__body" id="casesBody">
+          <div class="state-message" id="casesEmpty">
+            <div class="state-message__icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="32" height="14" rx="4" stroke="currentColor" stroke-width="2" opacity="0.5"/><rect x="4" y="22" width="32" height="14" rx="4" stroke="currentColor" stroke-width="2" opacity="0.3"/></svg>
+            </div>
+            <p class="state-message__text">Similar historical cases will appear here after searching.</p>
+          </div>
+          <div class="hidden" id="casesResults"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- AI RECOMMENDATION SECTION -->
+    <section class="section" aria-labelledby="recommendation-heading" id="recommendSection">
+      <div class="card" id="recommendCard">
+        <div class="card__header">
+          <div class="card__header-left">
+            <span class="card__header-icon" aria-hidden="true">
+              <svg viewBox="0 0 18 18" fill="none"><path d="M9 1v2M9 15v2M1 9h2M15 9h2M3.05 3.05l1.41 1.41M13.54 13.54l1.41 1.41M3.05 14.95l1.41-1.41M13.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
+            </span>
+            <h2 class="card__title" id="recommendation-heading">AI Recommendation</h2>
+          </div>
+          <span id="recommendTimer" class="tech-badge hidden" aria-live="polite"></span>
+        </div>
+        <div class="card__body" id="recommendBody">
+          <div class="state-message" id="recommendEmpty">
+            <div class="state-message__icon" aria-hidden="true">
+              <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2" opacity="0.3"/><path d="M20 12v8M20 24v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/></svg>
+            </div>
+            <p class="state-message__text">After searching, click "Get AI Recommendation" for a tailored maintenance recommendation generated by local AI. This typically takes 10-15 seconds.</p>
+          </div>
+          <div class="hidden" id="recommendLoading">
+            <div class="state-message state-message--loading">
+              <div class="state-message__icon"><div class="spinner spinner--large" role="status"><span class="sr-only">Generating AI recommendation</span></div></div>
+              <p class="state-message__text">Generating AI recommendation via local LLM. This may take 10-15 seconds...</p>
+            </div>
+          </div>
+          <div class="hidden" id="recommendError">
+            <div class="state-message state-message--error" role="alert">
+              <div class="state-message__icon" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2"/><path d="M14 14l12 12M26 14L14 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <p class="state-message__text" id="recommendErrorText">Failed to generate recommendation.</p>
+            </div>
+          </div>
+          <div class="hidden" id="recommendResults" role="region" aria-label="AI recommendation"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ================================================================
+       FOOTER
+       ================================================================ -->
+  <footer class="app-footer" role="contentinfo">
+    <div class="footer-powered">Powered by Local AI -- No Cloud Dependencies</div>
+    <div class="footer-tech">
+      <span class="tech-badge">Ollama</span>
+      <span class="footer-separator" aria-hidden="true">|</span>
+      <span class="tech-badge">nomic-embed-text</span>
+      <span class="footer-separator" aria-hidden="true">|</span>
+      <span class="tech-badge">qwen2.5:32b</span>
+      <span class="footer-separator" aria-hidden="true">|</span>
+      <span class="tech-badge">deepseek-r1:32b</span>
+    </div>
+    <div class="footer-classification">V-22 TAR Intelligence System v1.0 -- All processing performed on local infrastructure</div>
+  </footer>
+
+  <!-- ================================================================
+       JAVASCRIPT
+       ================================================================ -->
+  <script>
+    (function () {
+      "use strict";
+
+      /* ----------------------------------------------------------------
+         STATE
+         ---------------------------------------------------------------- */
+      var searchResults = null;
+      var searchText = "";
+      var showAllCases = false;
+      var INITIAL_CASES_SHOWN = 3;
+
+      /* ----------------------------------------------------------------
+         DOM REFERENCES
+         ---------------------------------------------------------------- */
+      var dom = {
+        tarInput: document.getElementById("tarInput"),
+        btnSearch: document.getElementById("btnSearch"),
+        btnRecommend: document.getElementById("btnRecommend"),
+
+        statTars: document.getElementById("statTars"),
+        statMafs: document.getElementById("statMafs"),
+        statClusters: document.getElementById("statClusters"),
+        statParts: document.getElementById("statParts"),
+        statusDot: document.getElementById("statusDot"),
+        statusText: document.getElementById("statusText"),
+
+        diagnosisEmpty: document.getElementById("diagnosisEmpty"),
+        diagnosisLoading: document.getElementById("diagnosisLoading"),
+        diagnosisError: document.getElementById("diagnosisError"),
+        diagnosisErrorText: document.getElementById("diagnosisErrorText"),
+        diagnosisResults: document.getElementById("diagnosisResults"),
+        diagnosisTimer: document.getElementById("diagnosisTimer"),
+
+        casesEmpty: document.getElementById("casesEmpty"),
+        casesResults: document.getElementById("casesResults"),
+        casesCount: document.getElementById("casesCount"),
+
+        recommendEmpty: document.getElementById("recommendEmpty"),
+        recommendLoading: document.getElementById("recommendLoading"),
+        recommendError: document.getElementById("recommendError"),
+        recommendErrorText: document.getElementById("recommendErrorText"),
+        recommendResults: document.getElementById("recommendResults"),
+        recommendTimer: document.getElementById("recommendTimer")
+      };
+
+      /* ----------------------------------------------------------------
+         UTILITIES
+         ---------------------------------------------------------------- */
+      function formatNumber(n) {
+        if (n === null || n === undefined) return "--";
+        if (n >= 1000000) return (n / 1000000).toFixed(1) + "M";
+        if (n >= 1000) return n.toLocaleString();
+        return String(n);
+      }
+
+      /**
+       * Safely escapes a string for use as text content within DOM
+       * construction. Uses the browser's built-in text node escaping
+       * to prevent XSS.
+       */
+      function escapeHtml(str) {
+        if (!str) return "";
+        var div = document.createElement("div");
+        div.appendChild(document.createTextNode(str));
+        return div.textContent !== undefined ? div.innerHTML : div.innerText;
+      }
+
+      function show(el) { el.classList.remove("hidden"); }
+      function hide(el) { el.classList.add("hidden"); }
+
+      function confidenceColor(conf) {
+        if (conf >= 0.8) return "var(--accent-green)";
+        if (conf >= 0.6) return "var(--accent-blue)";
+        if (conf >= 0.4) return "var(--accent-amber)";
+        return "var(--accent-red)";
+      }
+
+      function similarityBadgeClass(sim) {
+        if (sim >= 0.85) return "similarity-badge--high";
+        if (sim >= 0.70) return "similarity-badge--medium";
+        return "similarity-badge--low";
+      }
+
+      var barColors = [
+        "var(--bar-replace)",
+        "var(--bar-inspect)",
+        "var(--bar-adjust)",
+        "var(--bar-repair)",
+        "var(--bar-other)"
+      ];
+
+      function getBarColor(index) {
+        return barColors[index % barColors.length];
+      }
+
+      /**
+       * Builds a DOM element tree from a descriptor object.
+       * Avoids direct innerHTML usage for dynamic content.
+       *
+       * @param {string} tag - HTML tag name
+       * @param {Object} attrs - attributes and properties
+       * @param {Array} children - child elements or strings
+       * @returns {HTMLElement}
+       */
+      function h(tag, attrs, children) {
+        var el = document.createElement(tag);
+        if (attrs) {
+          Object.keys(attrs).forEach(function (key) {
+            if (key === "className") {
+              el.className = attrs[key];
+            } else if (key === "style" && typeof attrs[key] === "object") {
+              Object.keys(attrs[key]).forEach(function (sk) {
+                el.style[sk] = attrs[key][sk];
+              });
+            } else if (key.indexOf("aria") === 0 || key === "role" || key === "tabindex") {
+              el.setAttribute(key.replace(/([A-Z])/g, "-$1").toLowerCase(), attrs[key]);
+            } else {
+              el.setAttribute(key, attrs[key]);
+            }
+          });
+        }
+        if (children) {
+          if (!Array.isArray(children)) children = [children];
+          children.forEach(function (child) {
+            if (child === null || child === undefined) return;
+            if (typeof child === "string" || typeof child === "number") {
+              el.appendChild(document.createTextNode(String(child)));
+            } else if (child instanceof Node) {
+              el.appendChild(child);
+            }
+          });
+        }
+        return el;
+      }
+
+      /* ----------------------------------------------------------------
+         API CALLS
+         ---------------------------------------------------------------- */
+      async function apiGet(endpoint) {
+        var response = await fetch(endpoint);
+        if (!response.ok) {
+          var body = await response.text();
+          throw new Error("HTTP " + response.status + ": " + body);
+        }
+        return response.json();
+      }
+
+      async function apiPost(endpoint, data) {
+        var response = await fetch(endpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+        if (!response.ok) {
+          var body = await response.text();
+          throw new Error("HTTP " + response.status + ": " + body);
+        }
+        return response.json();
+      }
+
+      /* ----------------------------------------------------------------
+         LOAD STATS
+         ---------------------------------------------------------------- */
+      async function loadStats() {
+        try {
+          var stats = await apiGet("/api/stats");
+          dom.statTars.textContent = formatNumber(stats.total_tars);
+          dom.statMafs.textContent = formatNumber(stats.total_mafs);
+          dom.statClusters.textContent = String(stats.cluster_count);
+          dom.statParts.textContent = String(stats.parts_tracked);
+
+          if (stats.index_loaded) {
+            dom.statusDot.classList.remove("status-indicator__dot--offline");
+            dom.statusText.textContent = "System Ready";
+          } else {
+            dom.statusDot.classList.add("status-indicator__dot--offline");
+            dom.statusText.textContent = "Index Loading...";
+          }
+        } catch (e) {
+          dom.statusDot.classList.add("status-indicator__dot--offline");
+          dom.statusText.textContent = "Connection Failed";
+        }
+      }
+
+      /* ----------------------------------------------------------------
+         SEARCH
+         ---------------------------------------------------------------- */
+      var searchBtnOrigNodes = null;
+
+      async function performSearch() {
+        var text = dom.tarInput.value.trim();
+        if (!text) {
+          dom.tarInput.focus();
+          return;
+        }
+
+        searchText = text;
+        searchResults = null;
+        showAllCases = false;
+        dom.btnRecommend.disabled = true;
+
+        // Show loading state
+        hide(dom.diagnosisEmpty);
+        hide(dom.diagnosisError);
+        hide(dom.diagnosisResults);
+        show(dom.diagnosisLoading);
+        hide(dom.diagnosisTimer);
+
+        hide(dom.casesEmpty);
+        hide(dom.casesResults);
+        hide(dom.casesCount);
+
+        // Reset recommendation
+        show(dom.recommendEmpty);
+        hide(dom.recommendLoading);
+        hide(dom.recommendError);
+        hide(dom.recommendResults);
+        hide(dom.recommendTimer);
+
+        // Disable search button during request
+        dom.btnSearch.disabled = true;
+        if (!searchBtnOrigNodes) {
+          searchBtnOrigNodes = [];
+          while (dom.btnSearch.firstChild) {
+            searchBtnOrigNodes.push(dom.btnSearch.removeChild(dom.btnSearch.firstChild));
+          }
+        } else {
+          while (dom.btnSearch.firstChild) dom.btnSearch.removeChild(dom.btnSearch.firstChild);
+        }
+        var spinEl = document.createElement("span");
+        spinEl.className = "spinner";
+        spinEl.setAttribute("aria-hidden", "true");
+        dom.btnSearch.appendChild(spinEl);
+        dom.btnSearch.appendChild(document.createTextNode(" Searching..."));
+
+        var startTime = performance.now();
+
+        try {
+          var results = await apiPost("/api/search", { text: text, top_k: 10 });
+          var elapsed = ((performance.now() - startTime) / 1000).toFixed(2);
+
+          searchResults = results;
+          dom.btnRecommend.disabled = false;
+
+          // Render diagnosis
+          renderDiagnosis(results);
+          show(dom.diagnosisTimer);
+          dom.diagnosisTimer.textContent = elapsed + "s";
+
+          // Render similar cases
+          renderSimilarCases(results.similar_tars);
+          show(dom.casesCount);
+          dom.casesCount.textContent = results.similar_tars.length + " cases";
+
+        } catch (e) {
+          hide(dom.diagnosisLoading);
+          dom.diagnosisErrorText.textContent = "Search failed: " + e.message;
+          show(dom.diagnosisError);
+          show(dom.casesEmpty);
+        } finally {
+          dom.btnSearch.disabled = false;
+          // Restore original button content
+          while (dom.btnSearch.firstChild) dom.btnSearch.removeChild(dom.btnSearch.firstChild);
+          if (searchBtnOrigNodes) {
+            searchBtnOrigNodes.forEach(function (node) {
+              dom.btnSearch.appendChild(node);
+            });
+          }
+          searchBtnOrigNodes = null;
+        }
+      }
+
+      /* ----------------------------------------------------------------
+         RENDER: DIAGNOSIS (DOM-based, no innerHTML for dynamic data)
+         ---------------------------------------------------------------- */
+      function renderDiagnosis(results) {
+        hide(dom.diagnosisLoading);
+        hide(dom.diagnosisError);
+        hide(dom.diagnosisEmpty);
+
+        var cluster = results.matched_cluster;
+        if (!cluster) {
+          dom.diagnosisErrorText.textContent = "No matching cluster found in the database.";
+          show(dom.diagnosisError);
+          return;
+        }
+
+        // Clear previous
+        while (dom.diagnosisResults.firstChild) {
+          dom.diagnosisResults.removeChild(dom.diagnosisResults.firstChild);
+        }
+
+        var confPct = Math.round(cluster.confidence * 100);
+        var confColor = confidenceColor(cluster.confidence);
+
+        // Build solution breakdown
+        var breakdownEntries = Object.entries(cluster.solution_breakdown || {});
+        breakdownEntries.sort(function (a, b) { return b[1] - a[1]; });
+        var maxPct = breakdownEntries.length > 0 ? breakdownEntries[0][1] : 100;
+
+        var breakdownContainer = h("div", null, [
+          h("div", { className: "solution-breakdown__title" }, ["Solution Breakdown"])
+        ]);
+
+        breakdownEntries.forEach(function (entry, i) {
+          var label = entry[0];
+          var pct = entry[1];
+          var width = Math.max((pct / maxPct) * 100, 2);
+          var color = getBarColor(i);
+
+          var barFill = h("div", {
+            className: "solution-item__bar-fill",
+            style: { width: width + "%", background: color }
+          });
+
+          var barTrack = h("div", {
+            className: "solution-item__bar-track",
+            role: "progressbar",
+            "aria-valuenow": pct.toFixed(1),
+            "aria-valuemin": "0",
+            "aria-valuemax": "100",
+            "aria-label": label + ": " + pct.toFixed(1) + "%"
+          }, [barFill]);
+
+          breakdownContainer.appendChild(
+            h("div", { className: "solution-item" }, [
+              h("span", { className: "solution-item__label" }, [label]),
+              barTrack,
+              h("span", { className: "solution-item__pct" }, [pct.toFixed(1) + "%"])
+            ])
+          );
+        });
+
+        // Parts list
+        var relatedParts = results.related_parts || [];
+        var clusterParts = cluster.parts_commonly_involved || [];
+        var partsToShow = [];
+
+        if (relatedParts.length > 0) {
+          relatedParts.forEach(function (rp) {
+            partsToShow.push({
+              part_number: rp.part_number,
+              failure_count: rp.failure_count,
+              ai_summary: rp.ai_summary || ""
+            });
+          });
+        } else if (clusterParts.length > 0) {
+          clusterParts.forEach(function (pn) {
+            partsToShow.push({ part_number: pn, failure_count: 0, ai_summary: "" });
+          });
+        }
+
+        var partsContainer = null;
+        if (partsToShow.length > 0) {
+          var ul = h("ul");
+          partsToShow.forEach(function (p) {
+            var liChildren = [
+              h("span", { className: "part-number" }, [p.part_number])
+            ];
+            if (p.failure_count > 0) {
+              liChildren.push(
+                h("span", { className: "part-failures" }, ["(" + formatNumber(p.failure_count) + " historical failures)"])
+              );
+            }
+            if (p.ai_summary) {
+              var summary = p.ai_summary.length > 120 ? p.ai_summary.substring(0, 120) + "..." : p.ai_summary;
+              liChildren.push(h("span", { className: "part-summary" }, [summary]));
+            }
+            ul.appendChild(h("li", null, liChildren));
+          });
+          partsContainer = h("div", { className: "parts-list" }, [
+            h("div", { className: "parts-list__title" }, ["Parts to Have Ready"]),
+            ul
+          ]);
+        }
+
+        // Confidence bar
+        var confFill = h("div", {
+          className: "confidence-bar__fill",
+          style: { width: confPct + "%", background: confColor }
+        });
+
+        var confBarTrack = h("div", {
+          className: "confidence-bar__track",
+          role: "progressbar",
+          "aria-valuenow": String(confPct),
+          "aria-valuemin": "0",
+          "aria-valuemax": "100",
+          "aria-label": "Confidence: " + confPct + "%"
+        }, [confFill]);
+
+        var confBar = h("div", { className: "confidence-bar" }, [
+          h("div", { className: "confidence-bar__header" }, [
+            h("span", { className: "confidence-bar__label" }, ["Match Confidence"]),
+            h("span", { className: "confidence-bar__value", style: { color: confColor } }, [confPct + "%"])
+          ]),
+          confBarTrack
+        ]);
+
+        // Stat units styling helper
+        function statUnit(text) {
+          var sp = document.createElement("span");
+          sp.style.fontSize = "0.6em";
+          sp.style.color = "var(--text-muted)";
+          sp.textContent = text;
+          return sp;
+        }
+
+        function pctUnit() {
+          var sp = document.createElement("span");
+          sp.style.fontSize = "0.75em";
+          sp.style.color = "var(--text-muted)";
+          sp.textContent = "%";
+          return sp;
+        }
+
+        // Stats row
+        var confStatVal = h("span", { className: "diagnosis-stat__value" }, []);
+        confStatVal.appendChild(document.createTextNode(String(confPct)));
+        confStatVal.appendChild(pctUnit());
+
+        var occStatVal = h("span", { className: "diagnosis-stat__value" }, [formatNumber(cluster.occurrences)]);
+
+        var mhText = cluster.average_manhours > 0 ? cluster.average_manhours.toFixed(1) : "--";
+        var mhStatVal = h("span", { className: "diagnosis-stat__value" }, []);
+        mhStatVal.appendChild(document.createTextNode(mhText));
+        if (cluster.average_manhours > 0) {
+          mhStatVal.appendChild(statUnit(" hrs"));
+        }
+
+        var statsRow = h("div", { className: "diagnosis-stats" }, [
+          h("div", { className: "diagnosis-stat" }, [
+            confStatVal,
+            h("span", { className: "diagnosis-stat__label" }, ["Confidence"])
+          ]),
+          h("div", { className: "diagnosis-stat" }, [
+            occStatVal,
+            h("span", { className: "diagnosis-stat__label" }, ["Past Occurrences"])
+          ]),
+          h("div", { className: "diagnosis-stat" }, [
+            mhStatVal,
+            h("span", { className: "diagnosis-stat__label" }, ["Avg Resolution"])
+          ])
+        ]);
+
+        // Left column
+        var leftChildren = [
+          h("div", { className: "diagnosis-category" }, [cluster.problem]),
+          statsRow,
+          confBar
+        ];
+        if (partsContainer) leftChildren.push(partsContainer);
+        var leftCol = h("div", { className: "diagnosis-left" }, leftChildren);
+
+        // Right column
+        var rightCol = h("div", { className: "diagnosis-right" }, [breakdownContainer]);
+
+        // Grid
+        var grid = h("div", { className: "diagnosis-grid" }, [leftCol, rightCol]);
+        dom.diagnosisResults.appendChild(grid);
+
+        // Insight
+        if (cluster.typical_solution) {
+          var insight = h("div", { className: "insight-text" }, [
+            h("div", { className: "insight-text__title" }, ["Historical Insight"]),
+            h("p", { className: "insight-text__body" }, [cluster.typical_solution])
+          ]);
+          dom.diagnosisResults.appendChild(insight);
+        }
+
+        show(dom.diagnosisResults);
+
+        // Animate bars
+        requestAnimationFrame(function () {
+          var fills = dom.diagnosisResults.querySelectorAll(".solution-item__bar-fill, .confidence-bar__fill");
+          fills.forEach(function (f) {
+            var targetWidth = f.style.width;
+            f.style.width = "0%";
+            requestAnimationFrame(function () {
+              f.style.width = targetWidth;
+            });
+          });
+        });
+      }
+
+      /* ----------------------------------------------------------------
+         RENDER: SIMILAR CASES (DOM-based)
+         ---------------------------------------------------------------- */
+      function renderSimilarCases(cases) {
+        hide(dom.casesEmpty);
+
+        if (!cases || cases.length === 0) {
+          show(dom.casesEmpty);
+          return;
+        }
+
+        // Clear previous
+        while (dom.casesResults.firstChild) {
+          dom.casesResults.removeChild(dom.casesResults.firstChild);
+        }
+
+        var visibleCount = showAllCases ? cases.length : Math.min(INITIAL_CASES_SHOWN, cases.length);
+
+        var list = h("div", { className: "cases-list", role: "list" });
+
+        for (var i = 0; i < visibleCount; i++) {
+          var tar = cases[i];
+          var simPct = Math.round(tar.similarity * 100);
+          var badgeClass = similarityBadgeClass(tar.similarity);
+
+          // Header left
+          var headerLeftChildren = [
+            h("span", { className: "similarity-badge " + badgeClass, "aria-label": simPct + "% match" }, [simPct + "% match"]),
+            h("span", { className: "case-jcn" }, ["JCN: " + (tar.jcn || "N/A")])
+          ];
+          var headerLeft = h("div", { className: "case-card__header-left" }, headerLeftChildren);
+
+          var headerRight = null;
+          if (tar.cluster_label) {
+            headerRight = h("span", { className: "case-cluster-label" }, [tar.cluster_label]);
+          }
+
+          var headerChildren = [headerLeft];
+          if (headerRight) headerChildren.push(headerRight);
+          var cardHeader = h("div", { className: "case-card__header" }, headerChildren);
+
+          // Body
+          var bodyChildren = [];
+          if (tar.subject) {
+            bodyChildren.push(h("div", { className: "case-subject" }, [tar.subject]));
+          }
+          if (tar.issue) {
+            bodyChildren.push(h("div", { className: "case-issue" }, [tar.issue]));
+          }
+
+          // MAF actions
+          if (tar.maf_actions && tar.maf_actions.length > 0) {
+            var mafContainer = h("div", { className: "maf-actions" }, [
+              h("div", { className: "maf-actions__title" }, ["Corrective Actions Taken"])
+            ]);
+
+            tar.maf_actions.forEach(function (maf) {
+              var corr = maf.corr_act || maf.discrepancy || "";
+              var displayCorr = corr.length > 200 ? corr.substring(0, 200) + "..." : corr;
+              var hours = maf.manhours || "";
+              var parts = [];
+              if (maf.rmvd_partno) parts.push(maf.rmvd_partno);
+              if (maf.inst_partno && maf.inst_partno !== maf.rmvd_partno) parts.push(maf.inst_partno);
+              var partsStr = parts.join(", ");
+
+              var actionChildren = [
+                h("span", { className: "maf-action__text" }, [displayCorr])
+              ];
+              actionChildren.push(
+                hours ? h("span", { className: "maf-action__hours" }, [hours + " hrs"]) : h("span")
+              );
+              actionChildren.push(
+                partsStr ? h("span", { className: "maf-action__parts" }, [partsStr]) : h("span")
+              );
+
+              mafContainer.appendChild(h("div", { className: "maf-action" }, actionChildren));
+            });
+
+            bodyChildren.push(mafContainer);
+          }
+
+          var cardBody = h("div", { className: "case-card__body" }, bodyChildren);
+
+          list.appendChild(
+            h("div", { className: "case-card", role: "listitem" }, [cardHeader, cardBody])
+          );
+        }
+
+        dom.casesResults.appendChild(list);
+
+        // Show More / Show Less button
+        if (cases.length > INITIAL_CASES_SHOWN) {
+          var toggleBtn;
+          if (!showAllCases) {
+            toggleBtn = h("button", {
+              type: "button",
+              className: "show-more-btn",
+              "aria-label": "Show all " + cases.length + " similar cases"
+            }, ["Show " + (cases.length - INITIAL_CASES_SHOWN) + " more cases"]);
+            toggleBtn.addEventListener("click", function () {
+              showAllCases = true;
+              renderSimilarCases(searchResults.similar_tars);
+            });
+          } else {
+            toggleBtn = h("button", {
+              type: "button",
+              className: "show-more-btn",
+              "aria-label": "Show fewer cases"
+            }, ["Show fewer"]);
+            toggleBtn.addEventListener("click", function () {
+              showAllCases = false;
+              renderSimilarCases(searchResults.similar_tars);
+              document.getElementById("casesSection").scrollIntoView({ behavior: "smooth", block: "start" });
+            });
+          }
+          dom.casesResults.appendChild(toggleBtn);
+        }
+
+        show(dom.casesResults);
+      }
+
+      /* ----------------------------------------------------------------
+         AI RECOMMENDATION
+         ---------------------------------------------------------------- */
+      var recommendBtnOrigNodes = null;
+
+      async function getRecommendation() {
+        if (!searchResults || !searchText) return;
+
+        hide(dom.recommendEmpty);
+        hide(dom.recommendError);
+        hide(dom.recommendResults);
+        show(dom.recommendLoading);
+        hide(dom.recommendTimer);
+
+        dom.btnRecommend.disabled = true;
+        if (!recommendBtnOrigNodes) {
+          recommendBtnOrigNodes = [];
+          while (dom.btnRecommend.firstChild) {
+            recommendBtnOrigNodes.push(dom.btnRecommend.removeChild(dom.btnRecommend.firstChild));
+          }
+        } else {
+          while (dom.btnRecommend.firstChild) dom.btnRecommend.removeChild(dom.btnRecommend.firstChild);
+        }
+        var spinEl2 = document.createElement("span");
+        spinEl2.className = "spinner";
+        spinEl2.setAttribute("aria-hidden", "true");
+        dom.btnRecommend.appendChild(spinEl2);
+        dom.btnRecommend.appendChild(document.createTextNode(" Generating..."));
+
+        var startTime = performance.now();
+
+        try {
+          var response = await apiPost("/api/recommend", {
+            text: searchText,
+            search_results: searchResults
+          });
+          var elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
+
+          hide(dom.recommendLoading);
+
+          var recText = response.recommendation || "No recommendation generated.";
+
+          // Clear and build recommendation content via DOM
+          while (dom.recommendResults.firstChild) {
+            dom.recommendResults.removeChild(dom.recommendResults.firstChild);
+          }
+
+          var recContainer = h("div", { className: "recommendation-text" });
+
+          // Split by double newlines for paragraphs, single newlines for line breaks
+          var paragraphs = recText.split(/\n\n+/);
+          paragraphs.forEach(function (para) {
+            if (para.trim()) {
+              var pEl = document.createElement("p");
+              // Handle single line breaks within paragraphs
+              var lines = para.split(/\n/);
+              lines.forEach(function (line, lineIdx) {
+                if (lineIdx > 0) {
+                  pEl.appendChild(document.createElement("br"));
+                }
+                pEl.appendChild(document.createTextNode(line));
+              });
+              pEl.style.marginBottom = "12px";
+              recContainer.appendChild(pEl);
+            }
+          });
+
+          dom.recommendResults.appendChild(recContainer);
+          show(dom.recommendResults);
+          show(dom.recommendTimer);
+          dom.recommendTimer.textContent = elapsed + "s";
+
+        } catch (e) {
+          hide(dom.recommendLoading);
+          dom.recommendErrorText.textContent = "Recommendation failed: " + e.message;
+          show(dom.recommendError);
+        } finally {
+          dom.btnRecommend.disabled = false;
+          while (dom.btnRecommend.firstChild) dom.btnRecommend.removeChild(dom.btnRecommend.firstChild);
+          if (recommendBtnOrigNodes) {
+            recommendBtnOrigNodes.forEach(function (node) {
+              dom.btnRecommend.appendChild(node);
+            });
+          }
+          recommendBtnOrigNodes = null;
+        }
+      }
+
+      /* ----------------------------------------------------------------
+         EVENT HANDLERS
+         ---------------------------------------------------------------- */
+
+      dom.btnSearch.addEventListener("click", performSearch);
+      dom.btnRecommend.addEventListener("click", getRecommendation);
+
+      // Ctrl+Enter or Cmd+Enter in textarea triggers search
+      dom.tarInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          performSearch();
+        }
+      });
+
+      // Sample TAR buttons
+      document.querySelectorAll(".sample-tar-btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var tarText = this.getAttribute("data-tar");
+          dom.tarInput.value = tarText;
+          dom.tarInput.focus();
+        });
+      });
+
+      /* ----------------------------------------------------------------
+         INIT
+         ---------------------------------------------------------------- */
+      loadStats();
+      setInterval(loadStats, 30000);
+
+    })();
+  </script>
+</body>
+</html>
