@@ -595,6 +595,9 @@
       color: var(--text-secondary);
       text-transform: capitalize;
       text-align: right;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
       flex-shrink: 0;
     }
 
@@ -2006,6 +2009,12 @@
       color: var(--accent-cyan);
     }
 
+    .sys-mode-card__action-list {
+      margin-top: 6px;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+
     /* Corrective actions table within system detail */
     .sys-action-row {
       display: flex;
@@ -3308,9 +3317,11 @@
             "aria-label": label + ": " + pct.toFixed(1) + "%"
           }, [barFill]);
 
+          var truncLabel = label.length > 25 ? label.substring(0, 22) + "..." : label;
+
           breakdownContainer.appendChild(
             h("div", { className: "solution-item" }, [
-              h("span", { className: "solution-item__label" }, [label]),
+              h("span", { className: "solution-item__label", title: label }, [truncLabel]),
               barTrack,
               h("span", { className: "solution-item__pct" }, [pct.toFixed(1) + "%"])
             ])
@@ -5243,6 +5254,8 @@
         var btnClusters = tpdrDom.fleetViewBtnClusters;
         var systemView = tpdrDom.fleetSystemView;
         var clustersView = tpdrDom.fleetClustersView;
+        var statValue = document.getElementById("statClusters");
+        var statLabel = statValue ? statValue.nextElementSibling : null;
 
         function showView(view) {
           if (view === "system") {
@@ -5252,6 +5265,10 @@
             btnSystem.setAttribute("aria-selected", "true");
             btnClusters.classList.remove("fleet-view-toggle__btn--active");
             btnClusters.setAttribute("aria-selected", "false");
+            if (statValue && systemsData) {
+              statValue.textContent = systemsData.total_systems || "--";
+              if (statLabel) statLabel.textContent = "Systems Tracked";
+            }
           } else {
             hide(systemView);
             show(clustersView);
@@ -5259,11 +5276,21 @@
             btnClusters.setAttribute("aria-selected", "true");
             btnSystem.classList.remove("fleet-view-toggle__btn--active");
             btnSystem.setAttribute("aria-selected", "false");
+            if (statValue) {
+              statValue.textContent = "10";
+              if (statLabel) statLabel.textContent = "Problem Categories";
+            }
           }
         }
 
         btnSystem.addEventListener("click", function() { showView("system"); });
         btnClusters.addEventListener("click", function() { showView("clusters"); });
+
+        // Set initial state to match default (System View active)
+        if (statValue && systemsData) {
+          statValue.textContent = systemsData.total_systems || "--";
+          if (statLabel) statLabel.textContent = "Systems Tracked";
+        }
       }
 
       /* ----------------------------------------------------------------
@@ -5378,13 +5405,27 @@
             ]));
 
             if (mode.top_actions && mode.top_actions.length > 0) {
-              var actionsText = mode.top_actions.map(function(a) {
-                return a.length > 60 ? a.substring(0, 57) + "..." : a;
-              }).join(" | ");
-              modeCard.appendChild(h("div", { className: "sys-mode-card__actions" }, [
-                "Top actions: ",
-                h("span", null, [actionsText])
-              ]));
+              var actList = h("div", { className: "sys-mode-card__action-list" });
+              mode.top_actions.forEach(function(act, ai) {
+                var actionText = "";
+                var metaText = "";
+                // Handle both old format (string) and new format (object)
+                if (typeof act === "string") {
+                  actionText = act.length > 70 ? act.substring(0, 67) + "..." : act;
+                } else {
+                  actionText = (act.action || "").length > 70 ? act.action.substring(0, 67) + "..." : (act.action || "");
+                  var parts = [];
+                  if (act.count) parts.push(act.count + "x");
+                  if (act.avg_manhours > 0) parts.push("avg " + act.avg_manhours + " hrs");
+                  metaText = parts.join(" · ");
+                }
+                actList.appendChild(h("div", { className: "sys-action-row" }, [
+                  h("span", { className: "sys-action-row__rank" }, [String(ai + 1) + "."]),
+                  h("span", { className: "sys-action-row__text", title: typeof act === "string" ? act : (act.action || "") }, [actionText]),
+                  metaText ? h("span", { className: "sys-action-row__meta" }, [metaText]) : null
+                ].filter(Boolean)));
+              });
+              modeCard.appendChild(actList);
             }
 
             fmSection.appendChild(modeCard);
@@ -5393,8 +5434,9 @@
           container.appendChild(fmSection);
         }
 
-        // 2. Top Corrective Actions section
-        if (sys.top_corrective_actions && sys.top_corrective_actions.length > 0) {
+        // 2. Top Corrective Actions section (only when no failure modes — otherwise shown per-mode above)
+        var hasFailureModes = sys.failure_modes && sys.failure_modes.length > 0;
+        if (!hasFailureModes && sys.top_corrective_actions && sys.top_corrective_actions.length > 0) {
           var actSection = h("div", { className: "fleet-detail__section" }, [
             h("div", { className: "fleet-detail__section-title" }, ["Top Corrective Actions"])
           ]);

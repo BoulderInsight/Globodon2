@@ -58,8 +58,31 @@ def _load_cache() -> dict | None:
 # ---------------------------------------------------------------------------
 
 def _aggregate_corrective_actions(jcns: list[str]) -> list[dict]:
-    """Collect corr_act from linked MAFs, group by normalized text, return top 10."""
+    """Collect corr_act from linked MAFs, group by normalized text, return top 10.
+    
+    Filters out:
+    - Entries shorter than 5 characters (garbage data)
+    - BCM disposition codes (Beyond Capability of Maintenance) — these indicate
+      where the work was sent, not what fix was performed
+    """
+    # BCM patterns: "BEYOND CAPABILITY OF MAINTENANCE BCM-1", etc.
+    # These are disposition codes, not corrective actions
+    import re
+    BCM_PATTERN = re.compile(
+        r"^BEYOND\s+CAPABILITY\s+OF\s+MAINTENANCE\b|^BCM[\s\-]*\d",
+        re.IGNORECASE,
+    )
+    # Other non-actionable patterns
+    SKIP_PATTERNS = [
+        re.compile(r"^N/?A$", re.IGNORECASE),
+        re.compile(r"^NONE$", re.IGNORECASE),
+        re.compile(r"^SEE\s+ABOVE$", re.IGNORECASE),
+        re.compile(r"^SAME\s+AS\s+ABOVE$", re.IGNORECASE),
+    ]
+    MIN_ACTION_LENGTH = 5
+
     action_data: dict[str, dict] = {}  # normalized_text -> {count, manhours_sum, manhours_n}
+    bcm_data: dict[str, int] = {}  # BCM disposition counts (tracked separately)
 
     for jcn in jcns:
         jcn_str = str(jcn).strip()
@@ -70,7 +93,16 @@ def _aggregate_corrective_actions(jcns: list[str]) -> list[dict]:
             if not text:
                 continue
             normalized = text.strip().upper()
-            if not normalized:
+            if not normalized or len(normalized) < MIN_ACTION_LENGTH:
+                continue
+
+            # Skip non-actionable patterns
+            if any(p.match(normalized) for p in SKIP_PATTERNS):
+                continue
+
+            # Separate BCM disposition codes
+            if BCM_PATTERN.match(normalized):
+                bcm_data[normalized] = bcm_data.get(normalized, 0) + 1
                 continue
 
             if normalized not in action_data:
@@ -200,15 +232,11 @@ def _sub_cluster(group_indices: list[int], group_df: pd.DataFrame) -> list[dict]
             if jcn:
                 sub_jcns.append(jcn)
         sub_actions = _aggregate_corrective_actions(sub_jcns)
-        top_action_texts = [a["action"] for a in sub_actions[:3]]
+        top_actions_full = sub_actions[:5]  # full objects with count + manhours
 
-        # Silhouette score for this sub-cluster
+        # Silhouette score for this sub-cluster's members
         if count >= 2 and len(set(final_labels)) >= 2:
             try:
-                member_sil = silhouette_score(
-                    emb[member_indices], [0] * count, metric="cosine"
-                ) if count > 1 else 0.0
-                # Actually compute per-sample silhouette for this cluster's members
                 from sklearn.metrics import silhouette_samples
                 all_sil = silhouette_samples(emb, final_labels, metric="cosine")
                 member_sil = float(np.mean(all_sil[member_indices]))
@@ -222,7 +250,7 @@ def _sub_cluster(group_indices: list[int], group_df: pd.DataFrame) -> list[dict]
             "count": count,
             "label": label[:120],
             "sample_subjects": sample_subjects,
-            "top_actions": top_action_texts,
+            "top_actions": top_actions_full,
             "silhouette_score": round(member_sil, 3),
         })
 
