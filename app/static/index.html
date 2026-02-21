@@ -1837,6 +1837,63 @@
       font-weight: 600;
       font-family: var(--font-mono);
     }
+    .threshold-multiselect {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .threshold-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      font-size: 0.6875rem;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      user-select: none;
+    }
+    .threshold-chip:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+    .threshold-chip--active {
+      background: rgba(56, 189, 248, 0.12);
+      border-color: var(--accent-blue);
+      color: var(--accent-blue);
+    }
+    .threshold-multiselect-label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-top: 12px;
+      margin-bottom: 4px;
+    }
+    .threshold-multiselect-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 6px;
+    }
+    .threshold-link-btn {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.6875rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 2px 4px;
+      transition: color var(--transition-fast);
+    }
+    .threshold-link-btn:hover {
+      color: var(--text-secondary);
+    }
     @media (max-width: 900px) {
       .threshold-grid { grid-template-columns: repeat(2, 1fr); }
     }
@@ -3094,7 +3151,8 @@
         minAircraft: 3,
         minAcceleration: 1.5,
         minComebacks: 0,
-        minScore: 0
+        minScore: 0,
+        minMonthlyRate: 0
       };
 
       function getWorkflowStates() {
@@ -3123,12 +3181,38 @@
         storage.set("tars_tpdrThresholds", vals);
       }
 
+      function getMonthlyRate(rec) {
+        var counts = rec.monthly_counts || [];
+        if (counts.length === 0) return 0;
+        var sum = 0;
+        for (var i = 0; i < counts.length; i++) sum += counts[i];
+        return sum / counts.length;
+      }
+
+      function getSelectedActivities() {
+        return storage.get("tars_tpdrSelectedActivities") || null;
+      }
+
+      function setSelectedActivities(arr) {
+        storage.set("tars_tpdrSelectedActivities", arr);
+      }
+
       function passesThresholds(rec, thresholds) {
         if ((rec.total_tars || 0) < thresholds.minTotalTars) return false;
         if ((rec.aircraft_count || 0) < thresholds.minAircraft) return false;
         if ((rec.acceleration_ratio || 0) < thresholds.minAcceleration) return false;
         if ((rec.comeback_count || 0) < thresholds.minComebacks) return false;
         if ((rec.score || 0) < thresholds.minScore) return false;
+        if (thresholds.minMonthlyRate > 0 && getMonthlyRate(rec) < thresholds.minMonthlyRate) return false;
+        var selActs = getSelectedActivities();
+        if (selActs && selActs.length > 0) {
+          var recActs = rec.activities || [];
+          var hasMatch = false;
+          for (var i = 0; i < recActs.length; i++) {
+            if (selActs.indexOf(recActs[i]) !== -1) { hasMatch = true; break; }
+          }
+          if (!hasMatch) return false;
+        }
         return true;
       }
 
@@ -3443,6 +3527,20 @@
       /* ----------------------------------------------------------------
          BUILD THRESHOLD PANEL
          ---------------------------------------------------------------- */
+      function collectAllActivities(recs) {
+        var actMap = {};
+        var displayCount = Math.min(15, recs.length);
+        for (var i = 0; i < displayCount; i++) {
+          var acts = recs[i].activities || [];
+          for (var j = 0; j < acts.length; j++) {
+            actMap[acts[j]] = (actMap[acts[j]] || 0) + 1;
+          }
+        }
+        return Object.keys(actMap).sort(function(a, b) {
+          return actMap[b] - actMap[a];
+        });
+      }
+
       function buildThresholdPanel(thresholds, totalActive, filteredCount) {
         var panelContent = h("div", { className: "hidden" });
         var toggleBtn = h("button", {
@@ -3467,7 +3565,8 @@
           { key: "minAircraft", label: "Min Aircraft Affected", min: 1, max: 100, step: 1 },
           { key: "minAcceleration", label: "Min Acceleration Rate", min: 0.5, max: 20, step: 0.5 },
           { key: "minComebacks", label: "Min Comebacks", min: 0, max: 50, step: 1 },
-          { key: "minScore", label: "Min Score", min: 0, max: 500, step: 1 }
+          { key: "minScore", label: "Min Score", min: 0, max: 500, step: 1 },
+          { key: "minMonthlyRate", label: "Min Monthly Rate", min: 0, max: 100, step: 0.5 }
         ];
 
         var grid = h("div", { className: "threshold-grid" });
@@ -3500,6 +3599,58 @@
           ]));
         });
 
+        panelContent.appendChild(grid);
+
+        // Activity / Unit multi-select
+        var allActivities = tpdrData ? collectAllActivities(tpdrData.recommendations) : [];
+        if (allActivities.length > 0) {
+          var selActs = getSelectedActivities() || [];
+
+          panelContent.appendChild(h("div", { className: "threshold-multiselect-label" }, ["Filter by Activity / Unit"]));
+
+          var chipContainer = h("div", { className: "threshold-multiselect" });
+
+          allActivities.forEach(function(act) {
+            var isActive = selActs.indexOf(act) !== -1;
+            var chip = h("button", {
+              type: "button",
+              className: "threshold-chip" + (isActive ? " threshold-chip--active" : "")
+            }, [act]);
+
+            (function(activity, chipEl) {
+              chipEl.addEventListener("click", function() {
+                var current = getSelectedActivities() || [];
+                var idx = current.indexOf(activity);
+                if (idx !== -1) {
+                  current.splice(idx, 1);
+                } else {
+                  current.push(activity);
+                }
+                setSelectedActivities(current.length > 0 ? current : null);
+                renderTPDRCandidates(tpdrData.recommendations);
+              });
+            })(act, chip);
+
+            chipContainer.appendChild(chip);
+          });
+
+          panelContent.appendChild(chipContainer);
+
+          var selectAllBtn = h("button", { type: "button", className: "threshold-link-btn" }, ["Select All"]);
+          var clearAllBtn = h("button", { type: "button", className: "threshold-link-btn" }, ["Clear All"]);
+
+          selectAllBtn.addEventListener("click", function() {
+            setSelectedActivities(allActivities.slice());
+            renderTPDRCandidates(tpdrData.recommendations);
+          });
+          clearAllBtn.addEventListener("click", function() {
+            setSelectedActivities(null);
+            renderTPDRCandidates(tpdrData.recommendations);
+          });
+
+          panelContent.appendChild(h("div", { className: "threshold-multiselect-actions" }, [selectAllBtn, clearAllBtn]));
+        }
+
         var countText = h("div", { className: "threshold-count" }, [
           "Showing ", h("span", null, [String(filteredCount)]), " of ", h("span", null, [String(totalActive)]), " active candidates matching thresholds"
         ]);
@@ -3512,12 +3663,11 @@
 
         resetBtn.addEventListener("click", function() {
           setThresholds(Object.assign({}, TPDR_THRESHOLD_DEFAULTS));
+          setSelectedActivities(null);
           renderTPDRCandidates(tpdrData.recommendations);
         });
 
         var actions = h("div", { className: "threshold-actions" }, [countText, resetBtn]);
-
-        panelContent.appendChild(grid);
         panelContent.appendChild(actions);
 
         var panel = h("div", { className: "threshold-panel" }, [toggleBtn, panelContent]);
