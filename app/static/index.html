@@ -1932,6 +1932,98 @@
       margin-left: 8px;
     }
 
+    /* Expandable similar TAR cards */
+    .case-card__header {
+      cursor: pointer;
+      user-select: none;
+    }
+    .case-card__expand-icon {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      transition: transform var(--transition-fast);
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    .case-card--expanded .case-card__expand-icon {
+      transform: rotate(90deg);
+    }
+    .case-card--expanded .case-issue {
+      display: block;
+      -webkit-line-clamp: unset;
+      -webkit-box-orient: unset;
+      overflow: visible;
+    }
+    .case-card__details {
+      display: none;
+      padding: 0 16px 12px;
+    }
+    .case-card--expanded .case-card__details {
+      display: block;
+    }
+    .case-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 12px;
+      padding: 8px 12px;
+      background: rgba(255,255,255,0.03);
+      border-radius: var(--radius-sm);
+    }
+    .case-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.75rem;
+    }
+    .case-meta-item__label {
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+    .case-meta-item__value {
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+    .case-card__maf-full {
+      border-top: 1px solid rgba(255,255,255,0.04);
+      padding-top: 10px;
+      margin-bottom: 12px;
+    }
+    .case-analyze-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      font-family: var(--font-sans);
+      color: var(--accent-blue);
+      background: rgba(56, 189, 248, 0.1);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .case-analyze-btn:hover {
+      background: rgba(56, 189, 248, 0.2);
+      border-color: rgba(56, 189, 248, 0.5);
+    }
+
+    /* Clickable footer stats */
+    .rec-footer-link {
+      color: var(--text-muted);
+      text-decoration: underline;
+      text-decoration-color: rgba(100, 116, 139, 0.4);
+      text-underline-offset: 2px;
+      cursor: pointer;
+      transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
+    }
+    .rec-footer-link:hover {
+      color: var(--accent-blue);
+      text-decoration-color: var(--accent-blue);
+    }
+
     /* ===================================================================
        TPDR WORKFLOW
        =================================================================== */
@@ -3223,8 +3315,10 @@
           var jcn = tar.jcn || "N/A";
           var isFlagged = !!(flags[jcn] && flags[jcn].flagged);
 
-          // Header left
+          // Header left: chevron + similarity + JCN
+          var chevron = h("span", { className: "case-card__expand-icon", "aria-hidden": "true" }, ["\u25B6"]);
           var headerLeftChildren = [
+            chevron,
             h("span", { className: "similarity-badge " + badgeClass, "aria-label": simPct + "% match" }, [simPct + "% match"]),
             h("span", { className: "case-jcn" }, ["JCN: " + jcn])
           ];
@@ -3249,7 +3343,7 @@
           var headerChildren = [headerLeft, headerRight];
           var cardHeader = h("div", { className: "case-card__header" }, headerChildren);
 
-          // Body
+          // Body (collapsed preview)
           var bodyChildren = [];
           if (tar.subject) {
             bodyChildren.push(h("div", { className: "case-subject" }, [tar.subject]));
@@ -3258,13 +3352,14 @@
             bodyChildren.push(h("div", { className: "case-issue" }, [tar.issue]));
           }
 
-          // MAF actions
-          if (tar.maf_actions && tar.maf_actions.length > 0) {
+          // Collapsed MAF preview: first 3 actions, truncated
+          var previewMafs = (tar.maf_actions || []).slice(0, 3);
+          if (previewMafs.length > 0) {
             var mafContainer = h("div", { className: "maf-actions" }, [
               h("div", { className: "maf-actions__title" }, ["Corrective Actions Taken"])
             ]);
 
-            tar.maf_actions.forEach(function (maf) {
+            previewMafs.forEach(function (maf) {
               var corr = maf.corr_act || maf.discrepancy || "";
               var displayCorr = corr.length > 200 ? corr.substring(0, 200) + "..." : corr;
               var hours = maf.manhours || "";
@@ -3286,16 +3381,115 @@
               mafContainer.appendChild(h("div", { className: "maf-action" }, actionChildren));
             });
 
+            if (tar.maf_actions.length > 3) {
+              mafContainer.appendChild(h("div", {
+                style: { fontSize: "0.75rem", color: "var(--text-muted)", marginTop: "4px" }
+              }, ["+" + (tar.maf_actions.length - 3) + " more action" + (tar.maf_actions.length - 3 !== 1 ? "s" : "") + " \u2014 click to expand"]));
+            }
+
             bodyChildren.push(mafContainer);
           }
 
           var cardBody = h("div", { className: "case-card__body" }, bodyChildren);
 
-          var caseCard = h("div", { className: "case-card" + (isFlagged ? " case-card--flagged" : ""), role: "listitem" }, [cardHeader, cardBody]);
+          // Expanded details section (hidden by default)
+          var detailsDiv = h("div", { className: "case-card__details" });
+
+          // Metadata row
+          var metaItems = [];
+          if (tar.buno && tar.buno !== "nan") metaItems.push({ label: "Aircraft", value: tar.buno });
+          if (tar.activity && tar.activity !== "nan") metaItems.push({ label: "Activity", value: tar.activity });
+          if (tar.submit_date && tar.submit_date !== "nan") metaItems.push({ label: "Submitted", value: tar.submit_date });
+          if (tar.status && tar.status !== "nan") metaItems.push({ label: "Status", value: tar.status });
+          if (tar.priority && tar.priority !== "nan") metaItems.push({ label: "Priority", value: tar.priority });
+
+          if (metaItems.length > 0) {
+            var metaRow = h("div", { className: "case-meta-row" });
+            metaItems.forEach(function(item) {
+              metaRow.appendChild(h("div", { className: "case-meta-item" }, [
+                h("span", { className: "case-meta-item__label" }, [item.label + ":"]),
+                h("span", { className: "case-meta-item__value" }, [item.value])
+              ]));
+            });
+            detailsDiv.appendChild(metaRow);
+          }
+
+          // Full MAF actions (all, no truncation)
+          var allMafs = tar.maf_actions || [];
+          if (allMafs.length > 0) {
+            var fullMafContainer = h("div", { className: "case-card__maf-full" }, [
+              h("div", { className: "maf-actions__title" }, ["All Corrective Actions (" + allMafs.length + ")"])
+            ]);
+
+            allMafs.forEach(function(maf) {
+              var corr = maf.corr_act || maf.discrepancy || "";
+              var hours = maf.manhours || "";
+              var parts = [];
+              if (maf.rmvd_partno) parts.push(maf.rmvd_partno);
+              if (maf.inst_partno && maf.inst_partno !== maf.rmvd_partno) parts.push(maf.inst_partno);
+              var partsStr = parts.join(", ");
+
+              var actionChildren = [
+                h("span", { className: "maf-action__text" }, [corr])
+              ];
+              actionChildren.push(
+                hours ? h("span", { className: "maf-action__hours" }, [hours + " hrs"]) : h("span")
+              );
+              actionChildren.push(
+                partsStr ? h("span", { className: "maf-action__parts" }, [partsStr]) : h("span")
+              );
+
+              fullMafContainer.appendChild(h("div", { className: "maf-action" }, actionChildren));
+            });
+
+            detailsDiv.appendChild(fullMafContainer);
+          }
+
+          // Analyze This TAR button
+          var analyzeBtn = h("button", {
+            type: "button",
+            className: "case-analyze-btn",
+            "aria-label": "Analyze this TAR"
+          }, ["\u2192 Analyze This TAR"]);
+
+          detailsDiv.appendChild(analyzeBtn);
+
+          var caseCard = h("div", { className: "case-card" + (isFlagged ? " case-card--flagged" : ""), role: "listitem" }, [cardHeader, cardBody, detailsDiv]);
+
+          // Header click → toggle expand (but not when clicking flag button)
+          (function(header, card, bodyEl) {
+            header.addEventListener("click", function(e) {
+              if (e.target.closest(".flag-btn")) return;
+              card.classList.toggle("case-card--expanded");
+              // When expanded, hide collapsed MAF preview; when collapsed, show it
+              var mafPreview = bodyEl.querySelector(".maf-actions");
+              if (mafPreview) {
+                mafPreview.style.display = card.classList.contains("case-card--expanded") ? "none" : "";
+              }
+            });
+          })(cardHeader, caseCard, cardBody);
+
+          // Analyze button click handler
+          (function(btn, tarData) {
+            btn.addEventListener("click", function(e) {
+              e.stopPropagation();
+              var fullText = (tarData.subject || "").trim();
+              if (tarData.issue) fullText += "\n" + tarData.issue.trim();
+              dom.tarInput.value = fullText;
+              performSearch();
+              var diagSection = document.getElementById("diagnosisSection");
+              if (diagSection) {
+                setTimeout(function() {
+                  diagSection.scrollIntoView({ behavior: "smooth", block: "start" });
+                }, 100);
+              }
+            });
+          })(analyzeBtn, tar);
 
           // Flag button click handler
           (function(btn, card, caseJcn) {
-            btn.addEventListener("click", function() {
+            btn.addEventListener("click", function(e) {
+              e.stopPropagation();
               var allFlags = storage.get("tars_tarFlags") || {};
               allFlags[caseJcn] = { flagged: true, timestamp: new Date().toISOString() };
               storage.set("tars_tarFlags", allFlags);
@@ -3359,11 +3553,35 @@
       }
 
       function recFooter(nTars, mActions, elapsed) {
-        return h("div", { className: "rec-footer" }, [
-          "Generated by qwen2.5:32b \u00b7 " + nTars + " similar TAR" + (nTars !== 1 ? "s" : "") +
-          " \u00b7 " + mActions + " MAF action" + (mActions !== 1 ? "s" : "") +
-          " in context \u00b7 " + elapsed + "s"
-        ]);
+        var footer = h("div", { className: "rec-footer" });
+        footer.appendChild(document.createTextNode("Generated by qwen2.5:32b \u00b7 "));
+
+        var tarsLink = h("a", {
+          href: "#casesSection",
+          className: "rec-footer-link",
+          "aria-label": "Scroll to similar cases"
+        }, [nTars + " similar TAR" + (nTars !== 1 ? "s" : "")]);
+        tarsLink.addEventListener("click", function(e) {
+          e.preventDefault();
+          document.getElementById("casesSection").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        footer.appendChild(tarsLink);
+
+        footer.appendChild(document.createTextNode(" \u00b7 "));
+
+        var mafLink = h("a", {
+          href: "#casesSection",
+          className: "rec-footer-link",
+          "aria-label": "Scroll to MAF actions in similar cases"
+        }, [mActions + " MAF action" + (mActions !== 1 ? "s" : "")]);
+        mafLink.addEventListener("click", function(e) {
+          e.preventDefault();
+          document.getElementById("casesSection").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+        footer.appendChild(mafLink);
+
+        footer.appendChild(document.createTextNode(" in context \u00b7 " + elapsed + "s"));
+        return footer;
       }
 
       function renderStructuredRec(rec, nTars, mActions, elapsed) {

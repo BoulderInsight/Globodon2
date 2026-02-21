@@ -48,7 +48,7 @@ def search_tar(text: str, top_k: int = 10) -> SearchResponse:
                 inst_partno=m["inst_partno"],
                 rmvd_partno=m["rmvd_partno"],
             )
-            for m in maf_records[:5]  # limit per TAR
+            for m in maf_records
         ]
 
         # Collect part numbers
@@ -68,6 +68,11 @@ def search_tar(text: str, top_k: int = 10) -> SearchResponse:
             similarity=round(sim_score, 4),
             cluster_label=cluster_label,
             maf_actions=maf_actions,
+            buno=str(row.get("buno", "")).strip(),
+            activity=str(row.get("activity", "")).strip(),
+            submit_date=str(row.get("submit_date", "")).strip(),
+            status=str(row.get("status", "")).strip(),
+            priority=str(row.get("priority", "")).strip(),
         ))
 
     # 4. Majority vote for best-match cluster

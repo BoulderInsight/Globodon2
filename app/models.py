@@ -32,6 +32,11 @@ class SimilarTAR(BaseModel):
     similarity: float = 0.0
     cluster_label: str = ""
     maf_actions: list[MAFAction] = []
+    buno: str = ""
+    activity: str = ""
+    submit_date: str = ""
+    status: str = ""
+    priority: str = ""
 
 
 class MatchedCluster(BaseModel):
