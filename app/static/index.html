@@ -3278,22 +3278,12 @@
       /* ----------------------------------------------------------------
          RENDER TPDR CANDIDATES
          ---------------------------------------------------------------- */
-      function renderTPDRCandidates(recs) {
-        var container = tpdrDom.tpdrCandidatesResults;
-        while (container.firstChild) container.removeChild(container.firstChild);
+      // Persistent DOM refs so the threshold panel survives candidate re-renders
+      var _tpdrPersist = null;
 
-        if (!recs || recs.length === 0) {
-          container.appendChild(h("div", { className: "state-message" }, [
-            h("p", { className: "state-message__text" }, ["No TPDR candidates found."])
-          ]));
-          show(container);
-          return;
-        }
-
+      function _tpdrComputeLists(recs) {
         var workflowStates = getWorkflowStates();
         var thresholds = getThresholds();
-
-        // Separate candidates by workflow state
         var activeRecs = [];
         var deferredRecs = [];
         var filedRecs = [];
@@ -3311,64 +3301,127 @@
             activeRecs.push(rec);
           }
         }
-
-        // Filter active candidates by thresholds
         var filteredActive = activeRecs.filter(function(rec) {
           return passesThresholds(rec, thresholds);
         });
+        return {
+          workflowStates: workflowStates,
+          displayCount: displayCount,
+          activeRecs: activeRecs,
+          deferredRecs: deferredRecs,
+          filedRecs: filedRecs,
+          filteredActive: filteredActive
+        };
+      }
 
-        var totalCount = displayCount;
-        var filedCount = filedRecs.length;
-        var deferredCount = deferredRecs.length;
-        var activeCount = filteredActive.length;
+      function _tpdrRenderCards(recs) {
+        var p = _tpdrPersist;
+        var lists = _tpdrComputeLists(recs);
+        var cardsZone = p.cardsZone;
+        while (cardsZone.firstChild) cardsZone.removeChild(cardsZone.firstChild);
 
-        // --- Stats bar ---
-        var statsBar = h("div", { className: "tpdr-stats-bar" }, [
-          h("span", null, [String(totalCount)]),
-          " candidates",
-          h("span", { style: { marginLeft: "8px" } }, [String(filedCount)]),
-          " filed",
-          h("span", { style: { marginLeft: "8px" } }, [String(deferredCount)]),
-          " deferred",
-          h("span", { style: { marginLeft: "8px" } }, [String(activeCount)]),
-          " active"
-        ]);
-        container.appendChild(statsBar);
+        // Update stats bar counts
+        p.statsFiled.textContent = String(lists.filedRecs.length);
+        p.statsDeferred.textContent = String(lists.deferredRecs.length);
+        p.statsActive.textContent = String(lists.filteredActive.length);
 
-        // --- Threshold panel ---
-        container.appendChild(buildThresholdPanel(thresholds, activeRecs.length, filteredActive.length));
+        // Update threshold count text
+        p.countFiltered.textContent = String(lists.filteredActive.length);
+        p.countTotal.textContent = String(lists.activeRecs.length);
 
-        // --- Active candidates ---
-        if (filteredActive.length > 0) {
-          filteredActive.forEach(function(rec) {
-            container.appendChild(buildCandidateCard(rec, "active", workflowStates));
+        // Active candidates
+        if (lists.filteredActive.length > 0) {
+          lists.filteredActive.forEach(function(rec) {
+            cardsZone.appendChild(buildCandidateCard(rec, "active", lists.workflowStates));
           });
-        } else if (activeRecs.length > 0) {
-          container.appendChild(h("div", { className: "state-message", style: { padding: "16px 0" } }, [
+        } else if (lists.activeRecs.length > 0) {
+          cardsZone.appendChild(h("div", { className: "state-message", style: { padding: "16px 0" } }, [
             h("p", { className: "state-message__text" }, ["No active candidates match current thresholds."])
           ]));
         }
 
-        // --- Deferred section ---
-        if (deferredRecs.length > 0) {
-          container.appendChild(h("div", { className: "tpdr-section-header tpdr-section-header--deferred" }, [
-            "Deferred Candidates (" + deferredRecs.length + ")"
+        // Deferred section
+        if (lists.deferredRecs.length > 0) {
+          cardsZone.appendChild(h("div", { className: "tpdr-section-header tpdr-section-header--deferred" }, [
+            "Deferred Candidates (" + lists.deferredRecs.length + ")"
           ]));
-          deferredRecs.forEach(function(rec) {
-            container.appendChild(buildCandidateCard(rec, "deferred", workflowStates));
+          lists.deferredRecs.forEach(function(rec) {
+            cardsZone.appendChild(buildCandidateCard(rec, "deferred", lists.workflowStates));
           });
         }
 
-        // --- Filed section ---
-        if (filedRecs.length > 0) {
-          container.appendChild(h("div", { className: "tpdr-section-header tpdr-section-header--filed" }, [
-            "Filed TPDRs (" + filedRecs.length + ")"
+        // Filed section
+        if (lists.filedRecs.length > 0) {
+          cardsZone.appendChild(h("div", { className: "tpdr-section-header tpdr-section-header--filed" }, [
+            "Filed TPDRs (" + lists.filedRecs.length + ")"
           ]));
-          filedRecs.forEach(function(rec) {
-            container.appendChild(buildFiledCard(rec, workflowStates));
+          lists.filedRecs.forEach(function(rec) {
+            cardsZone.appendChild(buildFiledCard(rec, lists.workflowStates));
           });
         }
+      }
 
+      function renderTPDRCandidates(recs) {
+        var container = tpdrDom.tpdrCandidatesResults;
+
+        if (!recs || recs.length === 0) {
+          _tpdrPersist = null;
+          while (container.firstChild) container.removeChild(container.firstChild);
+          container.appendChild(h("div", { className: "state-message" }, [
+            h("p", { className: "state-message__text" }, ["No TPDR candidates found."])
+          ]));
+          show(container);
+          return;
+        }
+
+        // If panel already exists, just refresh the cards zone
+        if (_tpdrPersist) {
+          _tpdrRenderCards(recs);
+          show(container);
+          return;
+        }
+
+        // First render — build the full layout
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        var lists = _tpdrComputeLists(recs);
+
+        // Stats bar with updatable spans
+        var statsFiled = h("span", null, [String(lists.filedRecs.length)]);
+        var statsDeferred = h("span", null, [String(lists.deferredRecs.length)]);
+        var statsActive = h("span", null, [String(lists.filteredActive.length)]);
+        var statsBar = h("div", { className: "tpdr-stats-bar" }, [
+          h("span", null, [String(lists.displayCount)]),
+          " candidates",
+          h("span", { style: { marginLeft: "8px" } }, [statsFiled]),
+          " filed",
+          h("span", { style: { marginLeft: "8px" } }, [statsDeferred]),
+          " deferred",
+          h("span", { style: { marginLeft: "8px" } }, [statsActive]),
+          " active"
+        ]);
+        container.appendChild(statsBar);
+
+        // Cards zone (rebuilt on every filter change)
+        var cardsZone = h("div", null);
+
+        // Store persistent refs before buildThresholdPanel so it can wire up count spans
+        _tpdrPersist = {
+          cardsZone: cardsZone,
+          statsFiled: statsFiled,
+          statsDeferred: statsDeferred,
+          statsActive: statsActive,
+          countFiltered: null,
+          countTotal: null
+        };
+
+        // Threshold panel (built once, persisted)
+        var thresholds = getThresholds();
+        container.appendChild(buildThresholdPanel(thresholds, lists.activeRecs.length, lists.filteredActive.length));
+        container.appendChild(cardsZone);
+
+        // Render initial cards
+        _tpdrRenderCards(recs);
         show(container);
       }
 
@@ -3688,7 +3741,7 @@
               current[key] = val;
               setThresholds(current);
               updateSummary();
-              renderTPDRCandidates(tpdrData.recommendations);
+              _tpdrRenderCards(tpdrData.recommendations);
             });
           })(inp, f.key);
 
@@ -3709,7 +3762,7 @@
           current.recentWindow = parseInt(windowSelect.value, 10);
           setThresholds(current);
           updateSummary();
-          renderTPDRCandidates(tpdrData.recommendations);
+          _tpdrRenderCards(tpdrData.recommendations);
         });
         grid.appendChild(h("div", { className: "threshold-field" }, [
           h("label", null, ["Recent Window", makeTip("How far back to look when calculating monthly submission rate")]),
@@ -3720,12 +3773,13 @@
 
         // Activity / Unit multi-select
         var allActivities = tpdrData ? collectAllActivities(tpdrData.recommendations) : [];
+        var chipContainer = null;
         if (allActivities.length > 0) {
           var selActs = getSelectedActivities() || [];
 
           panelContent.appendChild(h("div", { className: "threshold-multiselect-label" }, ["Filter by Activity / Unit"]));
 
-          var chipContainer = h("div", { className: "threshold-multiselect" });
+          chipContainer = h("div", { className: "threshold-multiselect" });
 
           allActivities.forEach(function(act) {
             var isActive = selActs.indexOf(act) !== -1;
@@ -3736,6 +3790,7 @@
 
             (function(activity, chipEl) {
               chipEl.addEventListener("click", function() {
+                chipEl.classList.toggle("threshold-chip--active");
                 var current = getSelectedActivities() || [];
                 var idx = current.indexOf(activity);
                 if (idx !== -1) {
@@ -3744,7 +3799,7 @@
                   current.push(activity);
                 }
                 setSelectedActivities(current.length > 0 ? current : null);
-                renderTPDRCandidates(tpdrData.recommendations);
+                _tpdrRenderCards(tpdrData.recommendations);
               });
             })(act, chip);
 
@@ -3758,19 +3813,29 @@
 
           selectAllBtn.addEventListener("click", function() {
             setSelectedActivities(allActivities.slice());
-            renderTPDRCandidates(tpdrData.recommendations);
+            syncChipVisuals(chipContainer, allActivities);
+            _tpdrRenderCards(tpdrData.recommendations);
           });
           clearAllBtn.addEventListener("click", function() {
             setSelectedActivities(null);
-            renderTPDRCandidates(tpdrData.recommendations);
+            syncChipVisuals(chipContainer, null);
+            _tpdrRenderCards(tpdrData.recommendations);
           });
 
           panelContent.appendChild(h("div", { className: "threshold-multiselect-actions" }, [selectAllBtn, clearAllBtn]));
         }
 
+        var countFiltered = h("span", null, [String(filteredCount)]);
+        var countTotal = h("span", null, [String(totalActive)]);
         var countText = h("div", { className: "threshold-count" }, [
-          "Showing ", h("span", null, [String(filteredCount)]), " of ", h("span", null, [String(totalActive)]), " active candidates matching thresholds"
+          "Showing ", countFiltered, " of ", countTotal, " active candidates matching thresholds"
         ]);
+
+        // Store count refs so _tpdrRenderCards can update them
+        if (_tpdrPersist) {
+          _tpdrPersist.countFiltered = countFiltered;
+          _tpdrPersist.countTotal = countTotal;
+        }
 
         var resetBtn = h("button", {
           type: "button",
@@ -3779,9 +3844,19 @@
         }, ["Reset to Defaults"]);
 
         resetBtn.addEventListener("click", function() {
-          setThresholds(Object.assign({}, TPDR_THRESHOLD_DEFAULTS));
+          var defaults = Object.assign({}, TPDR_THRESHOLD_DEFAULTS);
+          setThresholds(defaults);
           setSelectedActivities(null);
-          renderTPDRCandidates(tpdrData.recommendations);
+          // Reset input values in place
+          Object.keys(inputs).forEach(function(key) {
+            inputs[key].value = String(defaults[key]);
+          });
+          // Reset window select
+          windowSelect.value = String(defaults.recentWindow);
+          // Reset chip visuals
+          if (chipContainer) syncChipVisuals(chipContainer, null);
+          updateSummary();
+          _tpdrRenderCards(tpdrData.recommendations);
         });
 
         var actions = h("div", { className: "threshold-actions" }, [countText, resetBtn]);
@@ -3789,6 +3864,17 @@
 
         var panel = h("div", { className: "threshold-panel" }, [toggleBtn, panelContent]);
         return panel;
+      }
+
+      function syncChipVisuals(container, activeList) {
+        var chips = container.children;
+        for (var i = 0; i < chips.length; i++) {
+          if (activeList && activeList.indexOf(chips[i].textContent) !== -1) {
+            chips[i].classList.add("threshold-chip--active");
+          } else {
+            chips[i].classList.remove("threshold-chip--active");
+          }
+        }
       }
 
       /* ----------------------------------------------------------------
@@ -4282,6 +4368,7 @@
       if (tpdrDom.tpdrRefreshBtn) {
         tpdrDom.tpdrRefreshBtn.addEventListener("click", function() {
           tpdrLoaded = false;
+          _tpdrPersist = null;
           loadTPDRData();
         });
       }
