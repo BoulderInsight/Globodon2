@@ -6,4 +6,4 @@ maf.csv
 .cache/
 
 # Analysis output
-analysis_results.json
+# analysis_results.json
