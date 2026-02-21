@@ -1,0 +1,82 @@
+{
+  "overall_silhouette_score": 0.0955,
+  "sample_size": 5000,
+  "clusters": [
+    {
+      "cluster_id": 0,
+      "name": "FADEC System Malfunction Troubleshooting",
+      "size": 2213,
+      "silhouette_score": -0.0148,
+      "quality": "POOR"
+    },
+    {
+      "cluster_id": 1,
+      "name": "Composite and Metal Structural Damage Repair Requests",
+      "size": 2154,
+      "silhouette_score": 0.1344,
+      "quality": "WEAK"
+    },
+    {
+      "cluster_id": 2,
+      "name": "Component Failures and Intermitent Faults",
+      "size": 2131,
+      "silhouette_score": 0.0296,
+      "quality": "WEAK"
+    },
+    {
+      "cluster_id": 3,
+      "name": "Test Equipment and Procedure Requests Failure",
+      "size": 1821,
+      "silhouette_score": -0.0178,
+      "quality": "POOR"
+    },
+    {
+      "cluster_id": 4,
+      "name": "Aircraft Component Failure and Maintenance Requests",
+      "size": 1594,
+      "silhouette_score": 0.0748,
+      "quality": "WEAK"
+    },
+    {
+      "cluster_id": 5,
+      "name": "Maintenance and Repair Procedures Requests",
+      "size": 1411,
+      "silhouette_score": 0.0055,
+      "quality": "WEAK"
+    },
+    {
+      "cluster_id": 6,
+      "name": "Sealing and Structural Integrity Issues",
+      "size": 1339,
+      "silhouette_score": 0.4351,
+      "quality": "MODERATE"
+    },
+    {
+      "cluster_id": 7,
+      "name": "Water Intrusion and Corrosion Prevention Procedures",
+      "size": 927,
+      "silhouette_score": 0.0015,
+      "quality": "WEAK"
+    },
+    {
+      "cluster_id": 8,
+      "name": "Proprotor Gearbox Debris Detection Issues",
+      "size": 726,
+      "silhouette_score": 0.2826,
+      "quality": "MODERATE"
+    },
+    {
+      "cluster_id": 9,
+      "name": "PCA Ball Screw Wear Test Failure",
+      "size": 609,
+      "silhouette_score": 0.3417,
+      "quality": "MODERATE"
+    }
+  ],
+  "interpretation": {
+    "strong": "Score >= 0.50: TARs in this cluster are clearly distinct from other clusters",
+    "moderate": "Score 0.25-0.50: TARs generally fit but some overlap with neighboring clusters",
+    "weak": "Score 0.00-0.25: Significant overlap with other clusters, boundary is fuzzy",
+    "poor": "Score < 0.00: TARs are closer to a different cluster than their assigned one"
+  }
+}

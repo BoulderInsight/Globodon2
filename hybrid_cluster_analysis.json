@@ -1,0 +1,785 @@
+{
+  "flat_kmeans_score": 0.0955,
+  "uns_only_score": -0.2247,
+  "hybrid_score": -0.1631,
+  "total_uns_groups": 305,
+  "total_hybrid_clusters": 342,
+  "uns_distribution": {
+    "large_50plus": {
+      "groups": 64,
+      "tars": 11832
+    },
+    "medium_20_49": {
+      "groups": 56,
+      "tars": 1771
+    },
+    "small_5_19": {
+      "groups": 111,
+      "tars": 1145
+    },
+    "tiny_under_5": {
+      "groups": 74,
+      "tars": 177
+    }
+  },
+  "per_uns_scores": [
+    {
+      "uns": "6321 PROPROTOR GEARBOX ASSEMBLY LH",
+      "size": 742,
+      "score": -0.2102,
+      "quality": "POOR"
+    },
+    {
+      "uns": "2420 AC POWER SYSTEM",
+      "size": 729,
+      "score": -0.1666,
+      "quality": "POOR"
+    },
+    {
+      "uns": "6322 PROPROTOR GEARBOX ASSEMBLY RH",
+      "size": 703,
+      "score": -0.2269,
+      "quality": "POOR"
+    },
+    {
+      "uns": "4270 WIRE INTEGRATION ASSEMBLY",
+      "size": 662,
+      "score": -0.069,
+      "quality": "POOR"
+    },
+    {
+      "uns": "3350 EMERGENCY LIGHTING",
+      "size": 563,
+      "score": -0.2123,
+      "quality": "POOR"
+    },
+    {
+      "uns": "7200 ENGINE",
+      "size": 406,
+      "score": -0.2297,
+      "quality": "POOR"
+    },
+    {
+      "uns": "4351 AN/AIC-XX INTERCOM SET",
+      "size": 384,
+      "score": -0.1572,
+      "quality": "POOR"
+    },
+    {
+      "uns": "2750 FLIGHT CONTROL ACTUATION",
+      "size": 376,
+      "score": -0.2683,
+      "quality": "POOR"
+    },
+    {
+      "uns": "4630 DISPLAY",
+      "size": 375,
+      "score": -0.1916,
+      "quality": "POOR"
+    },
+    {
+      "uns": "0005 INSPECTION",
+      "size": 294,
+      "score": -0.1877,
+      "quality": "POOR"
+    },
+    {
+      "uns": "6221 PROPROTOR HUB INSTALLATION LH",
+      "size": 288,
+      "score": -0.3643,
+      "quality": "POOR"
+    },
+    {
+      "uns": "3340 EXTERNAL LIGHTING",
+      "size": 286,
+      "score": -0.252,
+      "quality": "POOR"
+    },
+    {
+      "uns": "6222 PROPROTOR HUB SUBSYSTEM RH",
+      "size": 279,
+      "score": -0.3368,
+      "quality": "POOR"
+    },
+    {
+      "uns": "275021 CONVERSION ACUTATION (LEFT)",
+      "size": 262,
+      "score": -0.1867,
+      "quality": "POOR"
+    },
+    {
+      "uns": "7851 LEFT INFRARED SUPPRESSOR/EXHAUST DEFLECTOR",
+      "size": 256,
+      "score": -0.3079,
+      "quality": "POOR"
+    },
+    {
+      "uns": "6200 PROP ROTOR SYSTEM",
+      "size": 248,
+      "score": -0.2961,
+      "quality": "POOR"
+    },
+    {
+      "uns": "6251 LEFT SPINNER",
+      "size": 212,
+      "score": -0.2962,
+      "quality": "POOR"
+    },
+    {
+      "uns": "5412 NACELLE STRUCTURE RH",
+      "size": 208,
+      "score": -0.2692,
+      "quality": "POOR"
+    },
+    {
+      "uns": "0004 PRESERVATION",
+      "size": 202,
+      "score": -0.0525,
+      "quality": "POOR"
+    },
+    {
+      "uns": "5411 NACELLE STRUCTURE LH",
+      "size": 196,
+      "score": -0.2565,
+      "quality": "POOR"
+    },
+    {
+      "uns": "6252 RIGHT SPINNER",
+      "size": 183,
+      "score": -0.3172,
+      "quality": "POOR"
+    },
+    {
+      "uns": "7852 RIGHT INFRARED SUPPRESSOR/EXHAUST DEFLECTOR",
+      "size": 181,
+      "score": -0.3328,
+      "quality": "POOR"
+    },
+    {
+      "uns": "00 MV TECH PUBS SUPPORT",
+      "size": 180,
+      "score": -0.3018,
+      "quality": "POOR"
+    },
+    {
+      "uns": "275020 CONVERSION ACUTATION (RIGHT)",
+      "size": 179,
+      "score": -0.1916,
+      "quality": "POOR"
+    },
+    {
+      "uns": "2712 THRUST/POWER CONTROLS",
+      "size": 168,
+      "score": -0.196,
+      "quality": "POOR"
+    },
+    {
+      "uns": "5422 NACELLE COWLING RH",
+      "size": 161,
+      "score": -0.3243,
+      "quality": "POOR"
+    },
+    {
+      "uns": "5421 NACELLE COWLING LH",
+      "size": 156,
+      "score": -0.3406,
+      "quality": "POOR"
+    },
+    {
+      "uns": "6211 PROPROTOR BLADE ASSEMBLY LH",
+      "size": 156,
+      "score": -0.3056,
+      "quality": "POOR"
+    },
+    {
+      "uns": "4200 WIRING SYSTEMS",
+      "size": 154,
+      "score": -0.3146,
+      "quality": "POOR"
+    },
+    {
+      "uns": "6212 PROPROTOR BLADE ASSEMBLY RH",
+      "size": 130,
+      "score": -0.3312,
+      "quality": "POOR"
+    }
+  ],
+  "hybrid_sub_clusters": [
+    {
+      "uns": "6321 PROPROTOR GEARBOX ASSEMBLY LH",
+      "size": 742,
+      "sub_clusters": 2,
+      "sub_sil": 0.2147,
+      "sub_details": [
+        {
+          "count": 295,
+          "sample_subjects": [
+            "Documentation of LH PRGB and Input Quill Replacement IAW ERAC 1570",
+            "LH Input Quill Replacement",
+            "LH INPUT QUILL REPLACEMENT"
+          ]
+        },
+        {
+          "count": 447,
+          "sample_subjects": [
+            "AFB-200-REV A LH PRGB Debris 168340",
+            "AFB-200 Rev A. Initial Inspection and Post Ground Turn, LH PRGB",
+            "AFB- 200 Rev A 166734 LH"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "2420 AC POWER SYSTEM",
+      "size": 729,
+      "sub_clusters": 3,
+      "sub_sil": 0.2289,
+      "sub_details": [
+        {
+          "count": 493,
+          "sample_subjects": [
+            "VFG (2060015-00392)",
+            "VFG (2060015-00589)",
+            "VFG (2060015-00566)"
+          ]
+        },
+        {
+          "count": 91,
+          "sample_subjects": [
+            "CFG #2 Fail",
+            "VFG Crosstie Failure",
+            "Gen NO.1 F(P)"
+          ]
+        },
+        {
+          "count": 145,
+          "sample_subjects": [
+            "VFG (00073)",
+            "CFG 0213",
+            "VFG (403) 00904"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "6322 PROPROTOR GEARBOX ASSEMBLY RH",
+      "size": 703,
+      "sub_clusters": 2,
+      "sub_sil": 0.2261,
+      "sub_details": [
+        {
+          "count": 414,
+          "sample_subjects": [
+            "RH PRGB Initial Submission for AFB-200",
+            "AFB-200 Rev A. Initial Inspection and Post Ground Turn, RH PRGB",
+            "AFB- 200 Rev A 166734 RH"
+          ]
+        },
+        {
+          "count": 289,
+          "sample_subjects": [
+            "RH Input Quill Replaced",
+            "RH IQA Replacement",
+            "IQA Replacement"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "4270 WIRE INTEGRATION ASSEMBLY",
+      "size": 662,
+      "sub_clusters": 2,
+      "sub_sil": 0.2451,
+      "sub_details": [
+        {
+          "count": 189,
+          "sample_subjects": [
+            "WIA-56 (LH000067)",
+            "WIA 56",
+            "WIA 57"
+          ]
+        },
+        {
+          "count": 473,
+          "sample_subjects": [
+            "WIA 56 (DT101)",
+            "WIA 57 (0025)",
+            "WIA 57"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "3350 EMERGENCY LIGHTING",
+      "size": 563,
+      "sub_clusters": 2,
+      "sub_sil": 0.229,
+      "sub_details": [
+        {
+          "count": 150,
+          "sample_subjects": [
+            "EELS CONTROL BOX",
+            "EELS BOX S/N 1340",
+            "EELS BOX S/N 1336"
+          ]
+        },
+        {
+          "count": 413,
+          "sample_subjects": [
+            "EELS (0398)",
+            "EELS (0772)",
+            "EELS (0502)"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "7200 ENGINE",
+      "size": 406,
+      "sub_clusters": 4,
+      "sub_sil": 0.2035,
+      "sub_details": [
+        {
+          "count": 127,
+          "sample_subjects": [
+            "LH Engine Low EPP/Degradation",
+            "L/H ENG COMP SURGE STALL EVENT",
+            "LH Engine Compressor Stall"
+          ]
+        },
+        {
+          "count": 116,
+          "sample_subjects": [
+            "70 HR ENGINE WASHES",
+            "70 HOUR ENGINE WASH",
+            "70 HR ENGINE WASHES"
+          ]
+        },
+        {
+          "count": 78,
+          "sample_subjects": [
+            "LH Engine Component corrosion",
+            "RH Engine Component corrosion",
+            "Right hand engine 12 o'clock engine inlet guide vane corrosion"
+          ]
+        },
+        {
+          "count": 85,
+          "sample_subjects": [
+            "RH ENGINE P2 SENSOR HAS MODERATE SURFACE CORROSION",
+            "LH ENGINE P2 SENSOR HAS MODERATE SURFACE CORROSION",
+            "LEFT ENGINE HARDWARE BROKEN ON REAR BEARING ACCESS PLATE (TRASH CAN LID)"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "4351 AN/AIC-XX INTERCOM SET",
+      "size": 384,
+      "sub_clusters": 2,
+      "sub_sil": 0.3678,
+      "sub_details": [
+        {
+          "count": 204,
+          "sample_subjects": [
+            "ISC Water Intrusion",
+            "ISC Water Intrusion",
+            "ISC Water Intrusion"
+          ]
+        },
+        {
+          "count": 180,
+          "sample_subjects": [
+            "ICS BOX SEALANT",
+            "ICS BOX SEALANT",
+            "ICS BOX SEALANT"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "2750 FLIGHT CONTROL ACTUATION",
+      "size": 376,
+      "sub_clusters": 3,
+      "sub_sil": 0.2059,
+      "sub_details": [
+        {
+          "count": 94,
+          "sample_subjects": [
+            "RH SPA OVERTILT",
+            "CONVERSION ASYMMETRY BALL SCREW FAIL",
+            "LH/RH FAIL 70 HR PCA BALLSCREW WEAR TEST"
+          ]
+        },
+        {
+          "count": 122,
+          "sample_subjects": [
+            "RH PCA BALLSCREW F(T)",
+            "LH PCA BALL SCREW F(T)",
+            "LH PCA BALL SCREW FAILS 70 HR BALL SCREW WEAR TEST"
+          ]
+        },
+        {
+          "count": 160,
+          "sample_subjects": [
+            "Right Hand SPA Center Mount Bolt Uninstalled",
+            "SPA soft retract procedures (Off aircraft)",
+            "RH Swashplate Overtilt"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "4630 DISPLAY",
+      "size": 375,
+      "sub_clusters": 6,
+      "sub_sil": 0.3563,
+      "sub_details": [
+        {
+          "count": 74,
+          "sample_subjects": [
+            "CDU A4",
+            "CDU A4",
+            "CDU CCA A2 Pre Op Card Scan"
+          ]
+        },
+        {
+          "count": 52,
+          "sample_subjects": [
+            "CDU PRE CHECKS",
+            "CDU PRE CHECKS",
+            "CDU PRECHECKS"
+          ]
+        },
+        {
+          "count": 116,
+          "sample_subjects": [
+            "CDU PRE-CHECKS",
+            "CDU A2 Pre-checks",
+            "CDU A2 pre-checks"
+          ]
+        },
+        {
+          "count": 54,
+          "sample_subjects": [
+            "CDU Thermistor",
+            "CDU Thermistor",
+            "CDU Backlight Thermistor"
+          ]
+        },
+        {
+          "count": 56,
+          "sample_subjects": [
+            "CDU PRECHECK",
+            "CDU",
+            "CDU PRE CHECKS"
+          ]
+        },
+        {
+          "count": 23,
+          "sample_subjects": [
+            "ARAT CDU Repair",
+            "ARAT CDU Repair",
+            "ARAT CDU Repair"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "0005 INSPECTION",
+      "size": 294,
+      "sub_clusters": 6,
+      "sub_sil": 0.293,
+      "sub_details": [
+        {
+          "count": 37,
+          "sample_subjects": [
+            "PMI Prep",
+            "PMI PREP",
+            "PMI Prep"
+          ]
+        },
+        {
+          "count": 56,
+          "sample_subjects": [
+            "Aircraft Hoist Point Inspection",
+            "Aircraft Hoist Point Inspection",
+            "Aircraft Hoist Point Inspection"
+          ]
+        },
+        {
+          "count": 20,
+          "sample_subjects": [
+            "Canted Deck Austere Cleaning Test Plan",
+            "Canted Deck Austere Cleaning Test Plan",
+            "Canted Deck Austere Cleaning Test Plan"
+          ]
+        },
+        {
+          "count": 51,
+          "sample_subjects": [
+            "182/ 364 Day Inspection Deferrals",
+            "182/ 364 Day Inspection Deferrals",
+            "Request Maintenance Deferral for 56 day aircraft inspection"
+          ]
+        },
+        {
+          "count": 94,
+          "sample_subjects": [
+            "Phase A Sequence Control Card",
+            "70 Flight Hour Inspection Nacelle Improvement",
+            "PHASE A SEQUENCE CONTROL CARD"
+          ]
+        },
+        {
+          "count": 36,
+          "sample_subjects": [
+            "RH TAGB COUPLING",
+            "REQUESTING REPAIR PROCEDURES",
+            "REQUESTING REPAIR PROCEDURES FOR MOUNT ASSEY"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "6221 PROPROTOR HUB INSTALLATION LH",
+      "size": 288,
+      "sub_clusters": 2,
+      "sub_sil": 0.2632,
+      "sub_details": [
+        {
+          "count": 110,
+          "sample_subjects": [
+            "Click Studs",
+            "YOKE DAMAGE",
+            "Pendulum Dampner Weight FC1NVG3"
+          ]
+        },
+        {
+          "count": 178,
+          "sample_subjects": [
+            "Upper Blade Fairing SN: A-844",
+            "Upper Blade Fairing SN: A-844",
+            "LH Lower Center Grip Fairings Worn"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "3340 EXTERNAL LIGHTING",
+      "size": 286,
+      "sub_clusters": 2,
+      "sub_sil": 0.2514,
+      "sub_details": [
+        {
+          "count": 191,
+          "sample_subjects": [
+            "SEARCHLIGHT 101230",
+            "POSITION LIGHT (001)",
+            "SEARCHLIGHT(D72452)"
+          ]
+        },
+        {
+          "count": 95,
+          "sample_subjects": [
+            "SEARCHLIGHT 101417",
+            "Position light",
+            "FUEL PROBE LIGHT (0119)"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "6222 PROPROTOR HUB SUBSYSTEM RH",
+      "size": 279,
+      "sub_clusters": 2,
+      "sub_sil": 0.2293,
+      "sub_details": [
+        {
+          "count": 190,
+          "sample_subjects": [
+            "RH Hub Yoke Delamination",
+            "Sudden Stoppage Findings RH Hub A-385",
+            "Spindle Lock Pin (901-011-180-103)"
+          ]
+        },
+        {
+          "count": 89,
+          "sample_subjects": [
+            "FAIRING",
+            "RH GRN LEADING EDGE BLADE FAIRING DEICE DISBONDED",
+            "YOKE CLICK STUDS"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "275021 CONVERSION ACUTATION (LEFT)",
+      "size": 262,
+      "sub_clusters": 2,
+      "sub_sil": 0.2618,
+      "sub_details": [
+        {
+          "count": 92,
+          "sample_subjects": [
+            "LH BALLSCREW F(T) UPON 70 HR BALLSCREW WEAR TEST",
+            "PCA BALL SCREW WEAR TEST (LH)",
+            "LEFT BALLSCREW WEAR TEST FAIL"
+          ]
+        },
+        {
+          "count": 170,
+          "sample_subjects": [
+            "LH PCA 70HR Ballscrew Wear Test",
+            "LH PCA failed 70 hr.",
+            "PCA Wear Test Fail"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "7851 LEFT INFRARED SUPPRESSOR/EXHAUST DEFLECTOR",
+      "size": 256,
+      "sub_clusters": 2,
+      "sub_sil": 0.3549,
+      "sub_details": [
+        {
+          "count": 88,
+          "sample_subjects": [
+            "TRAILING ASSY GH1PD9M",
+            "AFT NACELLE",
+            "AFT NACELLE"
+          ]
+        },
+        {
+          "count": 168,
+          "sample_subjects": [
+            "LH AFT Nacelle Composite Baffle Plate",
+            "Fan Air Baffle",
+            "Left Aft Nacelle Assembly"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "6200 PROP ROTOR SYSTEM",
+      "size": 248,
+      "sub_clusters": 2,
+      "sub_sil": 0.1962,
+      "sub_details": [
+        {
+          "count": 84,
+          "sample_subjects": [
+            "RH Long Vib Trend Amp Exceedance",
+            "RH ROTOR Longitudinal Vibration Trend Amp Exceedance",
+            "LEADING EDGE FAIRING MCN: 4HJPBNC"
+          ]
+        },
+        {
+          "count": 164,
+          "sample_subjects": [
+            "Spinner Panel Stiffener Rivets Missdrilled",
+            "Rotor Spinning with LH GRN Pitch Link Bottom Bolt Not Installed",
+            "Rotor Spinning with LH GRN Pitch Link Bottom Bolt Not Installed"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "6251 LEFT SPINNER",
+      "size": 212,
+      "sub_clusters": 2,
+      "sub_sil": 0.3428,
+      "sub_details": [
+        {
+          "count": 120,
+          "sample_subjects": [
+            "FC1Q1DS SPINNER FAIRING",
+            "FC1MM1Q, SPINNER FAIRING",
+            "FC1JL0J SPINNER FAIRING"
+          ]
+        },
+        {
+          "count": 92,
+          "sample_subjects": [
+            "LH WHITE SPINNER FAIRING",
+            "RH WHITE SPINNER FAIRING",
+            "Spinner Panel GH1SYN7"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "5412 NACELLE STRUCTURE RH",
+      "size": 208,
+      "sub_clusters": 2,
+      "sub_sil": 0.268,
+      "sub_details": [
+        {
+          "count": 38,
+          "sample_subjects": [
+            "FC1Q5HK RH AFT BAFFLE PANEL ASSY",
+            "6RI7B FRAME",
+            "RH NACELLE NOSE AND 6RO1B DAMAMGE"
+          ]
+        },
+        {
+          "count": 170,
+          "sample_subjects": [
+            "RH Lower Inbrd Longeron STA 400/440 - Upper Inbrd Longeron STA 440",
+            "FS 440 Firewall and INBD Longeron",
+            "Right Lower Inboard Longeron Assembly 400.00 - 440.00"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "0004 PRESERVATION",
+      "size": 202,
+      "sub_clusters": 2,
+      "sub_sil": 0.2573,
+      "sub_details": [
+        {
+          "count": 155,
+          "sample_subjects": [
+            "Level 2 Modified Preservation Request",
+            "PRESERVATION PROCEDURES",
+            "Level II Preservation"
+          ]
+        },
+        {
+          "count": 47,
+          "sample_subjects": [
+            "Preservation",
+            "Preservation",
+            "Preservation"
+          ]
+        }
+      ]
+    },
+    {
+      "uns": "5411 NACELLE STRUCTURE LH",
+      "size": 196,
+      "sub_clusters": 2,
+      "sub_sil": 0.2465,
+      "sub_details": [
+        {
+          "count": 155,
+          "sample_subjects": [
+            "Left Inboard Nacelle",
+            "Left Inboard Nacelle FS 440 Firewall repair",
+            "Left Nacelle Aft Diagonal Brace Attach Fitting Oversize Holes"
+          ]
+        },
+        {
+          "count": 41,
+          "sample_subjects": [
+            "LH FWD DIAGONAL BRACE LOWER ROD END MOUNT",
+            "W966 RIBBON WIRING HARNESS",
+            "BAFFLE"
+          ]
+        }
+      ]
+    }
+  ]
+}
