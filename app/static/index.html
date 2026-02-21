@@ -1560,6 +1560,68 @@
         font-size: 0.75rem;
       }
     }
+
+    /* ===================================================================
+       EXTRACTED SOLUTIONS TABLE (Fleet Analytics)
+       =================================================================== */
+    .extracted-solutions-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+    }
+
+    .extracted-solutions-table th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.6875rem;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .extracted-solutions-table td {
+      padding: 5px 8px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* ===================================================================
+       FLAG BUTTON (TAR Lookup)
+       =================================================================== */
+    .flag-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-size: 0.6875rem;
+      font-family: var(--font-sans);
+      padding: 3px 8px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+    .flag-btn:hover {
+      color: var(--accent-amber);
+      border-color: rgba(251, 191, 36, 0.3);
+      background: rgba(251, 191, 36, 0.08);
+    }
+    .flag-btn--flagged {
+      color: var(--text-muted);
+      opacity: 0.6;
+      cursor: default;
+      pointer-events: none;
+    }
+    .case-card--flagged {
+      opacity: 0.5;
+    }
+    .flag-counter {
+      font-size: 0.75rem;
+      color: var(--accent-amber);
+      font-family: var(--font-mono);
+      margin-left: 8px;
+    }
   </style>
 </head>
 <body>
@@ -1919,6 +1981,23 @@
       var searchText = "";
       var showAllCases = false;
       var INITIAL_CASES_SHOWN = 3;
+
+      // localStorage helper with fallback
+      var storage = (function() {
+        var mem = {};
+        var ls = null;
+        try { ls = window.localStorage; ls.setItem('_test', '1'); ls.removeItem('_test'); } catch(e) { ls = null; }
+        return {
+          get: function(key) {
+            if (ls) { try { var v = ls.getItem(key); return v ? JSON.parse(v) : null; } catch(e) { return mem[key] || null; } }
+            return mem[key] || null;
+          },
+          set: function(key, val) {
+            if (ls) { try { ls.setItem(key, JSON.stringify(val)); } catch(e) { mem[key] = val; } }
+            else { mem[key] = val; }
+          }
+        };
+      })();
 
       /* ----------------------------------------------------------------
          DOM REFERENCES
@@ -2397,6 +2476,23 @@
       /* ----------------------------------------------------------------
          RENDER: SIMILAR CASES (DOM-based)
          ---------------------------------------------------------------- */
+      function getFlagCount() {
+        var flags = storage.get("tars_tarFlags") || {};
+        return Object.keys(flags).length;
+      }
+
+      function updateFlagCounter() {
+        var counterEl = document.getElementById("flagCounter");
+        if (!counterEl) return;
+        var count = getFlagCount();
+        if (count > 0) {
+          counterEl.textContent = count + " correction" + (count !== 1 ? "s" : "") + " submitted";
+          show(counterEl);
+        } else {
+          hide(counterEl);
+        }
+      }
+
       function renderSimilarCases(cases) {
         hide(dom.casesEmpty);
 
@@ -2410,6 +2506,14 @@
           dom.casesResults.removeChild(dom.casesResults.firstChild);
         }
 
+        // Flag counter (create once, reuse on re-renders)
+        if (!document.getElementById("flagCounter")) {
+          var flagCounter = h("span", { id: "flagCounter", className: "flag-counter hidden" });
+          dom.casesCount.parentNode.appendChild(flagCounter);
+        }
+        updateFlagCounter();
+
+        var flags = storage.get("tars_tarFlags") || {};
         var visibleCount = showAllCases ? cases.length : Math.min(INITIAL_CASES_SHOWN, cases.length);
 
         var list = h("div", { className: "cases-list", role: "list" });
@@ -2418,21 +2522,33 @@
           var tar = cases[i];
           var simPct = Math.round(tar.similarity * 100);
           var badgeClass = similarityBadgeClass(tar.similarity);
+          var jcn = tar.jcn || "N/A";
+          var isFlagged = !!(flags[jcn] && flags[jcn].flagged);
 
           // Header left
           var headerLeftChildren = [
             h("span", { className: "similarity-badge " + badgeClass, "aria-label": simPct + "% match" }, [simPct + "% match"]),
-            h("span", { className: "case-jcn" }, ["JCN: " + (tar.jcn || "N/A")])
+            h("span", { className: "case-jcn" }, ["JCN: " + jcn])
           ];
           var headerLeft = h("div", { className: "case-card__header-left" }, headerLeftChildren);
 
-          var headerRight = null;
+          // Header right: cluster label + flag button
+          var headerRightChildren = [];
           if (tar.cluster_label) {
-            headerRight = h("span", { className: "case-cluster-label" }, [tar.cluster_label]);
+            headerRightChildren.push(h("span", { className: "case-cluster-label" }, [tar.cluster_label]));
           }
 
-          var headerChildren = [headerLeft];
-          if (headerRight) headerChildren.push(headerRight);
+          var flagBtn = h("button", {
+            type: "button",
+            className: "flag-btn" + (isFlagged ? " flag-btn--flagged" : ""),
+            "aria-label": isFlagged ? "Flagged as not related" : "Flag as not related"
+          }, [isFlagged ? "Flagged \u2713" : "Not Related"]);
+
+          headerRightChildren.push(flagBtn);
+
+          var headerRight = h("div", { style: { display: "flex", alignItems: "center", gap: "8px" } }, headerRightChildren);
+
+          var headerChildren = [headerLeft, headerRight];
           var cardHeader = h("div", { className: "case-card__header" }, headerChildren);
 
           // Body
@@ -2477,9 +2593,23 @@
 
           var cardBody = h("div", { className: "case-card__body" }, bodyChildren);
 
-          list.appendChild(
-            h("div", { className: "case-card", role: "listitem" }, [cardHeader, cardBody])
-          );
+          var caseCard = h("div", { className: "case-card" + (isFlagged ? " case-card--flagged" : ""), role: "listitem" }, [cardHeader, cardBody]);
+
+          // Flag button click handler
+          (function(btn, card, caseJcn) {
+            btn.addEventListener("click", function() {
+              var allFlags = storage.get("tars_tarFlags") || {};
+              allFlags[caseJcn] = { flagged: true, timestamp: new Date().toISOString() };
+              storage.set("tars_tarFlags", allFlags);
+              btn.textContent = "Flagged \u2713";
+              btn.classList.add("flag-btn--flagged");
+              btn.setAttribute("aria-label", "Flagged as not related");
+              card.classList.add("case-card--flagged");
+              updateFlagCounter();
+            });
+          })(flagBtn, caseCard, jcn);
+
+          list.appendChild(caseCard);
         }
 
         dom.casesResults.appendChild(list);
@@ -3178,6 +3308,44 @@
 
         grid.appendChild(rightCol);
         container.appendChild(grid);
+
+        // Extracted Solutions section
+        if (cluster.solutions_extracted && cluster.solutions_extracted.length > 0) {
+          var solSection = h("div", { className: "fleet-detail__section", style: { marginTop: "16px" } }, [
+            h("div", { className: "fleet-detail__section-title" }, ["Extracted Solutions"])
+          ]);
+
+          var solTable = h("table", { className: "extracted-solutions-table" });
+          solTable.appendChild(h("thead", null, [
+            h("tr", null, [
+              h("th", null, ["Action"]),
+              h("th", null, ["Component"]),
+              h("th", null, ["Reference"])
+            ])
+          ]));
+
+          var solTbody = h("tbody");
+          var solLimit = Math.min(10, cluster.solutions_extracted.length);
+          for (var si = 0; si < solLimit; si++) {
+            var sol = cluster.solutions_extracted[si];
+            var actionText = sol.action || "";
+            var actionUpper = actionText.toUpperCase();
+            var actionColor = "var(--bar-other)";
+            if (actionUpper.indexOf("REPLACE") === 0) actionColor = "var(--bar-replace)";
+            else if (actionUpper.indexOf("INSPECT") === 0) actionColor = "var(--bar-inspect)";
+            else if (actionUpper.indexOf("ADJUST") === 0) actionColor = "var(--bar-adjust)";
+            else if (actionUpper.indexOf("REPAIR") === 0) actionColor = "var(--bar-repair)";
+
+            solTbody.appendChild(h("tr", null, [
+              h("td", { style: { color: actionColor, fontWeight: "600" } }, [actionText]),
+              h("td", null, [sol.component || ""]),
+              h("td", { style: { fontFamily: "var(--font-mono)", color: "var(--accent-cyan)", fontSize: "0.75rem" } }, [sol.reference || ""])
+            ]));
+          }
+          solTable.appendChild(solTbody);
+          solSection.appendChild(solTable);
+          container.appendChild(solSection);
+        }
 
         if (cluster.typical_solution) {
           container.appendChild(h("div", { className: "fleet-insight-box" }, [
