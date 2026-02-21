@@ -152,3 +152,46 @@ class TPDRComebacksResponse(BaseModel):
 
 class TPDRSystemDetailResponse(BaseModel):
     system: dict = {}
+
+
+# --- UNS System View Models ---
+
+class UNSCorrectiveAction(BaseModel):
+    action: str = ""
+    count: int = 0
+    avg_manhours: float = 0.0
+
+
+class UNSFailureMode(BaseModel):
+    mode_id: int = 0
+    count: int = 0
+    label: str = ""
+    sample_subjects: list[str] = []
+    top_actions: list[str] = []
+    silhouette_score: float = 0.0
+
+
+class UNSPartCount(BaseModel):
+    part_number: str = ""
+    count: int = 0
+
+
+class UNSSystem(BaseModel):
+    uns_code: str = ""
+    uns_name: str = ""
+    total_tars: int = 0
+    aircraft_affected: int = 0
+    activities: list[str] = []
+    date_range: dict[str, str] = {}
+    monthly_counts: list[int] = []
+    months_labels: list[str] = []
+    top_corrective_actions: list[UNSCorrectiveAction] = []
+    failure_modes: list[UNSFailureMode] = []
+    sub_cluster_quality: float | None = None
+    top_parts: list[UNSPartCount] = []
+
+
+class UNSSystemsResponse(BaseModel):
+    systems: list[UNSSystem] = []
+    total_systems: int = 0
+    computed_at: str = ""

@@ -1871,6 +1871,198 @@
     }
 
     /* ===================================================================
+       FLEET ANALYTICS -- VIEW TOGGLE & SYSTEM VIEW
+       =================================================================== */
+    .fleet-view-toggle {
+      display: inline-flex;
+      background: var(--bg-primary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .fleet-view-toggle__btn {
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 8px 18px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .fleet-view-toggle__btn:hover {
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .fleet-view-toggle__btn--active {
+      background: var(--accent-blue);
+      color: var(--bg-primary);
+      font-weight: 600;
+    }
+
+    .fleet-view-toggle__btn--active:hover {
+      background: var(--accent-blue);
+      color: var(--bg-primary);
+    }
+
+    .fleet-view-summary {
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .fleet-view-summary strong {
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+    }
+
+    /* System card failure modes (nested sub-cards) */
+    .sys-failure-modes {
+      margin-bottom: 16px;
+    }
+
+    .sys-failure-modes__header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .sys-failure-modes__title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-label);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .sys-quality-badge {
+      display: inline-flex;
+      padding: 2px 8px;
+      border-radius: var(--radius-sm);
+      font-size: 0.6875rem;
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+
+    .sys-quality-badge--green {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-green);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .sys-quality-badge--amber {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .sys-quality-badge--red {
+      background: rgba(248, 113, 113, 0.15);
+      color: var(--accent-red);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+    }
+
+    .sys-mode-card {
+      margin-left: 12px;
+      padding: 10px 14px;
+      border-left: 2px solid var(--border-color);
+      margin-bottom: 8px;
+      background: rgba(255,255,255,0.015);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+
+    .sys-mode-card__header {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+
+    .sys-mode-card__label {
+      font-size: 0.8125rem;
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .sys-mode-card__count {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .sys-mode-card__actions {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .sys-mode-card__actions span {
+      color: var(--accent-cyan);
+    }
+
+    /* Corrective actions table within system detail */
+    .sys-action-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 4px 0;
+      font-size: 0.8125rem;
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+    }
+
+    .sys-action-row:last-child {
+      border-bottom: none;
+    }
+
+    .sys-action-row__rank {
+      width: 22px;
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-family: var(--font-mono);
+      flex-shrink: 0;
+    }
+
+    .sys-action-row__text {
+      flex: 1;
+      color: var(--text-secondary);
+      font-size: 0.75rem;
+      word-break: break-word;
+    }
+
+    .sys-action-row__meta {
+      flex-shrink: 0;
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    .sys-quick-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .sys-quick-stat {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .sys-quick-stat strong {
+      color: var(--text-secondary);
+    }
+
+    /* ===================================================================
        EXTRACTED SOLUTIONS TABLE (Fleet Analytics)
        =================================================================== */
     .extracted-solutions-table {
@@ -2456,14 +2648,28 @@
             <div class="hidden" id="fleetResults">
               <div id="fleetStatsRow" class="fleet-stats-row"></div>
 
-              <div class="fleet-detail__section">
-                <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Problem Categories</div>
-                <div id="fleetClustersChart"></div>
+              <div class="fleet-view-toggle" role="tablist" aria-label="Fleet analytics view">
+                <button type="button" class="fleet-view-toggle__btn fleet-view-toggle__btn--active" id="fleetViewBtnSystem" role="tab" aria-selected="true">System View</button>
+                <button type="button" class="fleet-view-toggle__btn" id="fleetViewBtnClusters" role="tab" aria-selected="false">Problem Categories</button>
               </div>
 
-              <div class="fleet-detail__section" style="margin-top: 32px;">
-                <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Top Failing Parts</div>
-                <div id="fleetPartsChart"></div>
+              <!-- System View -->
+              <div id="fleetSystemView">
+                <div id="fleetSystemSummary" class="fleet-view-summary"></div>
+                <div id="fleetSystemsChart"></div>
+              </div>
+
+              <!-- Problem Categories View (existing) -->
+              <div id="fleetClustersView" class="hidden">
+                <div class="fleet-detail__section">
+                  <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Problem Categories</div>
+                  <div id="fleetClustersChart"></div>
+                </div>
+
+                <div class="fleet-detail__section" style="margin-top: 32px;">
+                  <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Top Failing Parts</div>
+                  <div id="fleetPartsChart"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -4021,6 +4227,8 @@
 
       var fleetData = null;
       var fleetLoaded = false;
+      var systemsData = null;
+      var systemsLoaded = false;
 
       var tpdrDom = {
         tabBtnFleet: document.getElementById("tabBtnFleet"),
@@ -4033,6 +4241,12 @@
         fleetError: document.getElementById("fleetError"),
         fleetErrorText: document.getElementById("fleetErrorText"),
         fleetResults: document.getElementById("fleetResults"),
+        fleetViewBtnSystem: document.getElementById("fleetViewBtnSystem"),
+        fleetViewBtnClusters: document.getElementById("fleetViewBtnClusters"),
+        fleetSystemView: document.getElementById("fleetSystemView"),
+        fleetClustersView: document.getElementById("fleetClustersView"),
+        fleetSystemSummary: document.getElementById("fleetSystemSummary"),
+        fleetSystemsChart: document.getElementById("fleetSystemsChart"),
         tpdrLoading: document.getElementById("tpdrLoading"),
         tpdrError: document.getElementById("tpdrError"),
         tpdrErrorText: document.getElementById("tpdrErrorText"),
@@ -5000,11 +5214,257 @@
           renderFleetStats(stats);
           renderFleetClusters(clusters);
           renderFleetParts(parts);
+
+          // Also load systems data
+          try {
+            var sysResp = await apiGet("/api/systems?limit=30");
+            systemsData = sysResp;
+            systemsLoaded = true;
+            renderFleetSystems(sysResp);
+          } catch (sysErr) {
+            console.warn("System view load failed:", sysErr);
+            tpdrDom.fleetSystemSummary.textContent = "System view data unavailable.";
+          }
+
           show(tpdrDom.fleetResults);
+          initFleetViewToggle();
         } catch (e) {
           hide(tpdrDom.fleetLoading);
           tpdrDom.fleetErrorText.textContent = "Failed to load fleet analytics: " + e.message;
           show(tpdrDom.fleetError);
+        }
+      }
+
+      /* ----------------------------------------------------------------
+         FLEET ANALYTICS -- VIEW TOGGLE
+         ---------------------------------------------------------------- */
+      function initFleetViewToggle() {
+        var btnSystem = tpdrDom.fleetViewBtnSystem;
+        var btnClusters = tpdrDom.fleetViewBtnClusters;
+        var systemView = tpdrDom.fleetSystemView;
+        var clustersView = tpdrDom.fleetClustersView;
+
+        function showView(view) {
+          if (view === "system") {
+            show(systemView);
+            hide(clustersView);
+            btnSystem.classList.add("fleet-view-toggle__btn--active");
+            btnSystem.setAttribute("aria-selected", "true");
+            btnClusters.classList.remove("fleet-view-toggle__btn--active");
+            btnClusters.setAttribute("aria-selected", "false");
+          } else {
+            hide(systemView);
+            show(clustersView);
+            btnClusters.classList.add("fleet-view-toggle__btn--active");
+            btnClusters.setAttribute("aria-selected", "true");
+            btnSystem.classList.remove("fleet-view-toggle__btn--active");
+            btnSystem.setAttribute("aria-selected", "false");
+          }
+        }
+
+        btnSystem.addEventListener("click", function() { showView("system"); });
+        btnClusters.addEventListener("click", function() { showView("clusters"); });
+      }
+
+      /* ----------------------------------------------------------------
+         FLEET ANALYTICS -- RENDER SYSTEMS
+         ---------------------------------------------------------------- */
+      function renderFleetSystems(data) {
+        var container = tpdrDom.fleetSystemsChart;
+        if (!container) return;
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        var systems = data.systems || [];
+        if (systems.length === 0) return;
+
+        // Summary line
+        tpdrDom.fleetSystemSummary.textContent = "";
+        tpdrDom.fleetSystemSummary.appendChild(h("span", null, [
+          h("strong", null, [String(data.total_systems)]),
+          " systems tracked \u00B7 Top " + systems.length + " by volume"
+        ]));
+
+        var maxCount = systems[0].total_tars;
+        var chartColors = [
+          "var(--bar-replace)", "var(--bar-inspect)", "var(--bar-adjust)",
+          "var(--bar-repair)", "var(--bar-other)", "var(--accent-blue)",
+          "var(--accent-cyan)", "var(--accent-green)", "var(--accent-amber)",
+          "var(--accent-purple)"
+        ];
+
+        systems.forEach(function(sys, idx) {
+          var pct = (sys.total_tars / maxCount) * 100;
+          var color = chartColors[idx % chartColors.length];
+          var detailId = "fleet-system-detail-" + idx;
+
+          // Build info line
+          var infoItems = [sys.total_tars + " TARs"];
+          if (sys.aircraft_affected) infoItems.push(sys.aircraft_affected + " aircraft");
+          if (sys.failure_modes && sys.failure_modes.length > 0) {
+            infoItems.push(sys.failure_modes.length + " failure mode" + (sys.failure_modes.length > 1 ? "s" : ""));
+          }
+
+          var labelText = sys.uns_code + " " + sys.uns_name;
+          var row = h("div", {
+            className: "fleet-bar-row",
+            tabindex: "0",
+            role: "button",
+            ariaExpanded: "false",
+            ariaControls: detailId
+          }, [
+            h("div", { className: "fleet-bar-row__label", title: labelText, style: { width: "320px" } }, [
+              h("span", { style: { fontFamily: "var(--font-mono)", color: "var(--accent-cyan)", marginRight: "6px" } }, [sys.uns_code]),
+              sys.uns_name
+            ]),
+            h("div", { className: "fleet-bar-row__track" }, [
+              h("div", { className: "fleet-bar-row__fill", style: { width: pct + "%", background: color } })
+            ]),
+            h("div", { className: "fleet-bar-row__value" }, [formatNumber(sys.total_tars)])
+          ]);
+
+          var detail = h("div", { id: detailId, className: "fleet-detail hidden" });
+          buildSystemDetail(detail, sys);
+
+          (function(r, d) {
+            function toggle() {
+              if (d.classList.contains("hidden")) {
+                show(d);
+                r.setAttribute("aria-expanded", "true");
+              } else {
+                hide(d);
+                r.setAttribute("aria-expanded", "false");
+              }
+            }
+            r.addEventListener("click", toggle);
+            r.addEventListener("keydown", function(e) {
+              if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+            });
+          })(row, detail);
+
+          container.appendChild(row);
+          container.appendChild(detail);
+        });
+      }
+
+      /* ----------------------------------------------------------------
+         FLEET ANALYTICS -- BUILD SYSTEM DETAIL CARD
+         ---------------------------------------------------------------- */
+      function buildSystemDetail(container, sys) {
+        // 1. Failure Modes section
+        if (sys.failure_modes && sys.failure_modes.length > 0) {
+          var fmSection = h("div", { className: "sys-failure-modes" });
+          var fmHeader = h("div", { className: "sys-failure-modes__header" }, [
+            h("span", { className: "sys-failure-modes__title" }, [
+              "Failure Modes (" + sys.failure_modes.length + " detected)"
+            ])
+          ]);
+
+          // Quality badge
+          if (sys.sub_cluster_quality !== null && sys.sub_cluster_quality !== undefined) {
+            var q = sys.sub_cluster_quality;
+            var badgeClass = "sys-quality-badge";
+            if (q >= 0.3) badgeClass += " sys-quality-badge--green";
+            else if (q >= 0.15) badgeClass += " sys-quality-badge--amber";
+            else badgeClass += " sys-quality-badge--red";
+            fmHeader.appendChild(h("span", { className: badgeClass }, [q.toFixed(3)]));
+          }
+          fmSection.appendChild(fmHeader);
+
+          sys.failure_modes.forEach(function(mode) {
+            var modeCard = h("div", { className: "sys-mode-card" });
+            modeCard.appendChild(h("div", { className: "sys-mode-card__header" }, [
+              h("span", { className: "sys-mode-card__label" }, [mode.label || "Mode " + mode.mode_id]),
+              h("span", { className: "sys-mode-card__count" }, ["(" + mode.count + " TARs)"])
+            ]));
+
+            if (mode.top_actions && mode.top_actions.length > 0) {
+              var actionsText = mode.top_actions.map(function(a) {
+                return a.length > 60 ? a.substring(0, 57) + "..." : a;
+              }).join(" | ");
+              modeCard.appendChild(h("div", { className: "sys-mode-card__actions" }, [
+                "Top actions: ",
+                h("span", null, [actionsText])
+              ]));
+            }
+
+            fmSection.appendChild(modeCard);
+          });
+
+          container.appendChild(fmSection);
+        }
+
+        // 2. Top Corrective Actions section
+        if (sys.top_corrective_actions && sys.top_corrective_actions.length > 0) {
+          var actSection = h("div", { className: "fleet-detail__section" }, [
+            h("div", { className: "fleet-detail__section-title" }, ["Top Corrective Actions"])
+          ]);
+
+          sys.top_corrective_actions.forEach(function(act, i) {
+            var metaParts = [act.count + "x"];
+            if (act.avg_manhours > 0) metaParts.push("avg " + act.avg_manhours + " hrs");
+
+            var actionText = act.action || "";
+            if (actionText.length > 90) actionText = actionText.substring(0, 87) + "...";
+
+            actSection.appendChild(h("div", { className: "sys-action-row" }, [
+              h("span", { className: "sys-action-row__rank" }, [String(i + 1) + "."]),
+              h("span", { className: "sys-action-row__text" }, [actionText]),
+              h("span", { className: "sys-action-row__meta" }, [metaParts.join(" \u00B7 ")])
+            ]));
+          });
+
+          container.appendChild(actSection);
+        }
+
+        // 3. Quick stats row
+        var quickStats = h("div", { className: "sys-quick-stats" });
+
+        // Date range
+        if (sys.date_range && sys.date_range.first) {
+          var first = sys.date_range.first.substring(0, 7).replace("-", " ");
+          var last = sys.date_range.last.substring(0, 7).replace("-", " ");
+          // Format as "Sep 2020 – Sep 2024"
+          var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+          function fmtYM(ds) {
+            var p = ds.split("-");
+            if (p.length >= 2) {
+              var mi = parseInt(p[1], 10) - 1;
+              return (months[mi] || p[1]) + " " + p[0];
+            }
+            return ds;
+          }
+          quickStats.appendChild(h("span", { className: "sys-quick-stat" }, [
+            "Date range: ", h("strong", null, [fmtYM(sys.date_range.first) + " \u2013 " + fmtYM(sys.date_range.last)])
+          ]));
+        }
+
+        // Aircraft count
+        if (sys.aircraft_affected) {
+          quickStats.appendChild(h("span", { className: "sys-quick-stat" }, [
+            "Aircraft: ", h("strong", null, [String(sys.aircraft_affected)])
+          ]));
+        }
+
+        // Units reporting
+        if (sys.activities && sys.activities.length > 0) {
+          var unitsText = sys.activities.slice(0, 5).join(", ");
+          if (sys.activities.length > 5) unitsText += " +" + (sys.activities.length - 5) + " more";
+          quickStats.appendChild(h("span", { className: "sys-quick-stat" }, [
+            "Units: ", h("strong", null, [unitsText])
+          ]));
+        }
+
+        container.appendChild(quickStats);
+
+        // Parts chips
+        if (sys.top_parts && sys.top_parts.length > 0) {
+          var partsRow = h("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "10px" } });
+          sys.top_parts.forEach(function(p) {
+            partsRow.appendChild(h("span", { className: "fleet-parts-badge" }, [
+              p.part_number + " (" + p.count + ")"
+            ]));
+          });
+          container.appendChild(partsRow);
         }
       }
 

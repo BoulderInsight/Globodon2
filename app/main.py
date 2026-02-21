@@ -14,6 +14,7 @@ from app.models import (
 )
 from app.search import search_tar
 from app.tpdr import run_tpdr_analysis, get_tpdr_results, get_system_detail
+from app.uns_analysis import run_uns_analysis, get_uns_results
 
 from pathlib import Path
 
@@ -24,6 +25,7 @@ STATIC_DIR = Path(__file__).parent / "static"
 async def lifespan(app: FastAPI):
     load_index()
     run_tpdr_analysis()
+    run_uns_analysis()
     yield
 
 
@@ -169,6 +171,25 @@ async def api_tars_filters():
         "work_centers": unique_sorted("work_center"),
         "activities": unique_sorted("activity"),
         "priorities": unique_sorted("priority"),
+    }
+
+
+# --- UNS System View Endpoint ---
+
+@app.get("/api/systems")
+async def api_systems(
+    min_tars: int = Query(10, ge=1),
+    limit: int = Query(30, ge=1, le=500),
+):
+    results = get_uns_results()
+    if results is None:
+        raise HTTPException(503, "UNS analysis not yet complete")
+    systems = results.get("systems", [])
+    filtered = [s for s in systems if s["total_tars"] >= min_tars]
+    return {
+        "systems": filtered[:limit],
+        "total_systems": len(filtered),
+        "computed_at": results.get("computed_at", ""),
     }
 
 

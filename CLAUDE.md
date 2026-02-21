@@ -72,13 +72,16 @@ Globodon2/
 │   ├── search.py                     # Core RAG: embed query → cosine search → retrieve context
 │   ├── llm.py                        # Ollama helpers (embed, generate, JSON parse)
 │   ├── tpdr.py                       # TPDR analysis: trend, comeback, scoring, AI justification
+│   ├── uns_analysis.py               # UNS system group analysis: sub-cluster failure modes, corrective actions
 │   ├── models.py                     # Pydantic request/response models
 │   └── static/
 │       └── index.html                # Single-page frontend (3 tabs: Fleet Analytics, TAR Lookup, TPDR Intelligence)
 │
 ├── scripts/
 │   ├── build_index.py                # Precompute/verify search index
-│   └── save_cluster_assignments.py   # Cache cluster assignments to avoid KMeans re-run
+│   ├── save_cluster_assignments.py   # Cache cluster assignments to avoid KMeans re-run
+│   ├── validate_clusters.py          # Silhouette analysis of current flat clusters
+│   └── hybrid_cluster_analysis.py    # Hybrid UNS + embedding analysis comparison
 ├── docs/
 │   ├── tar-system-initial.png        # Screenshot: app initial state
 │   └── tar-system-search-results.png # Screenshot: search results
@@ -125,6 +128,7 @@ Results cached to `.cache/tpdr_analysis.json` (24-hour expiry).
 
 ### Fleet Analytics
 - Reads from `/api/clusters` (analysis_results_cleaned.json) and `/api/parts` (part_failure_analysis.json)
+- System View reads from `/api/systems` (uns_analysis.json) — UNS-based grouping with sub-cluster failure modes
 - Horizontal bar charts, expandable detail cards, solution breakdowns, AI insights
 - No external JS dependencies, pure CSS/HTML bars
 
@@ -133,6 +137,7 @@ Results cached to `.cache/tpdr_analysis.json` (24-hour expiry).
 **Fleet Analytics & Stats:**
 - `GET /api/clusters` — all 10 cluster profiles (includes solutions_extracted, typical_solution, solution_breakdown)
 - `GET /api/parts` — top 20 failing parts with AI summaries
+- `GET /api/systems` — UNS system groups with sub-cluster failure modes, corrective actions, parts
 - `GET /api/stats` — database statistics
 
 **TAR Lookup:**
