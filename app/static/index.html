@@ -1007,6 +1007,377 @@
         scroll-behavior: auto;
       }
     }
+
+    /* ===================================================================
+       TAB NAVIGATION
+       =================================================================== */
+    .tab-nav {
+      display: flex;
+      gap: 0;
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border-color);
+      padding: 0 32px;
+    }
+
+    .tab-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 20px;
+      border: none;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .tab-btn svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .tab-btn:hover {
+      color: var(--text-secondary);
+      background: rgba(255,255,255,0.03);
+    }
+
+    .tab-btn--active {
+      color: var(--accent-blue);
+      border-bottom-color: var(--accent-blue);
+    }
+
+    .btn--small {
+      padding: 6px 14px;
+      font-size: 0.75rem;
+    }
+
+    /* ===================================================================
+       TPDR CANDIDATE CARDS
+       =================================================================== */
+    .tpdr-candidate {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      margin-bottom: 16px;
+      transition: border-color var(--transition-fast);
+    }
+
+    .tpdr-candidate:hover {
+      border-color: var(--accent-blue);
+    }
+
+    .tpdr-candidate__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .tpdr-candidate__rank {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tpdr-candidate__rank-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .tpdr-score-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-blue);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+    }
+
+    .tpdr-candidate__title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .tpdr-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .tpdr-stat-box {
+      background: var(--bg-secondary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      text-align: center;
+    }
+
+    .tpdr-stat-box__value {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      line-height: 1.2;
+    }
+
+    .tpdr-stat-box__label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+    }
+
+    .tpdr-sparkline-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .tpdr-sparkline-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+    }
+
+    .tpdr-justification {
+      background: var(--bg-secondary);
+      border-left: 3px solid var(--accent-blue);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+    }
+
+    .tpdr-justification__label {
+      font-size: 0.6875rem;
+      font-weight: 600;
+      color: var(--accent-blue);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+
+    .tpdr-justification__text {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .tpdr-details-toggle {
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 8px 16px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: var(--font-sans);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tpdr-details-toggle:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+
+    /* Detail View (expandable) */
+    .tpdr-detail {
+      margin-top: 16px;
+      border-top: 1px solid var(--border-color);
+      padding-top: 16px;
+    }
+
+    .tpdr-detail__section {
+      margin-bottom: 16px;
+    }
+
+    .tpdr-detail__section-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-label);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+    }
+
+    .tpdr-bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 3px;
+      height: 80px;
+      padding: 4px 0;
+    }
+
+    .tpdr-bar {
+      flex: 1;
+      border-radius: 2px 2px 0 0;
+      min-width: 4px;
+      transition: height var(--transition-normal);
+      position: relative;
+    }
+
+    .tpdr-bar-labels {
+      display: flex;
+      gap: 3px;
+      margin-top: 4px;
+    }
+
+    .tpdr-bar-label {
+      flex: 1;
+      text-align: center;
+      font-size: 0.5rem;
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+    }
+
+    .tpdr-aircraft-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .tpdr-aircraft-badge {
+      display: inline-flex;
+      padding: 3px 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius-sm);
+      font-size: 0.6875rem;
+      font-family: var(--font-mono);
+      color: var(--text-secondary);
+    }
+
+    .tpdr-comeback-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+    }
+
+    .tpdr-comeback-table th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: 0.6875rem;
+      padding: 6px 8px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .tpdr-comeback-table td {
+      padding: 6px 8px;
+      color: var(--text-secondary);
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+
+    /* Fleet Trend Overview */
+    .tpdr-trend-section {
+      margin-bottom: 20px;
+    }
+
+    .tpdr-trend-section__title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-label);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tpdr-trend-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 4px;
+      transition: background var(--transition-fast);
+    }
+
+    .tpdr-trend-item:hover {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .tpdr-trend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .tpdr-trend-dot--critical { background: var(--accent-red); }
+    .tpdr-trend-dot--moderate { background: var(--accent-amber); }
+    .tpdr-trend-dot--stable { background: var(--text-muted); }
+    .tpdr-trend-dot--declining { background: var(--accent-green); }
+
+    .tpdr-trend-name {
+      flex: 1;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .tpdr-trend-ratio {
+      font-size: 0.8125rem;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      min-width: 50px;
+      text-align: right;
+    }
+
+    .tpdr-trend-ratio--critical { color: var(--accent-red); }
+    .tpdr-trend-ratio--moderate { color: var(--accent-amber); }
+    .tpdr-trend-ratio--stable { color: var(--text-muted); }
+    .tpdr-trend-ratio--declining { color: var(--accent-green); }
+
+    /* Responsive -- TPDR */
+    @media (max-width: 900px) {
+      .tpdr-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .tab-nav {
+        padding: 0 16px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .tpdr-stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .tab-btn {
+        font-size: 0.8125rem;
+        padding: 10px 14px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1060,10 +1431,24 @@
     </div>
   </header>
 
+  <!-- TAB NAVIGATION -->
+  <nav class="tab-nav" role="tablist" aria-label="Application views">
+    <button class="tab-btn tab-btn--active" id="tabBtnLookup" role="tab" aria-selected="true" aria-controls="tabLookup">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="2"/><path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      TAR Lookup
+    </button>
+    <button class="tab-btn" id="tabBtnTPDR" role="tab" aria-selected="false" aria-controls="tabTPDR">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 12l4-8 3 4 2-3 3 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      TPDR Intelligence
+    </button>
+  </nav>
+
   <!-- ================================================================
        MAIN CONTENT
        ================================================================ -->
   <main id="main-content" class="app-main" tabindex="-1">
+
+    <div id="tabLookup" role="tabpanel" aria-labelledby="tabBtnLookup">
 
     <!-- INPUT SECTION -->
     <section class="section input-section" aria-labelledby="input-heading">
@@ -1227,6 +1612,54 @@
         </div>
       </div>
     </section>
+
+    </div><!-- tabLookup -->
+
+    <div id="tabTPDR" class="hidden" role="tabpanel" aria-labelledby="tabBtnTPDR">
+      <!-- TPDR CANDIDATES SECTION -->
+      <section class="section" aria-labelledby="tpdr-candidates-heading">
+        <div class="card">
+          <div class="card__header">
+            <div class="card__header-left">
+              <span class="card__header-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none"><path d="M2 14l4-8 3 4 2-3 5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <h2 class="card__title" id="tpdr-candidates-heading">TPDR Candidates</h2>
+            </div>
+            <button type="button" class="btn btn--secondary btn--small" id="tpdrRefreshBtn">Refresh</button>
+          </div>
+          <div class="card__body" id="tpdrCandidatesBody">
+            <div class="state-message" id="tpdrLoading">
+              <div class="state-message__icon"><div class="spinner spinner--large" role="status"><span class="sr-only">Loading TPDR analysis</span></div></div>
+              <p class="state-message__text">Loading TPDR analysis data...</p>
+            </div>
+            <div class="hidden" id="tpdrError">
+              <div class="state-message state-message--error" role="alert">
+                <p class="state-message__text" id="tpdrErrorText">Failed to load TPDR data.</p>
+              </div>
+            </div>
+            <div class="hidden" id="tpdrCandidatesResults"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FLEET TREND OVERVIEW SECTION -->
+      <section class="section" aria-labelledby="tpdr-trends-heading">
+        <div class="card">
+          <div class="card__header">
+            <div class="card__header-left">
+              <span class="card__header-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none"><path d="M2 16V2M2 14h14M5 11l3-4 3 3 4-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </span>
+              <h2 class="card__title" id="tpdr-trends-heading">Fleet Trend Overview</h2>
+            </div>
+          </div>
+          <div class="card__body" id="tpdrTrendsBody">
+            <div class="hidden" id="tpdrTrendsResults"></div>
+          </div>
+        </div>
+      </section>
+    </div><!-- tabTPDR -->
 
   </main>
 
@@ -1946,6 +2379,377 @@
       }
 
       /* ----------------------------------------------------------------
+         TPDR STATE
+         ---------------------------------------------------------------- */
+      var tpdrData = null;
+      var tpdrLoaded = false;
+      var tpdrExpandedCards = {};
+
+      var tpdrDom = {
+        tabBtnLookup: document.getElementById("tabBtnLookup"),
+        tabBtnTPDR: document.getElementById("tabBtnTPDR"),
+        tabLookup: document.getElementById("tabLookup"),
+        tabTPDR: document.getElementById("tabTPDR"),
+        tpdrLoading: document.getElementById("tpdrLoading"),
+        tpdrError: document.getElementById("tpdrError"),
+        tpdrErrorText: document.getElementById("tpdrErrorText"),
+        tpdrCandidatesResults: document.getElementById("tpdrCandidatesResults"),
+        tpdrTrendsResults: document.getElementById("tpdrTrendsResults"),
+        tpdrRefreshBtn: document.getElementById("tpdrRefreshBtn"),
+      };
+
+      /* ----------------------------------------------------------------
+         TAB SWITCHING
+         ---------------------------------------------------------------- */
+      function switchTab(tabName) {
+        if (tabName === "lookup") {
+          tpdrDom.tabBtnLookup.classList.add("tab-btn--active");
+          tpdrDom.tabBtnLookup.setAttribute("aria-selected", "true");
+          tpdrDom.tabBtnTPDR.classList.remove("tab-btn--active");
+          tpdrDom.tabBtnTPDR.setAttribute("aria-selected", "false");
+          show(tpdrDom.tabLookup);
+          hide(tpdrDom.tabTPDR);
+        } else {
+          tpdrDom.tabBtnTPDR.classList.add("tab-btn--active");
+          tpdrDom.tabBtnTPDR.setAttribute("aria-selected", "true");
+          tpdrDom.tabBtnLookup.classList.remove("tab-btn--active");
+          tpdrDom.tabBtnLookup.setAttribute("aria-selected", "false");
+          hide(tpdrDom.tabLookup);
+          show(tpdrDom.tabTPDR);
+          if (!tpdrLoaded) loadTPDRData();
+        }
+      }
+
+      /* ----------------------------------------------------------------
+         TPDR HELPERS
+         ---------------------------------------------------------------- */
+      function createSparkline(data, width, height, color) {
+        if (!data || data.length === 0) return document.createTextNode("");
+        var max = Math.max.apply(null, data);
+        if (max === 0) max = 1;
+        var ns = "http://www.w3.org/2000/svg";
+        var svg = document.createElementNS(ns, "svg");
+        svg.setAttribute("width", String(width));
+        svg.setAttribute("height", String(height));
+        svg.setAttribute("viewBox", "0 0 " + width + " " + height);
+        svg.style.display = "block";
+
+        var points = data.map(function(val, i) {
+          var x = (i / Math.max(data.length - 1, 1)) * (width - 2) + 1;
+          var y = height - 2 - ((val / max) * (height - 4));
+          return x + "," + y;
+        }).join(" ");
+
+        var polyline = document.createElementNS(ns, "polyline");
+        polyline.setAttribute("points", points);
+        polyline.setAttribute("fill", "none");
+        polyline.setAttribute("stroke", color || "var(--accent-blue)");
+        polyline.setAttribute("stroke-width", "1.5");
+        polyline.setAttribute("stroke-linecap", "round");
+        polyline.setAttribute("stroke-linejoin", "round");
+        svg.appendChild(polyline);
+
+        var areaPoints = "1," + height + " " + points + " " + (width - 1) + "," + height;
+        var polygon = document.createElementNS(ns, "polygon");
+        polygon.setAttribute("points", areaPoints);
+        polygon.setAttribute("fill", color || "var(--accent-blue)");
+        polygon.setAttribute("opacity", "0.1");
+        svg.appendChild(polygon);
+
+        return svg;
+      }
+
+      function accelColor(ratio) {
+        if (ratio > 3.0) return { dot: "tpdr-trend-dot--critical", ratio: "tpdr-trend-ratio--critical", color: "var(--accent-red)" };
+        if (ratio >= 2.0) return { dot: "tpdr-trend-dot--moderate", ratio: "tpdr-trend-ratio--moderate", color: "var(--accent-amber)" };
+        if (ratio < 1.0) return { dot: "tpdr-trend-dot--declining", ratio: "tpdr-trend-ratio--declining", color: "var(--accent-green)" };
+        return { dot: "tpdr-trend-dot--stable", ratio: "tpdr-trend-ratio--stable", color: "var(--text-muted)" };
+      }
+
+      /* ----------------------------------------------------------------
+         LOAD TPDR DATA
+         ---------------------------------------------------------------- */
+      async function loadTPDRData() {
+        show(tpdrDom.tpdrLoading);
+        hide(tpdrDom.tpdrError);
+        hide(tpdrDom.tpdrCandidatesResults);
+        hide(tpdrDom.tpdrTrendsResults);
+
+        try {
+          var recData = await apiGet("/api/tpdr/recommendations");
+          var trendData = await apiGet("/api/tpdr/trends");
+          var cbData = await apiGet("/api/tpdr/comebacks");
+
+          tpdrData = {
+            recommendations: recData.recommendations || [],
+            trends: trendData.trends || [],
+            comebacks: cbData.comebacks || [],
+            computed_at: recData.computed_at || ""
+          };
+          tpdrLoaded = true;
+
+          hide(tpdrDom.tpdrLoading);
+          renderTPDRCandidates(tpdrData.recommendations);
+          renderTPDRTrends(tpdrData.trends);
+        } catch (e) {
+          hide(tpdrDom.tpdrLoading);
+          tpdrDom.tpdrErrorText.textContent = "Failed to load TPDR data: " + e.message;
+          show(tpdrDom.tpdrError);
+        }
+      }
+
+      /* ----------------------------------------------------------------
+         RENDER TPDR CANDIDATES
+         ---------------------------------------------------------------- */
+      function renderTPDRCandidates(recs) {
+        var container = tpdrDom.tpdrCandidatesResults;
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        if (!recs || recs.length === 0) {
+          container.appendChild(h("div", { className: "state-message" }, [
+            h("p", { className: "state-message__text" }, ["No TPDR candidates found."])
+          ]));
+          show(container);
+          return;
+        }
+
+        var displayCount = Math.min(15, recs.length);
+        for (var i = 0; i < displayCount; i++) {
+          var rec = recs[i];
+          var colors = accelColor(rec.acceleration_ratio);
+          var cardId = "tpdr-detail-" + i;
+
+          var header = h("div", { className: "tpdr-candidate__header" }, [
+            h("div", { className: "tpdr-candidate__rank" }, [
+              h("span", { className: "tpdr-candidate__rank-num" }, ["#" + (i + 1)]),
+              h("span", { className: "tpdr-score-badge" }, ["Score: " + Math.round(rec.score)])
+            ])
+          ]);
+
+          var title = h("div", { className: "tpdr-candidate__title" }, [rec.uns]);
+
+          var statsGrid = h("div", { className: "tpdr-stats-grid" }, [
+            h("div", { className: "tpdr-stat-box" }, [
+              h("div", { className: "tpdr-stat-box__value" }, [formatNumber(rec.total_tars)]),
+              h("div", { className: "tpdr-stat-box__label" }, ["Total TARs"])
+            ]),
+            h("div", { className: "tpdr-stat-box" }, [
+              h("div", { className: "tpdr-stat-box__value", style: { color: colors.color } }, [rec.acceleration_ratio + "x"]),
+              h("div", { className: "tpdr-stat-box__label" }, ["Accel. Rate"])
+            ]),
+            h("div", { className: "tpdr-stat-box" }, [
+              h("div", { className: "tpdr-stat-box__value" }, [String(rec.aircraft_count)]),
+              h("div", { className: "tpdr-stat-box__label" }, ["Aircraft Affected"])
+            ]),
+            h("div", { className: "tpdr-stat-box" }, [
+              h("div", { className: "tpdr-stat-box__value" }, [String(rec.comeback_count || 0)]),
+              h("div", { className: "tpdr-stat-box__label" }, ["Comebacks (90-day)"])
+            ])
+          ]);
+
+          var sparklineRow = h("div", { className: "tpdr-sparkline-row" }, [
+            h("span", { className: "tpdr-sparkline-label" }, ["Trend:"]),
+            createSparkline(rec.monthly_counts || [], 120, 24, colors.color)
+          ]);
+
+          var justificationEl = null;
+          if (rec.justification) {
+            justificationEl = h("div", { className: "tpdr-justification" }, [
+              h("div", { className: "tpdr-justification__label" }, ["AI Justification"]),
+              h("div", { className: "tpdr-justification__text" }, [rec.justification])
+            ]);
+          }
+
+          var toggleBtn = h("button", {
+            type: "button",
+            className: "tpdr-details-toggle",
+            "data-target": cardId
+          }, ["View Details"]);
+
+          var detailSection = h("div", { id: cardId, className: "tpdr-detail hidden" });
+          buildDetailContent(detailSection, rec);
+
+          (function(btn, detail) {
+            btn.addEventListener("click", function() {
+              if (detail.classList.contains("hidden")) {
+                show(detail);
+                btn.textContent = "Hide Details";
+              } else {
+                hide(detail);
+                btn.textContent = "View Details";
+              }
+            });
+          })(toggleBtn, detailSection);
+
+          var cardChildren = [header, title, statsGrid, sparklineRow];
+          if (justificationEl) cardChildren.push(justificationEl);
+          cardChildren.push(toggleBtn, detailSection);
+
+          container.appendChild(h("div", { className: "tpdr-candidate" }, cardChildren));
+        }
+
+        show(container);
+      }
+
+      /* ----------------------------------------------------------------
+         BUILD DETAIL CONTENT
+         ---------------------------------------------------------------- */
+      function buildDetailContent(container, rec) {
+        if (rec.monthly_counts && rec.monthly_counts.length > 0) {
+          var chartSection = h("div", { className: "tpdr-detail__section" }, [
+            h("div", { className: "tpdr-detail__section-title" }, ["Monthly TAR Timeline"])
+          ]);
+          var maxVal = Math.max.apply(null, rec.monthly_counts);
+          if (maxVal === 0) maxVal = 1;
+          var colors = accelColor(rec.acceleration_ratio);
+
+          var barContainer = h("div", { className: "tpdr-bar-chart" });
+          var labelsContainer = h("div", { className: "tpdr-bar-labels" });
+
+          rec.monthly_counts.forEach(function(count, idx) {
+            var heightPct = (count / maxVal) * 100;
+            var bar = h("div", {
+              className: "tpdr-bar",
+              style: { height: Math.max(heightPct, 2) + "%", background: colors.color },
+              title: (rec.months_labels && rec.months_labels[idx] ? rec.months_labels[idx] + ": " : "") + count + " TARs"
+            });
+            barContainer.appendChild(bar);
+
+            var label = rec.months_labels && rec.months_labels[idx] ? rec.months_labels[idx].slice(-2) : "";
+            labelsContainer.appendChild(h("div", { className: "tpdr-bar-label" }, [label]));
+          });
+
+          chartSection.appendChild(barContainer);
+          chartSection.appendChild(labelsContainer);
+          container.appendChild(chartSection);
+        }
+
+        if (rec.affected_aircraft && rec.affected_aircraft.length > 0) {
+          var aircraftSection = h("div", { className: "tpdr-detail__section" }, [
+            h("div", { className: "tpdr-detail__section-title" }, ["Affected Aircraft (" + rec.aircraft_count + ")"])
+          ]);
+          var aircraftList = h("div", { className: "tpdr-aircraft-list" });
+          rec.affected_aircraft.forEach(function(buno) {
+            aircraftList.appendChild(h("span", { className: "tpdr-aircraft-badge" }, [buno]));
+          });
+          aircraftSection.appendChild(aircraftList);
+          container.appendChild(aircraftSection);
+        }
+
+        if (rec.example_comebacks && rec.example_comebacks.length > 0) {
+          var cbSection = h("div", { className: "tpdr-detail__section" }, [
+            h("div", { className: "tpdr-detail__section-title" }, ["Comeback Instances"])
+          ]);
+          var table = h("table", { className: "tpdr-comeback-table" });
+          var thead = h("thead", null, [
+            h("tr", null, [
+              h("th", null, ["Aircraft"]),
+              h("th", null, ["First Date"]),
+              h("th", null, ["Second Date"]),
+              h("th", null, ["Gap (days)"])
+            ])
+          ]);
+          table.appendChild(thead);
+          var tbody = h("tbody");
+          rec.example_comebacks.forEach(function(cb) {
+            tbody.appendChild(h("tr", null, [
+              h("td", null, [cb.buno || ""]),
+              h("td", null, [cb.date_first || ""]),
+              h("td", null, [cb.date_second || ""]),
+              h("td", null, [String(cb.gap_days || "")])
+            ]));
+          });
+          table.appendChild(tbody);
+          cbSection.appendChild(table);
+          container.appendChild(cbSection);
+        }
+
+        if (rec.activities && rec.activities.length > 0) {
+          var unitsSection = h("div", { className: "tpdr-detail__section" }, [
+            h("div", { className: "tpdr-detail__section-title" }, ["Units Affected"])
+          ]);
+          var unitsList = h("div", { className: "tpdr-aircraft-list" });
+          rec.activities.forEach(function(unit) {
+            unitsList.appendChild(h("span", { className: "tpdr-aircraft-badge" }, [unit]));
+          });
+          unitsSection.appendChild(unitsList);
+          container.appendChild(unitsSection);
+        }
+
+        if (rec.linked_cluster) {
+          container.appendChild(h("div", { className: "tpdr-detail__section" }, [
+            h("div", { className: "tpdr-detail__section-title" }, ["Linked Problem Category"]),
+            h("div", { style: { color: "var(--accent-blue)", fontSize: "0.875rem" } }, [rec.linked_cluster])
+          ]));
+        }
+
+        if (rec.sample_tars && rec.sample_tars.length > 0) {
+          var sampleSection = h("div", { className: "tpdr-detail__section" }, [
+            h("div", { className: "tpdr-detail__section-title" }, ["Sample TARs"])
+          ]);
+          rec.sample_tars.forEach(function(tar) {
+            sampleSection.appendChild(h("div", { style: { marginBottom: "8px", padding: "8px 12px", background: "var(--bg-secondary)", borderRadius: "var(--radius-sm)", fontSize: "0.8125rem" } }, [
+              h("span", { style: { color: "var(--accent-cyan)", fontFamily: "var(--font-mono)", marginRight: "8px" } }, ["JCN: " + (tar.jcn || "N/A")]),
+              h("span", { style: { color: "var(--text-secondary)" } }, [tar.subject || ""]),
+              tar.submit_date ? h("span", { style: { color: "var(--text-muted)", marginLeft: "8px", fontSize: "0.75rem" } }, [tar.submit_date]) : null
+            ]));
+          });
+          container.appendChild(sampleSection);
+        }
+      }
+
+      /* ----------------------------------------------------------------
+         RENDER FLEET TRENDS
+         ---------------------------------------------------------------- */
+      function renderTPDRTrends(trends) {
+        var container = tpdrDom.tpdrTrendsResults;
+        while (container.firstChild) container.removeChild(container.firstChild);
+
+        if (!trends || trends.length === 0) {
+          show(container);
+          return;
+        }
+
+        var accelerating = trends.filter(function(t) { return t.acceleration_ratio >= 2.0; });
+        var declining = trends.filter(function(t) { return t.acceleration_ratio < 1.0; });
+
+        if (accelerating.length > 0) {
+          var accelSection = h("div", { className: "tpdr-trend-section" }, [
+            h("div", { className: "tpdr-trend-section__title" }, ["Accelerating Systems"])
+          ]);
+          accelerating.slice(0, 15).forEach(function(t) {
+            var colors = accelColor(t.acceleration_ratio);
+            accelSection.appendChild(h("div", { className: "tpdr-trend-item" }, [
+              h("span", { className: "tpdr-trend-dot " + colors.dot }),
+              h("span", { className: "tpdr-trend-name" }, [t.uns]),
+              h("span", { className: "tpdr-trend-ratio " + colors.ratio }, [t.acceleration_ratio + "x"]),
+              createSparkline(t.monthly_counts || [], 80, 20, colors.color)
+            ]));
+          });
+          container.appendChild(accelSection);
+        }
+
+        if (declining.length > 0) {
+          declining.sort(function(a, b) { return a.acceleration_ratio - b.acceleration_ratio; });
+          var declineSection = h("div", { className: "tpdr-trend-section" }, [
+            h("div", { className: "tpdr-trend-section__title" }, ["Declining Systems"])
+          ]);
+          declining.slice(0, 10).forEach(function(t) {
+            var colors = accelColor(t.acceleration_ratio);
+            declineSection.appendChild(h("div", { className: "tpdr-trend-item" }, [
+              h("span", { className: "tpdr-trend-dot " + colors.dot }),
+              h("span", { className: "tpdr-trend-name" }, [t.uns]),
+              h("span", { className: "tpdr-trend-ratio " + colors.ratio }, [t.acceleration_ratio + "x"]),
+              createSparkline(t.monthly_counts || [], 80, 20, colors.color)
+            ]));
+          });
+          container.appendChild(declineSection);
+        }
+
+        show(container);
+      }
+
+      /* ----------------------------------------------------------------
          EVENT HANDLERS
          ---------------------------------------------------------------- */
 
@@ -1968,6 +2772,16 @@
           dom.tarInput.focus();
         });
       });
+
+      // Tab navigation
+      tpdrDom.tabBtnLookup.addEventListener("click", function() { switchTab("lookup"); });
+      tpdrDom.tabBtnTPDR.addEventListener("click", function() { switchTab("tpdr"); });
+      if (tpdrDom.tpdrRefreshBtn) {
+        tpdrDom.tpdrRefreshBtn.addEventListener("click", function() {
+          tpdrLoaded = false;
+          loadTPDRData();
+        });
+      }
 
       /* ----------------------------------------------------------------
          INIT

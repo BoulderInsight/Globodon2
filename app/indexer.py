@@ -235,6 +235,12 @@ def load_index() -> None:
     tar_jcns = set(index.tar_df["jcn"].dropna().str.strip())
     index.maf_index, index.total_maf_records = _build_maf_index(tar_jcns)
 
+    # 7. Parse submit_date for TPDR analysis
+    print("  Parsing TAR dates for TPDR analysis...")
+    index.tar_df["submit_dt"] = pd.to_datetime(index.tar_df["submit_date"], errors="coerce")
+    valid_dates = index.tar_df["submit_dt"].notna().sum()
+    print(f"  {valid_dates} / {len(index.tar_df)} TARs have valid dates")
+
     index.loaded = True
     elapsed = time.time() - start
     print("=" * 60)

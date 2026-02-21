@@ -13,6 +13,7 @@ from app.models import (
     StatsResponse,
 )
 from app.search import search_tar
+from app.tpdr import run_tpdr_analysis, get_tpdr_results, get_system_detail
 
 from pathlib import Path
 
@@ -22,6 +23,7 @@ STATIC_DIR = Path(__file__).parent / "static"
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     load_index()
+    run_tpdr_analysis()
     yield
 
 
@@ -97,6 +99,43 @@ async def api_stats():
         parts_tracked=len(index.part_failures),
         index_loaded=index.loaded,
     )
+
+
+# --- TPDR Endpoints ---
+
+@app.get("/api/tpdr/recommendations")
+async def api_tpdr_recommendations():
+    results = get_tpdr_results()
+    if results is None:
+        raise HTTPException(503, "TPDR analysis not yet complete")
+    return {
+        "recommendations": results.get("recommendations", []),
+        "computed_at": results.get("computed_at", ""),
+    }
+
+
+@app.get("/api/tpdr/trends")
+async def api_tpdr_trends():
+    results = get_tpdr_results()
+    if results is None:
+        raise HTTPException(503, "TPDR analysis not yet complete")
+    return {"trends": results.get("trends", [])}
+
+
+@app.get("/api/tpdr/comebacks")
+async def api_tpdr_comebacks():
+    results = get_tpdr_results()
+    if results is None:
+        raise HTTPException(503, "TPDR analysis not yet complete")
+    return {"comebacks": results.get("comebacks", [])}
+
+
+@app.get("/api/tpdr/system/{uns_code:path}")
+async def api_tpdr_system_detail(uns_code: str):
+    detail = get_system_detail(uns_code)
+    if detail is None:
+        raise HTTPException(404, f"System '{uns_code}' not found")
+    return {"system": detail}
 
 
 @app.get("/")
