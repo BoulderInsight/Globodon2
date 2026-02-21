@@ -3152,7 +3152,8 @@
         minAcceleration: 1.5,
         minComebacks: 0,
         minScore: 0,
-        minMonthlyRate: 0
+        minMonthlyRate: 0,
+        recentWindow: 6
       };
 
       function getWorkflowStates() {
@@ -3181,12 +3182,15 @@
         storage.set("tars_tpdrThresholds", vals);
       }
 
-      function getMonthlyRate(rec) {
+      function getMonthlyRate(rec, window) {
         var counts = rec.monthly_counts || [];
         if (counts.length === 0) return 0;
+        var w = window || counts.length;
+        if (w > counts.length) w = counts.length;
+        var slice = counts.slice(counts.length - w);
         var sum = 0;
-        for (var i = 0; i < counts.length; i++) sum += counts[i];
-        return sum / counts.length;
+        for (var i = 0; i < slice.length; i++) sum += slice[i];
+        return sum / slice.length;
       }
 
       function getSelectedActivities() {
@@ -3203,7 +3207,7 @@
         if ((rec.acceleration_ratio || 0) < thresholds.minAcceleration) return false;
         if ((rec.comeback_count || 0) < thresholds.minComebacks) return false;
         if ((rec.score || 0) < thresholds.minScore) return false;
-        if (thresholds.minMonthlyRate > 0 && getMonthlyRate(rec) < thresholds.minMonthlyRate) return false;
+        if (thresholds.minMonthlyRate > 0 && getMonthlyRate(rec, thresholds.recentWindow) < thresholds.minMonthlyRate) return false;
         var selActs = getSelectedActivities();
         if (selActs && selActs.length > 0) {
           var recActs = rec.activities || [];
@@ -3598,6 +3602,23 @@
             inp
           ]));
         });
+
+        var windowSelect = h("select", null);
+        [3, 6, 12].forEach(function(m) {
+          var opt = h("option", { value: String(m) }, [m + " months"]);
+          if (m === (thresholds.recentWindow || 6)) opt.selected = true;
+          windowSelect.appendChild(opt);
+        });
+        windowSelect.addEventListener("change", function() {
+          var current = getThresholds();
+          current.recentWindow = parseInt(windowSelect.value, 10);
+          setThresholds(current);
+          renderTPDRCandidates(tpdrData.recommendations);
+        });
+        grid.appendChild(h("div", { className: "threshold-field" }, [
+          h("label", null, ["Recent Window"]),
+          windowSelect
+        ]));
 
         panelContent.appendChild(grid);
 
