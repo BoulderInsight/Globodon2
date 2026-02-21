@@ -2,13 +2,19 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Vision
+
+On-premises maintenance intelligence platform for V-22 Osprey that integrates into existing TAR workflows, runs on air-gapped networks with zero cloud dependencies, and puts actionable data in front of maintainers without requiring them to change how they work. Every design decision filters through three questions: Does it run offline? Does it make the maintainer's job faster? Can it deploy to a classified network tomorrow?
+
 ## Project Overview
 
-**V-22 TAR Intelligence System** — an AI-powered maintenance decision-support platform for V-22 Osprey aircraft. Three main components:
+**V-22 TAR Intelligence System** — AI-powered maintenance decision support. Three-tab web application:
 
-1. **Batch Analysis Pipeline** (complete) — mines historical TAR/MAF data to discover problem categories, solution patterns, and part failure trends using local LLMs via Ollama.
-2. **Real-Time Lookup Tool** (complete) — FastAPI web app where maintainers paste a new TAR and instantly get: the likely problem category, what has fixed it before, which parts to have ready, and an AI-generated recommendation.
-3. **TPDR Recommendation Engine** (complete) — automatic detection of systems that need Technical Publications Deficiency Reports, combining trend analysis, comeback detection, and AI-generated justification.
+1. **Fleet Analytics** (complete) — visualizes batch analysis results: 10 problem categories with solution breakdowns, 20 high-failure parts with AI summaries. Horizontal bar charts, expandable detail cards, all from API data.
+2. **TAR Lookup** (complete) — paste a TAR, get sub-second results: problem category match, similar past cases with MAF corrective actions, parts cross-reference, optional AI recommendation.
+3. **TPDR Intelligence** (complete) — automatic detection of systems needing Technical Publications Deficiency Reports: trend acceleration, comeback detection, scored candidates with AI-generated justifications.
+
+**Current scope:** This is a demo built against a sample of the full database (~15K TARs, ~1.8M MAFs). Architecture is designed to scale to the full dataset with a vector database swap.
 
 ## Data Sources
 
@@ -49,7 +55,8 @@ ollama pull deepseek-r1:32b           # reasoning/summarization (slower, uses <t
 Globodon2/
 ├── CLAUDE.md                         # This file
 ├── PROMPT_BUILD_TAR_LOOKUP.md        # Spec for the real-time lookup tool (complete)
-├── PROMPT_BUILD_TPDR_ENGINE.md       # Spec for the TPDR recommendation engine (to build)
+├── PROMPT_BUILD_TPDR_ENGINE_1.md     # Spec for the TPDR recommendation engine (complete)
+├── PROMPT_BUILD_FLEET_ANALYTICS.md   # Spec for the Fleet Analytics tab (complete)
 │
 │  ── Batch Analysis (complete) ──
 ├── tar_maf_analyzer.py               # Task 1: Problem→Solution pipeline
@@ -60,21 +67,17 @@ Globodon2/
 ├── cleanup_results.py               # Utility: additional cleanup
 ├── .cache/                           # Cached embeddings, cluster assignments, TPDR results
 │
-│  ── Real-Time Lookup Tool (complete) ──
+│  ── Web Application ──
 ├── app/
 │   ├── __init__.py
 │   ├── main.py                       # FastAPI app with routes
 │   ├── indexer.py                    # Startup: load embeddings, TAR data, MAF index
 │   ├── search.py                     # Core RAG: embed query → cosine search → retrieve context
 │   ├── llm.py                        # Ollama helpers (embed, generate, JSON parse)
-│   ├── tpdr.py                       # TPDR Recommendation Engine (trend, comeback, scoring)
+│   ├── tpdr.py                       # TPDR analysis: trend, comeback, scoring, AI justification
 │   ├── models.py                     # Pydantic request/response models
 │   └── static/
-│       └── index.html                # Single-page frontend (dark theme, tabbed: TAR Lookup + TPDR)
-│
-│  ── TPDR Recommendation Engine (to build) ──
-│   ├── tpdr.py                       # TPDR analysis: trend detection, comeback detection, scoring
-│   (new endpoints added to main.py, new models added to models.py, new tab added to index.html)
+│       └── index.html                # Single-page frontend (3 tabs: Fleet Analytics, TAR Lookup, TPDR Intelligence)
 │
 ├── scripts/
 │   ├── build_index.py                # Precompute/verify search index
@@ -82,6 +85,7 @@ Globodon2/
 ├── docs/
 │   ├── tar-system-initial.png        # Screenshot: app initial state
 │   └── tar-system-search-results.png # Screenshot: search results
+├── demo_dashboard.html               # SUPERSEDED by Fleet Analytics tab, kept for reference
 ├── requirements.txt
 └── run.sh                            # Start script for the web app
 ```
@@ -94,15 +98,15 @@ python3 tar_maf_analyzer.py           # Rerun full pipeline if needed (~13 min)
 python3 part_failure_analysis.py      # Rerun part analysis if needed
 ```
 
-### Real-Time Lookup + TPDR App
+### Web Application
 ```bash
 pip install -r requirements.txt
 ./run.sh                              # Starts FastAPI on port 8000
 ```
 
-## Real-Time Lookup Architecture (app/)
+## Architecture
 
-RAG pipeline for instant TAR diagnosis:
+### RAG Pipeline (TAR Lookup)
 1. **Embed** incoming TAR text via `nomic-embed-text` (~100ms)
 2. **Cosine similarity search** against all ~15K preloaded TAR embeddings
 3. **Map to cluster** — majority vote of top-k neighbors → cluster profile
@@ -114,69 +118,76 @@ RAG pipeline for instant TAR diagnosis:
 - **Fast path** (steps 1–5): <1 second, no LLM call needed
 - **AI path** (step 6): ~10–15 seconds via Ollama
 
-## TPDR Recommendation Engine Architecture (app/tpdr.py)
-
-Automatic detection of systems needing Technical Publications Deficiency Reports:
+### TPDR Analysis (app/tpdr.py)
 1. **System Trend Detection** — monthly TAR counts per UNS, acceleration ratio (recent vs earlier)
 2. **Comeback Detection** — same aircraft + same system, another TAR within 90 days = fix didn't hold
-3. **TPDR Scoring** — combines acceleration, comeback count, fleet impact, urgency into a ranked score
+3. **TPDR Scoring** — combines acceleration, comeback count, fleet impact, urgency into ranked score
 4. **AI Justification** — LLM generates TPDR justification paragraph for top candidates
 
-**Known high-signal patterns in the data:**
-- UNS 6322 "PROPROTOR GEARBOX ASSEMBLY RH": 5.1x acceleration (83→422 TARs)
-- UNS 6321 "PROPROTOR GEARBOX ASSEMBLY LH": 4.6x acceleration (96→441 TARs)
-- 575 comeback instances fleet-wide (same aircraft+system within 90 days)
-- 166 aircraft+system combos with 5+ repeat TARs
+Results cached to `.cache/tpdr_analysis.json` (24-hour expiry).
 
-Results are cached to `.cache/tpdr_analysis.json` to avoid re-running LLM calls on restart.
+### Fleet Analytics
+- Reads from `/api/clusters` (analysis_results_cleaned.json) and `/api/parts` (part_failure_analysis.json)
+- Horizontal bar charts, expandable detail cards, solution breakdowns, AI insights
+- No external JS dependencies, pure CSS/HTML bars
 
 ## API Endpoints
 
-**Existing (Real-Time Lookup):**
+**Fleet Analytics & Stats:**
+- `GET /api/clusters` — all 10 cluster profiles (includes solutions_extracted, typical_solution, solution_breakdown)
+- `GET /api/parts` — top 20 failing parts with AI summaries
+- `GET /api/stats` — database statistics
+
+**TAR Lookup:**
 - `POST /api/search` — core RAG search, returns cluster match + similar TARs + MAF actions
 - `POST /api/recommend` — AI recommendation based on search results
-- `GET /api/clusters` — all 10 cluster profiles
-- `GET /api/parts` — top 20 failing parts
-- `GET /api/stats` — database statistics
 - `GET /` — serve frontend
 
-**TPDR Endpoints:**
+**TPDR Intelligence:**
 - `GET /api/tpdr/recommendations` — scored, ranked TPDR candidates
 - `GET /api/tpdr/trends` — system-level trend data
 - `GET /api/tpdr/comebacks` — comeback analysis data
 - `GET /api/tpdr/system/{uns_code}` — detailed drilldown for a specific system
 
+## Key Data Structures
+
+**analysis_results_cleaned.json** cluster fields:
+`problem`, `cluster_id`, `occurrences`, `linked_mafs`, `typical_solution`, `solution_breakdown`, `parts_commonly_involved`, `average_manhours`, `sample_tar_jcns`, `solutions_extracted`
+
+**solutions_extracted** is an array of objects: `{action, component, reference}` where reference is often an IETM reference number. These are the structured corrective actions extracted from MAF data.
+
+**part_failure_analysis.json** part fields:
+`part_number`, `failure_count`, `ai_summary`
+
 ## Key Implementation Details
 
+- Frontend is a single HTML file, zero external JS dependencies, no framework, no build step
 - MAF file is read in 100K-row chunks (`pd.read_csv(..., chunksize=100_000)`) due to 1.8M row size
 - `call_ollama_json()` strips deepseek-r1's `<think>...</think>` blocks before parsing JSON
 - `call_ollama()` has retry logic with exponential backoff and a configurable delay (`LLM_DELAY`)
-- Embeddings are cached by SHA-256 hash of input texts in `.cache/`
+- Embeddings cached by SHA-256 hash of input texts in `.cache/`
 - For cosine similarity: normalize embeddings at load time, use `np.dot(query, matrix.T)`
-- MAF JCN index (dict mapping jcn→MAF records) is built once on startup
-- `submit_date` has mixed formats — always parse with `pd.to_datetime(..., errors='coerce')`
+- MAF JCN index (dict mapping jcn→MAF records) built once on startup
+- `submit_date` mixed formats — always parse with `pd.to_datetime(..., errors='coerce')`
 - `buno` of "I-level" = not aircraft-specific, exclude from per-aircraft analysis
+- Tab switching uses lazy-load pattern: Fleet Analytics and TPDR data fetch on first tab activation
+- All state stored client-side or in .cache/ JSON files, no database required for demo
+
+## Known High-Signal Patterns
+
+- UNS 6322 "PROPROTOR GEARBOX ASSEMBLY RH": 5.1x acceleration (83→422 TARs)
+- UNS 6321 "PROPROTOR GEARBOX ASSEMBLY LH": 4.6x acceleration (96→441 TARs)
+- UNS 6320 "GEARBOX ASSEMBLIES": 10.7x acceleration
+- 575 comeback instances fleet-wide (same aircraft+system within 90 days)
+- 166 aircraft+system combos with 5+ repeat TARs
 
 ## Existing Analysis Results (precomputed)
 
-**analysis_results_cleaned.json** — 10 clusters:
-- FADEC System Malfunction Troubleshooting (2,213 TARs)
-- Composite and Metal Structural Damage Repair (2,154 TARs)
-- Component Failures and Intermittent Faults (2,131 TARs)
-- Test Equipment and Procedure Requests Failure (1,821 TARs)
-- Aircraft Component Failure and Maintenance Requests (1,594 TARs)
-- Maintenance and Repair Procedures Requests (1,411 TARs)
-- Sealing and Structural Integrity Issues (1,339 TARs)
-- Water Intrusion and Corrosion Prevention (927 TARs)
-- Proprotor Gearbox Debris Detection Issues (726 TARs)
-- PCA Ball Screw Wear Test Failure (609 TARs)
+**10 Clusters:**
+FADEC System Malfunction (2,213), Composite/Metal Structural Damage (2,154), Component Failures/Intermittent Faults (2,131), Test Equipment/Procedure Requests (1,821), Aircraft Component Failure/Maintenance (1,594), Maintenance/Repair Procedures (1,411), Sealing/Structural Integrity (1,339), Water Intrusion/Corrosion (927), Proprotor Gearbox Debris (726), PCA Ball Screw Wear (609)
 
-**part_failure_analysis.json** — Top 5 of 20:
-- 901-011-420-101: 6,831 failures
-- 901-336-007-115: 5,693 failures
-- MN1400: 3,837 failures
-- 901-363-203-105: 3,649 failures
-- 901-336-006-115: 2,691 failures
+**Top 5 of 20 Parts:**
+901-011-420-101 (6,831), 901-336-007-115 (5,693), MN1400 (3,837), 901-363-203-105 (3,649), 901-336-006-115 (2,691)
 
 ## Dependencies
 
