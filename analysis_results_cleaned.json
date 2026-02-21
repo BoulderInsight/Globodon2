@@ -1,0 +1,1063 @@
+[
+  {
+    "problem": "FADEC System Malfunction Troubleshooting",
+    "cluster_id": 8,
+    "occurrences": 2213,
+    "linked_mafs": 4666,
+    "typical_solution": "The typical fix for FADEC system malfunctions involves replacing specific components such as LH FMU NO.1, PANEL 5LS3, and LH NIPCU, along with manufacturing and soldering tasks. Patterns show recurring issues like FOD (Foreign Object Damage) and corrosion, suggesting environmental factors contribute to failures. Maintainers should start by conducting thorough inspections for contamination and performing voltage checks on battery power. To enhance efficiency, standardizing inspection protocols and ensuring ready availability of replacement parts can reduce downtime and streamline the maintenance process.",
+    "solution_breakdown": {
+      "replace": 40.0,
+      "inspect": 33.3,
+      "manufactured and soldered": 6.7,
+      "painting": 6.7,
+      "checked": 6.7,
+      "paint application": 6.7
+    },
+    "parts_commonly_involved": [
+      "001-008690-0001",
+      "001-008696-0103",
+      "1008939G-10",
+      "10738000-107"
+    ],
+    "average_manhours": 26.3,
+    "sample_tar_jcns": [
+      "fcq087437",
+      "FCQ219172",
+      "FCQ247141",
+      "GC4239328"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "REPLACED",
+        "component": "LH FMU NO.1",
+        "reference": "IETM SSS 2863"
+      },
+      {
+        "action": "manufactured and soldered",
+        "component": "ICS long cord 50 ft",
+        "reference": "Phoenix IETMS Maintenance Procedures and NA 01-1A-23"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "PANEL 5LS3",
+        "reference": "IETM SSS 5741"
+      },
+      {
+        "action": "PAINTING",
+        "component": "WIA",
+        "reference": "01-1A-509"
+      },
+      {
+        "action": "checked",
+        "component": "stray voltage checks on battery power",
+        "reference": "SSS 6321"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "LH NIPCU",
+        "reference": "IETMS SSS:3085"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "V22 RUDDER",
+        "reference": "A1-V22AB-TIS-000 S/S/S 5542 AND NA 01-1A-16"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "RH HUB ASSEMBLY",
+        "reference": "SSS 6222"
+      },
+      {
+        "action": "inspected",
+        "component": "area and gear",
+        "reference": "MV-22 IETMS"
+      },
+      {
+        "action": "inspected",
+        "component": "AREA",
+        "reference": "A1-V22AB-TIS-000"
+      },
+      {
+        "action": "inspected",
+        "component": "area for FOD/corrosion",
+        "reference": "SSS: 053E"
+      },
+      {
+        "action": "inspected",
+        "component": "AREA",
+        "reference": "A1-V22AB-TIS-000"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "LH GRN LE BLADE FAIRING",
+        "reference": "IETM SSS 6221"
+      },
+      {
+        "action": "PAINT APPLICATION",
+        "component": "PANEL",
+        "reference": "01-1A-509 SERIES AND 01-1A-21 (NATEC)"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "WIA 50",
+        "reference": "IETM SSS:4270"
+      }
+    ]
+  },
+  {
+    "problem": "Composite and Metal Structural Damage Repair Requests",
+    "cluster_id": 2,
+    "occurrences": 2154,
+    "linked_mafs": 4103,
+    "typical_solution": "The typical fixes involve replacing or repairing damaged components, often referencing specific manuals. Patterns show reliance on standardized procedures and documents like IETMS or SSS. A maintainer should first inspect the damage using appropriate references to determine repair feasibility. To enhance efficiency, maintainers should ensure quick access to common parts, undergo composite repair training, and use ultrasonic mapping proactively for early detection.",
+    "solution_breakdown": {
+      "replace": 33.3,
+      "remove": 20.0,
+      "installed": 6.7,
+      "installation": 6.7,
+      "performed ultrasonic damage mapping": 6.7,
+      "none": 6.7,
+      "repair": 6.7,
+      "clean": 6.7
+    },
+    "parts_commonly_involved": [
+      "1370-L283",
+      "180383-008",
+      "180383-012"
+    ],
+    "average_manhours": 23.6,
+    "sample_tar_jcns": [
+      "WB7252269",
+      "FC3252999",
+      "FC4224383",
+      "GH5248365",
+      "GH5237489"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "INSTALLED",
+        "component": "LEFT HAND COCKPIT WINDOW SEVERANCE ASSY",
+        "reference": "IETMS 9520"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "LH WHITE LEADING EDGE BLADE FAIRING",
+        "reference": "IETM 6221"
+      },
+      {
+        "action": "INSTALLATION",
+        "component": "ATAF APAF AFF ACF",
+        "reference": "MCN: 1OO30DZ, PEMA 6916"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "LH COCKPIT SIDE WINDOW",
+        "reference": "SSS 5630"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "LEFT HAND COCKPIT WINDOW TLX LINES",
+        "reference": "IETM SSS:5630"
+      },
+      {
+        "action": "PERFORMED ULTRASONIC DAMAGE MAPPING",
+        "component": "PANEL 7RT2 ZONE B",
+        "reference": "SSS 5348/SMP0022M1"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "CO-PILOT SEAT",
+        "reference": "S/S/S 2501"
+      },
+      {
+        "action": "None",
+        "component": "marked holes",
+        "reference": "None"
+      },
+      {
+        "action": "REPLACE",
+        "component": "DUCT VANE ASSEMBLY (ZONE 1)",
+        "reference": "A1-V22AB-TIS-000 S/S/S: 7852"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "WIA 56 FOR FOM TO REPLACE RH PRGB",
+        "reference": "PEAM USED 45904. ATAF. APAF. AFF. ACF"
+      },
+      {
+        "action": "REPLACED",
+        "component": "PANEL 6RI7B",
+        "reference": "SSS 5422"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "DRAIN CUP AND ADHERED SEAL",
+        "reference": "V22 IETMS SSS 7161"
+      },
+      {
+        "action": "REPAIR",
+        "component": "CRACK IN ZONE 3B",
+        "reference": "MV22 IETMS SSS 6211"
+      },
+      {
+        "action": "Cleaned, Inspect, Composite repairs, Fabricated and installed, Micro Spotweld repair, Repaired",
+        "component": "Panel, holes, skin, ribs, flanges, Rib Flange, AFT Channel, AFT Panel Assy, FWD Panel Assy, Fairing Assy, side panel",
+        "reference": "NA 01-1A-21, NA 01-1A-34, A1-V22AB-TIS-000, LES CP 71-12-PP-683-RB"
+      }
+    ]
+  },
+  {
+    "problem": "Component Failures and Intermitent Faults",
+    "cluster_id": 9,
+    "occurrences": 2131,
+    "linked_mafs": 5140,
+    "typical_solution": "To address component failures and intermittent faults effectively:\n\n1. **Typical Fixes**: The common approach involves \"REMOVED AND REPLACED\" or \"REMOVED AND REINSTALLED\" actions, indicating a focus on part replacement when issues arise.\n\n2. **Patterns in Resolution**: Solutions frequently reference standardized documents (IETM, PEMA) and diagnostic tools (BCM), highlighting the importance of following established procedures for consistent outcomes.\n\n3. **Initial Steps for Maintainers**: Begin with inspections using Eddy Current or visual checks to identify wear, corrosion, or damage before considering replacements. This proactive approach can prevent failures.\n\n4. **Efficiency Recommendations**: Cross-train staff to handle diverse tasks and ensure quick access to manuals and diagnostic tools. Early identification of common issues through standardized methods can reduce downtime and the need for extensive repairs.\n\nBy focusing on these strategies, maintenance teams can enhance efficiency and consistency in addressing aircraft component issues.",
+    "solution_breakdown": {
+      "replace": 20.0,
+      "inspect": 20.0,
+      "remove": 13.3,
+      "bcm-9": 13.3,
+      "bcm-8 reccomend": 6.7,
+      "sanding": 6.7,
+      "complied with": 6.7,
+      "recommend": 6.7,
+      "repair": 6.7
+    },
+    "parts_commonly_involved": [
+      "001-008426-0101",
+      "001-008690-0001",
+      "001-008696-0103",
+      "1008939G-10",
+      "1024327G-3",
+      "125150-001"
+    ],
+    "average_manhours": 17.2,
+    "sample_tar_jcns": [
+      "FCQ230A04",
+      "SL3262497",
+      "FCB268240",
+      "FCC224009",
+      "GC4133104"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "RH FADEC A HARNESS",
+        "reference": "IETM 7611 UTILIZING PEMA 91790"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "ALL ASSOCIATED COMPONENTS WITH THE REMOVAL OF THE LH ENG",
+        "reference": "IETM SSS: 6321 UTILIZING PEMA 63"
+      },
+      {
+        "action": "BCM-8 RECCOMEND",
+        "component": "MOTHERBOARD PN 30117-0404-01",
+        "reference": "RTCASS TESTING PROCEDURES"
+      },
+      {
+        "action": "sanding",
+        "component": "Copper Plate",
+        "reference": "FST's"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "LH ENGINE FIRE BOTTLE",
+        "reference": "A1-V22AB-TIS-000 SSS: 2621"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "RUDDER FORMER",
+        "reference": "SSS 5541.APAF ATAF AFF ACF.PEMA 410"
+      },
+      {
+        "action": "BCM-9",
+        "component": "Rod End",
+        "reference": "TAR 99347"
+      },
+      {
+        "action": "BCM-9",
+        "component": "ASSET",
+        "reference": "TAR 97994"
+      },
+      {
+        "action": "PERFORMED EDDY CURRENT INSPECTION",
+        "component": "V-22 COOLING PANEL SN: 011",
+        "reference": "S/S/S 5110 AND TAR #99010"
+      },
+      {
+        "action": "COMPLIED WITH",
+        "component": "AFC-226 REV B",
+        "reference": "BELL BOEING FIELD TEAM"
+      },
+      {
+        "action": "REPLACED",
+        "component": "PANEL 6LI8",
+        "reference": "SSS78"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "BEARING BORES",
+        "reference": "V22 IETMS SSS 5412 AND 01-1A-16-2"
+      },
+      {
+        "action": "recommend",
+        "component": "BCM",
+        "reference": "TAR #99522"
+      },
+      {
+        "action": "REMOVED AND REPAIRED",
+        "component": "COOLING PANEL",
+        "reference": "V-22 IETMS S/S/S 5110, S/S/S 1230, AND TAR #99009"
+      },
+      {
+        "action": "PERFORMED EDDY CURRENT INSPECTION",
+        "component": "V-22 COOLING PANEL SN: 111",
+        "reference": "S/S/S 5110 AND TAR #99009"
+      }
+    ]
+  },
+  {
+    "problem": "Test Equipment and Procedure Requests Failure",
+    "cluster_id": 6,
+    "occurrences": 1821,
+    "linked_mafs": 3607,
+    "typical_solution": "The \"Test Equipment and Procedure Requests Failure\" issue is typically resolved by replacing faulty components or repairing specific wiring. Patterns show reliance on IETM SSS tasks and other maintenance documents, with common actions like reseating connections. To address this efficiently, maintainers should first verify test equipment functionality and calibration, then consult relevant IETM procedures. Maintaining an inventory of frequently replaced parts and ensuring regular calibration of test equipment can enhance efficiency and reduce downtime.",
+    "solution_breakdown": {
+      "replace": 53.3,
+      "inspect": 13.3,
+      "prepared": 6.7,
+      "repair": 6.7,
+      "treated": 6.7,
+      "verified": 6.7
+    },
+    "parts_commonly_involved": [
+      "001-007678-103",
+      "001-007722-2103",
+      "001-008426-0101",
+      "001-008696-0103",
+      "001-008718-0002",
+      "1008939G-10",
+      "1008939G-11",
+      "105E7322G6"
+    ],
+    "average_manhours": 17.4,
+    "sample_tar_jcns": [
+      "FCQ250295",
+      "FCC216527",
+      "FC3116342"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "GEN 4",
+        "reference": "IETM SSS 2420"
+      },
+      {
+        "action": "prepared",
+        "component": "AC (Aircraft)",
+        "reference": "PMI (Pre-Flight Maintenance Inspection)"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "RH FADEC A HARNESS ASSEMBLY",
+        "reference": "IETM SSS: 7000"
+      },
+      {
+        "action": "REPLACED",
+        "component": "ROTOR TIP LIGHT PANEL ASSY",
+        "reference": "IETMS SSS: 3340"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "RH POSITION LIGHT ASSEMBLY",
+        "reference": "IETM SSS: 3340"
+      },
+      {
+        "action": "REPAIRED",
+        "component": "WIRE V75P24 RD18 ON HARNESS W971 (PN 901-376-826-123) ON CONNECTOR 4296UP84",
+        "reference": "NAVAIR 01-1A-505-1"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "LH NIPCU",
+        "reference": "IETM SSS 3850"
+      },
+      {
+        "action": "TREATED",
+        "component": "NLG HW",
+        "reference": "IAW 01-1A-509 UTILIZING PEMA 47039"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "CONTROL DISPLAY UNIT",
+        "reference": "IETM SSS 4630"
+      },
+      {
+        "action": "REMOVED AND REPLACED, RESEATED",
+        "component": "W/C 65B, CCA A1, CCA A2",
+        "reference": "A1-V22AB-TIS-000"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "CONTROL DISPLAY UNIT",
+        "reference": "IETM TASK SSS: 4630"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "PHASE B",
+        "reference": "IETMS"
+      },
+      {
+        "action": "verified",
+        "component": "PHASE B INSPECTION",
+        "reference": "A1-V22AB-TIS-000"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "ATAF APAF AREA",
+        "reference": "SSS 054B"
+      }
+    ]
+  },
+  {
+    "problem": "Aircraft Component Failure and Maintenance Requests",
+    "cluster_id": 4,
+    "occurrences": 1594,
+    "linked_mafs": 2347,
+    "typical_solution": "The typical fixes involve a mix of inspections, operational checks, repairs, replacements, and reinstallation of specific components. Patterns suggest frequent issues with corrosion prevention, drive systems, and engine-related components, often resolved through standardized procedures like preservation compliance or component replacement. Maintenance staff should prioritize inspections and operational checks to identify early signs of failure. To improve efficiency, standardize common fixes, create checklists for recurring issues, and leverage data on high-frequency failures to schedule proactive maintenance, reducing downtime and manhours.",
+    "solution_breakdown": {
+      "inspect": 26.7,
+      "replace": 26.7,
+      "remove": 13.3,
+      "complied with preservation level ii": 6.7,
+      "performed operational check": 6.7,
+      "repair": 6.7,
+      "sys op check good": 6.7,
+      "rebaselined": 6.7
+    },
+    "parts_commonly_involved": [
+      "001-008690-0001",
+      "001-008696-0103",
+      "100-193-6-12",
+      "115E1987G24",
+      "115E5661G2"
+    ],
+    "average_manhours": 26.3,
+    "sample_tar_jcns": [
+      "GBN243113",
+      "gbn270299",
+      "GH8035564",
+      "GH8233329",
+      "GBN127169"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "COMPLIED WITH PRESERVATION LEVEL II",
+        "component": "PEMA-69",
+        "reference": "SSS 0410"
+      },
+      {
+        "action": "PERFORMED OPERATIONAL CHECK",
+        "component": "TCAS",
+        "reference": "SSS 3441"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "V-22 AIRCRAFT",
+        "reference": "INTRM CODE: 74 BASIC NO: 0199 REV LTR: AMEND: PART: KIT NO: 00"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "V-22 AIRCRAFT",
+        "reference": "INTRM CODE: 74 BASIC NO: 0199 REV LTR: AMEND: PART: KIT NO: 00"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "AREA FOD/CORROSION FREE AND SECURE",
+        "reference": "BASIC NO: 0199, REV LTR: L"
+      },
+      {
+        "action": "COMPLIED WITH EXCESSIVE VIBRATIONS-DRIVE SYSTEM CONDITIONAL INSPECTION",
+        "component": "DRIVE SYSTEM",
+        "reference": "SSS 0550"
+      },
+      {
+        "action": "REPAIRED",
+        "component": "LEFT H-V FITTING AFT ATTACH FITTING ASSEMBLY",
+        "reference": "TAR # 99282"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "RIGHT HAND PEN DAMP ASSY FOR PRGB",
+        "reference": "IETMS S/S/S 6300 PEMA 3235 ATAF APAF AFF"
+      },
+      {
+        "action": "REPLACEMENT",
+        "component": "AERIAL RETRACTABLE REFUEL PROBE NOZZLE",
+        "reference": "MCN 4HJQDZL"
+      },
+      {
+        "action": "SYS OP CHECK GOOD",
+        "component": "Not explicitly specified, but implied to be related to the system checked as per IETM SSS 7162",
+        "reference": "IETM SSS 7162"
+      },
+      {
+        "action": "rebaselined",
+        "component": "RH ENGINE",
+        "reference": "SSS 1210 USING PEMA 38543"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "LEFT PROPROTOR HUB ASSEMBLY",
+        "reference": "IETMS SSS 6321"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "LH FMU",
+        "reference": "IETM SSS:2863"
+      },
+      {
+        "action": "Removed and replaced",
+        "component": "A1 and A4",
+        "reference": "TAR 97878"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "PILOT SEAT",
+        "reference": "SSS 2510"
+      }
+    ]
+  },
+  {
+    "problem": "Maintenance and Repair Procedures Requests",
+    "cluster_id": 3,
+    "occurrences": 1411,
+    "linked_mafs": 3352,
+    "typical_solution": "The typical fix involves replacing or removing components, often following specific inspection schedules and referencing IETM or PEMA codes. Patterns show a reliance on standardized procedures for inspections, replacements, and calibrations. A maintainer should first inspect components using the provided references before proceeding with repairs. To enhance efficiency, standardize common maintenance tasks and ensure quick access to necessary parts and documentation.",
+    "solution_breakdown": {
+      "replace": 33.3,
+      "inspect": 26.7,
+      "repair": 6.7,
+      "manufacture": 6.7,
+      "tested and calibrated": 6.7,
+      "rebase": 6.7,
+      "remove": 6.7
+    },
+    "parts_commonly_involved": [
+      "001-007678-103",
+      "001-008690-0001",
+      "001-008696-0103",
+      "10069460-102",
+      "132-008",
+      "179730-0006"
+    ],
+    "average_manhours": 16.8,
+    "sample_tar_jcns": [
+      "GHS236P01",
+      "FDD274601",
+      "FC4134030",
+      "GC5231247",
+      "FCG243890"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "COMPLIED WITH 56 DAY INSPECTION",
+        "component": "ATAF APAF AFF ACF",
+        "reference": "SSS 052A"
+      },
+      {
+        "action": "REPLACED",
+        "component": "CFG 1",
+        "reference": "IETM SSS 2420"
+      },
+      {
+        "action": "inspected",
+        "component": "both LH and RH proprotor gearboxes (PRGB), debris sensors, mag plugs, mag plug screens, and oil filters",
+        "reference": "NAVAIR A1-V22AB-TIS-000 V-22 IETM O-level tasks S/S/S 6321/6322, PEMA 92946"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "WIA 57",
+        "reference": "IETMS SSS 4270"
+      },
+      {
+        "action": "REPLACED",
+        "component": "GEN 2",
+        "reference": "IETMS SSS:2420 PEMA 01"
+      },
+      {
+        "action": "REPAIRABLE CANCELED",
+        "component": "MAF",
+        "reference": "MCN: 00GNZQJ"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "A2 CCA",
+        "reference": "PEMA 4CTTC45919, RTCASS TPS 54.0"
+      },
+      {
+        "action": "MANUFACTURE",
+        "component": "W678",
+        "reference": "EWS FIGURE W678, NA 01-1A-505-1"
+      },
+      {
+        "action": "tested and calibrated",
+        "component": "checks RFI",
+        "reference": "FRC procedures and TAR 99759"
+      },
+      {
+        "action": "rebase",
+        "component": "DD 1599.4",
+        "reference": "NEW DD 1661.6"
+      },
+      {
+        "action": "REMOVED AND TURNED IN",
+        "component": "LH RED SPINNER FAIRING",
+        "reference": "MCN: 4MCAVZA JCN: GBD296492 PEMA G24925 APAF. ATAF."
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "RIGHT HAND RED SPINNER FAIRING",
+        "reference": "SSS:62"
+      },
+      {
+        "action": "NDI (Non-Destructive Inspection)",
+        "component": "INLET ASSY",
+        "reference": "01-1A-16-2"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "WIA-56",
+        "reference": "01-1A-16-2"
+      }
+    ]
+  },
+  {
+    "problem": "Sealing and Structural Integrity Issues",
+    "cluster_id": 7,
+    "occurrences": 1339,
+    "linked_mafs": 3347,
+    "typical_solution": "To address sealing and structural integrity issues efficiently:\n\n1. **Inspect First**: Begin with thorough inspections using standardized procedures (e.g., SSS and PEMA references) to identify the root cause accurately.\n\n2. **Replace or Repair**: Based on inspection findings, replace faulty components like bearings, grommets, or CDUs, or repair as needed, following detailed guidelines to ensure effectiveness.\n\n3. **Standardize Processes**: Use checklists and established procedures (e.g., V22 IETMS SSS) for consistency and thoroughness, reducing the chance of oversight.\n\n4. **Maintain Inventory**: Keep common replacement parts readily available to minimize downtime and avoid delays caused by waiting for supplies.\n\n5. **Follow Guidelines**: Ensure all maintenance activities adhere to specified references to prevent further issues and maintain structural integrity effectively.\n\nBy following these steps, maintainers can address problems efficiently, reducing manhours and resource expenditure.",
+    "solution_breakdown": {
+      "replace": 53.3,
+      "inspect": 20.0,
+      "transfer": 6.7,
+      "returned": 6.7,
+      "remove": 6.7
+    },
+    "parts_commonly_involved": [
+      "001-008690-0001",
+      "001-008696-0103",
+      "115E1987G24",
+      "115E5661G2",
+      "132-008",
+      "1370-L283"
+    ],
+    "average_manhours": 19.4,
+    "sample_tar_jcns": [
+      "FCQ195194",
+      "FCG154193",
+      "FC3228284",
+      "FCB319910"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "transfer",
+        "component": "MCN",
+        "reference": ""
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "LH SEARCHLIGHT",
+        "reference": "SSS:3340"
+      },
+      {
+        "action": "REPLACED, REPAIRED",
+        "component": "BEARINGS, STATIC DISCHARGE BASES, COMPOSITE DAMAGE",
+        "reference": "V22 IETMS SSS 5541"
+      },
+      {
+        "action": "REPLACED, REPAIRED",
+        "component": "GROMMETS, DOUBLED, DOOR, WEAR",
+        "reference": "V22 IETMS SSS 5421"
+      },
+      {
+        "action": "REMOVAL AND REPLACEMENT",
+        "component": "CONTROL DISPLAY UNIT",
+        "reference": "(MCN: 121N2DH JCN: FCB029500) CDU BRICKED MAF"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "CDU",
+        "reference": "SSS 4630"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "PHASE 'D' HUB",
+        "reference": "SSS 054D"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "ATAF APAF AFF",
+        "reference": "SSS 052A"
+      },
+      {
+        "action": "returned",
+        "component": "INLET ASSY",
+        "reference": ""
+      },
+      {
+        "action": "replaced",
+        "component": "BCM 9",
+        "reference": "V-22 IETMS SSS: 6221"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "LEFT PRGB DEBRIS",
+        "reference": "SSS 0550"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "LH BIRDCAGE",
+        "reference": "SSS 6321, PEMA 6916"
+      },
+      {
+        "action": "REPLACEMENT",
+        "component": "LH PRGB",
+        "reference": "SSS 6300 ATAF APAF AFF ACF PEMA 3954"
+      },
+      {
+        "action": "REPLACED, REPAIRED",
+        "component": "HEAT SHIELD, HEATER BLANKET, ALL NECESARRY CONSUMABLES AND FASTENERS, FINS ON TOP OF DUCT ASSEMBLY",
+        "reference": "V22 IETMS SSS: 7852"
+      }
+    ]
+  },
+  {
+    "problem": "Water Intrusion and Corrosion Prevention Procedures",
+    "cluster_id": 0,
+    "occurrences": 927,
+    "linked_mafs": 1624,
+    "typical_solution": "For water intrusion and corrosion prevention, the typical fix involves inspections, cleaning, grease application, sealing, painting, or component replacement. Patterns show frequent use of standardized procedures (e.g., TSII-81915, PEMA 91927) targeting high-risk areas like engines, wings, and panels. A maintainer should start with thorough inspections using these references to identify early signs of water intrusion or corrosion. To improve efficiency, prioritize standardizing effective solutions, reducing redundant actions, and focusing on proactive measures like regular engine washes and grease applications to prevent recurring issues.",
+    "solution_breakdown": {
+      "remove": 20.0,
+      "inspect": 13.3,
+      "replace": 13.3,
+      "performed": 6.7,
+      "no further action": 6.7,
+      "prepared": 6.7,
+      "treated": 6.7,
+      "performed ultrasonic": 6.7,
+      "sealed and painted": 6.7,
+      "performed tsii -81915 ground turn": 6.7
+    },
+    "parts_commonly_involved": [
+      "001-007678-103",
+      "10738800-3",
+      "1370-L283",
+      "180383-008",
+      "180383-012",
+      "19E0142-1"
+    ],
+    "average_manhours": 22.9,
+    "sample_tar_jcns": [
+      "GC4241226",
+      "FCC014038",
+      "FCB025223"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "PERFORMED 45-DAY GROUND TURN, INSPECTIONS, GREASE APPLICATION, ENGINE WASH",
+        "component": "SWASHPLATE, PENDAMP, ENGINE",
+        "reference": "TSII-81915, PEMA 91927"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "FOD/CORROSION FREE PEMA#91927 FAL/TFOA WATCHLISTS",
+        "reference": "SSS TSII-81915"
+      },
+      {
+        "action": "PERFORMED",
+        "component": "LH PRGB FOMS",
+        "reference": "IETMS SSS 6321"
+      },
+      {
+        "action": "NO FURTHER ACTION",
+        "component": "",
+        "reference": "TAR 96816"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "FIRE BOTTLE",
+        "reference": "SSS: 2621"
+      },
+      {
+        "action": "prepared",
+        "component": "AC (Aircraft)",
+        "reference": "PMI"
+      },
+      {
+        "action": "TREATED",
+        "component": "RIGHT HAND WING SPAR LEADING EDGE",
+        "reference": "01-1A-509"
+      },
+      {
+        "action": "REPLACEMENT",
+        "component": "PROPROTOR GEARBOX",
+        "reference": "MCN: 2RQ9627"
+      },
+      {
+        "action": "Removed and Reinstalled",
+        "component": "LH Engine",
+        "reference": "PEMA 33"
+      },
+      {
+        "action": "REMOVED AND REINSTALLED",
+        "component": "LH PRGB COMPONENTS",
+        "reference": "PEMA USED 015"
+      },
+      {
+        "action": "REMOVED AND REPLACED",
+        "component": "CONVERTER 3",
+        "reference": "SSS 2430"
+      },
+      {
+        "action": "Performed ultrasonic",
+        "component": "panel",
+        "reference": ""
+      },
+      {
+        "action": "SEALED AND PAINTED",
+        "component": "PANEL 7LS3",
+        "reference": "01-1A-509 & SSS 1230"
+      },
+      {
+        "action": "PERFORMED TSII -81915 GROUND TURN",
+        "component": "NOT SPECIFIED",
+        "reference": "PEMA 92245"
+      }
+    ]
+  },
+  {
+    "problem": "Proprotor Gearbox Debris Detection Issues",
+    "cluster_id": 1,
+    "occurrences": 726,
+    "linked_mafs": 1045,
+    "typical_solution": "The typical fix involves inspecting components like ATAF, APAF, and debris sensors for corrosion or foreign object damage (FOD) and replacing parts such as LH/RH PRGB if issues are found. Patterns show frequent use of PEMA standards and inspections of strainers and sensors. A maintainer should first conduct a detailed inspection using SSS 6321/6322 and PEMA guidelines to identify debris or corrosion before proceeding. To improve efficiency, standardize inspection protocols and ensure maintainers are trained on relevant procedures like chip burn inspections and preservation storage checks.",
+    "solution_breakdown": {
+      "inspect": 60.0,
+      "replace": 6.7,
+      "complied with chip burn insp": 6.7,
+      "complied with": 6.7,
+      "ataf apaf aff area corrosion free. pema 3 uttilized left and right prbg strainers 1,2,3,4 and debris sensors 1,2,3 safety wired": 6.7,
+      "determined out of limits": 6.7,
+      "performed system operational checks": 6.7
+    },
+    "parts_commonly_involved": [
+      "1370-L283",
+      "3205AS107-3",
+      "3392AS2624",
+      "3392AS2706",
+      "3392AS2715",
+      "64510-105",
+      "794HN450-6",
+      "901-011-420-101",
+      "901-044-001-111",
+      "901-044-001-113"
+    ],
+    "average_manhours": 31.5,
+    "sample_tar_jcns": [
+      "GHD260476",
+      "GC4266186",
+      "FCK365451",
+      "GC6288206",
+      "GH4283186"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "REPLACED",
+        "component": "LH PRGB",
+        "reference": "SSS: 6321 AREA CORROSION AND FOD FREE PEMA 090"
+      },
+      {
+        "action": "inspected",
+        "component": "ATAF, APAF, AFF, ACF, TFOA/FAL",
+        "reference": "SSS 053D"
+      },
+      {
+        "action": "COMPLIED WITH CHIP BURN INSP",
+        "component": "LH PRGB",
+        "reference": "SSS 6300, FAL/TFOA"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "(UNS 1000000)",
+        "reference": "TAR-84471"
+      },
+      {
+        "action": "COMPLIED WITH",
+        "component": "PROPROTOR GEARBOX DEBRIS",
+        "reference": "SSS 053D"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "LH/RH DEBRIS",
+        "reference": "SSS 6321 & SSS 6322 PEMA 93880 ATAF APAF ACF AFF"
+      },
+      {
+        "action": "ATAF APAF AFF AREA CORROSION FREE. PEMA 3 UTTILIZED LEFT AND RIGHT PRBG STRAINERS 1,2,3,4 AND DEBRIS SENSORS 1,2,3 SAFETY WIRED",
+        "component": "LEFT AND RIGHT PRBG STRAINERS 1,2,3,4 AND DEBRIS SENSORS 1,2,3",
+        "reference": "AFB -200 REV A AND TAR - 85250, 1P1Q9WV AND 1P1Q9WW"
+      },
+      {
+        "action": "determined out of limits",
+        "component": "RH PRGB",
+        "reference": "MCN: 0W9VGLF AND TAR #91599"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "PRGB CHIP COLLECTORS AND DETECTORS ATAF APAF AREA",
+        "reference": "TD AFB-200 REV A"
+      },
+      {
+        "action": "COMPLIED WITH INSPECTION",
+        "component": "7 DAY PRESERVATION STORAGE",
+        "reference": "A1-V22AB-TIS-000"
+      },
+      {
+        "action": "COMPLIED WITH INSPECTION",
+        "component": "7 DAY PRESERVATION STORAGE",
+        "reference": "A1-V22AB-TIS-000"
+      },
+      {
+        "action": "COMPLIED WITH INSPECTION",
+        "component": "7 DAY PRESERVATION STORAGE",
+        "reference": "A1-V22AB-TIS-000"
+      },
+      {
+        "action": "PERFORMED SYSTEM OPERATIONAL CHECKS",
+        "component": "SYSTEM",
+        "reference": "A1-V22AB-TIS SSS7512"
+      },
+      {
+        "action": "inspected",
+        "component": "proporator gearbox debris area (ATAF, APAF)",
+        "reference": "SSS 053"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "LH/RH DEBRIS",
+        "reference": "IAW SSS 6321 & 6322 PEMA 93880"
+      }
+    ]
+  },
+  {
+    "problem": "PCA Ball Screw Wear Test Failure",
+    "cluster_id": 5,
+    "occurrences": 609,
+    "linked_mafs": 1525,
+    "typical_solution": "The PCA Ball Screw Wear Test Failure issue primarily involves inspecting for Foreign Object Damage (FOD) and corrosion in specific aircraft components such as PEMA 4066 and the ATAF APAF area. The typical fix is a detailed inspection following standard procedures like those referenced in SSS 053D, focusing on these areas to identify and address potential wear causes. A maintainer should initiate with these inspections, checking for FOD and corrosion as outlined. To enhance efficiency, prioritize high-risk components during inspections and ensure quick access to necessary tools and documentation. Additionally, consider preventive maintenance on frequently affected parts like PEMA 4066 to reduce future issues.",
+    "solution_breakdown": {
+      "inspect": 86.7,
+      "inspec": 6.7,
+      "complied with": 6.7
+    },
+    "parts_commonly_involved": [
+      "179250-0003",
+      "3205AS109-12",
+      "3392AS2706",
+      "3392AS2715",
+      "41010810-106",
+      "42555-400",
+      "42555-401",
+      "42555-43",
+      "42555-52"
+    ],
+    "average_manhours": 9.3,
+    "sample_tar_jcns": [
+      "GH5127430",
+      "FCG230501",
+      "FC3124184",
+      "FCC344906",
+      "fc3233487"
+    ],
+    "solutions_extracted": [
+      {
+        "action": "INSPECTED",
+        "component": "70 FLIGHT HOUR INSPECTION",
+        "reference": ""
+      },
+      {
+        "action": "inspected",
+        "component": "PEMA 4066, ATAF APAF AREA",
+        "reference": "SSS 053D"
+      },
+      {
+        "action": "inspected",
+        "component": "full system",
+        "reference": "A1-V22AB-MRC-000"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "ATAF APAF AREA",
+        "reference": "SSS 053D"
+      },
+      {
+        "action": "inspected",
+        "component": "ATAF APAF AFF ACF",
+        "reference": "SSS 053D"
+      },
+      {
+        "action": "COMPLIED WITH INSPECTION",
+        "component": "PEMA 95293",
+        "reference": "SSS 053D"
+      },
+      {
+        "action": "INSPEC",
+        "component": "ATAF APAF AFF ACF",
+        "reference": "SSS 053D"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "AREA FOD AND CORROSION",
+        "reference": "SSS 053D PEMA SN 0059"
+      },
+      {
+        "action": "inspected",
+        "component": "area for FOD and corrosion",
+        "reference": "SSS: 053D, PEMA 42559"
+      },
+      {
+        "action": "COMPLIED WITH",
+        "component": "70 FLIGHT HOUR AIRCRAFT INSPECTION",
+        "reference": "053D PEMA FL05 AFF,ACF, ATAF, APAF"
+      },
+      {
+        "action": "COMPLIED WITH INSPECTION",
+        "component": "AREA FOD/CORROSION",
+        "reference": "SSS 052A"
+      },
+      {
+        "action": "inspected",
+        "component": "area for FOD/corrosion",
+        "reference": "IAW 052A, PEMA 47035"
+      },
+      {
+        "action": "inspected",
+        "component": "PEMA 2536 AREA",
+        "reference": "A1-V22AB-MRC-000 SSS:053D"
+      },
+      {
+        "action": "COMPLIED WITH 70 HOUR INSPECTION",
+        "component": "ATAF APAF AFF ACF TFOA/FAL",
+        "reference": "SSS 053D, PEMA 2947"
+      },
+      {
+        "action": "INSPECTION",
+        "component": "ATAF APAF AFF ACF",
+        "reference": "70 FLIGHT HOUR INSPECTION"
+      }
+    ]
+  }
+]

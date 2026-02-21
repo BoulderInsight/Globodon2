@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TAR-MAF Problem-to-Solution Analyzer Dashboard</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg-primary: #0f0f1a;
+    --bg-secondary: #1a1a2e;
+    --bg-card: #16213e;
+    --bg-card-hover: #1a2745;
+    --border: #2a2a4a;
+    --text-primary: #e0e0ec;
+    --text-secondary: #a0a0b8;
+    --text-muted: #6c6c8a;
+    --accent: #4fc3f7;
+    --accent-dim: #2a7fa8;
+    --green: #66bb6a;
+    --yellow: #ffa726;
+    --red: #ef5350;
+    --purple: #ab47bc;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .dashboard-header {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 2rem 2rem 1.5rem;
+    text-align: center;
+  }
+  .dashboard-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+    background: linear-gradient(135deg, var(--accent), #e0e0ec);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .dashboard-header p {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+
+  .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  .stats-bar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem 1rem;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .stat-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-dim);
+  }
+  .stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.2rem;
+  }
+  .stat-card.badge-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #1a2740, #0f3460);
+    border-color: var(--accent-dim);
+  }
+  .stat-card.badge-card .stat-value {
+    font-size: 1rem;
+    color: var(--green);
+    letter-spacing: 0.02em;
+  }
+  .stat-card.badge-card .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+  }
+
+  .section-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--accent-dim);
+    color: var(--text-primary);
+  }
+
+  .chart-container {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    position: relative;
+    width: 100%;
+  }
+  .chart-container canvas { max-height: 420px; }
+
+  .problem-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  .problem-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1.2rem;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+    cursor: default;
+  }
+  .problem-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-dim);
+    box-shadow: 0 4px 20px rgba(79, 195, 247, 0.08);
+  }
+  .problem-card h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+  .card-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+  }
+  .card-stat {
+    text-align: center;
+    padding: 0.5rem 0.3rem;
+    background: rgba(79, 195, 247, 0.05);
+    border-radius: 6px;
+  }
+  .card-stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .card-stat-label {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .typical-solution {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 0.8rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .details-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--accent);
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    width: 100%;
+    text-align: center;
+  }
+  .details-toggle:hover {
+    background: rgba(79, 195, 247, 0.08);
+    border-color: var(--accent-dim);
+  }
+  .card-details {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+  }
+  .card-details.open { max-height: 600px; }
+  .card-details-inner { padding-top: 0.8rem; }
+  .breakdown-title {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.4rem;
+  }
+  .breakdown-bar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.3rem;
+    font-size: 0.8rem;
+  }
+  .breakdown-label {
+    flex: 0 0 180px;
+    color: var(--text-secondary);
+    text-transform: capitalize;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .breakdown-track {
+    flex: 1;
+    height: 8px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    margin: 0 0.5rem;
+    overflow: hidden;
+  }
+  .breakdown-fill {
+    height: 100%;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--accent), var(--accent-dim));
+    transition: width 0.5s ease;
+  }
+  .breakdown-pct {
+    flex: 0 0 40px;
+    text-align: right;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+  }
+  .parts-list { margin-top: 0.6rem; }
+  .parts-list span {
+    display: inline-block;
+    background: rgba(79, 195, 247, 0.1);
+    border: 1px solid rgba(79, 195, 247, 0.2);
+    border-radius: 4px;
+    padding: 0.15rem 0.5rem;
+    font-size: 0.75rem;
+    color: var(--accent);
+    margin: 0.15rem 0.2rem 0.15rem 0;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    margin-bottom: 2rem;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem;
+  }
+  thead th {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    padding: 0.9rem 1rem;
+    text-align: left;
+    border-bottom: 2px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  tbody tr {
+    border-bottom: 1px solid rgba(42, 42, 74, 0.5);
+    transition: background 0.15s;
+  }
+  tbody tr:hover { background: rgba(79, 195, 247, 0.04); }
+  tbody td {
+    padding: 0.8rem 1rem;
+    vertical-align: top;
+  }
+  .part-number {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-weight: 600;
+    color: var(--accent);
+    font-size: 0.82rem;
+  }
+  .failure-count {
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+  .wuc-tags { display: flex; flex-wrap: wrap; gap: 0.25rem; }
+  .wuc-tag {
+    display: inline-block;
+    background: rgba(171, 71, 188, 0.12);
+    border: 1px solid rgba(171, 71, 188, 0.25);
+    border-radius: 3px;
+    padding: 0.1rem 0.4rem;
+    font-size: 0.72rem;
+    color: var(--purple);
+    font-family: 'SF Mono', 'Fira Code', monospace;
+  }
+  .ai-summary {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+    max-width: 400px;
+  }
+
+  tr.severity-high { background: rgba(239, 83, 80, 0.08); }
+  tr.severity-high:hover { background: rgba(239, 83, 80, 0.14); }
+  tr.severity-medium { background: rgba(255, 167, 38, 0.06); }
+  tr.severity-medium:hover { background: rgba(255, 167, 38, 0.12); }
+  tr.severity-low { background: rgba(102, 187, 106, 0.04); }
+  tr.severity-low:hover { background: rgba(102, 187, 106, 0.08); }
+
+  .dashboard-footer {
+    text-align: center;
+    padding: 2rem;
+    color: var(--text-muted);
+    font-size: 0.8rem;
+    border-top: 1px solid var(--border);
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .container { padding: 1rem; }
+    .dashboard-header { padding: 1.5rem 1rem; }
+    .dashboard-header h1 { font-size: 1.3rem; }
+    .stats-bar { grid-template-columns: repeat(2, 1fr); }
+    .problem-cards { grid-template-columns: 1fr; }
+    .breakdown-label { flex: 0 0 120px; }
+    table { font-size: 0.78rem; }
+    thead th, tbody td { padding: 0.6rem 0.5rem; }
+    .ai-summary { max-width: 250px; }
+  }
+  @media (max-width: 480px) {
+    .stats-bar { grid-template-columns: 1fr; }
+    .stat-value { font-size: 1.6rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="dashboard-header">
+  <h1>TAR-MAF Problem-to-Solution Analyzer</h1>
+  <p>Aircraft maintenance intelligence -- problems discovered, solutions extracted, parts analyzed</p>
+</header>
+
+<div class="container">
+  <div class="stats-bar" id="statsBar"></div>
+
+  <h2 class="section-title">Problem-to-Solution Insights</h2>
+  <div class="chart-container">
+    <canvas id="problemChart"></canvas>
+  </div>
+  <div class="problem-cards" id="problemCards"></div>
+
+  <h2 class="section-title">Top 20 Failing Parts</h2>
+  <div class="chart-container">
+    <canvas id="partsChart"></canvas>
+  </div>
+  <div class="table-wrapper">
+    <table>
+      <thead>
+        <tr>
+          <th>Part Number</th>
+          <th>Failures</th>
+          <th>Avg Hours</th>
+          <th>Common WUCs</th>
+          <th>AI Summary</th>
+        </tr>
+      </thead>
+      <tbody id="partsTableBody"></tbody>
+    </table>
+  </div>
+</div>
+
+<footer class="dashboard-footer" id="dashFooter"></footer>
+
+<script>
+// ============================================================
+// Embedded Data
+// ============================================================
+const analysisData = [
+  {
+    problem: "FADEC System Malfunction Troubleshooting",
+    cluster_id: 8,
+    occurrences: 2213,
+    linked_mafs: 4666,
+    typical_solution: "The typical fix for FADEC system malfunctions involves replacing specific components such as LH FMU NO.1, PANEL 5LS3, and LH NIPCU, along with manufacturing and soldering tasks. Patterns show recurring issues like FOD (Foreign Object Damage) and corrosion, suggesting environmental factors contribute to failures. Maintainers should start by conducting thorough inspections for contamination and performing voltage checks on battery power. To enhance efficiency, standardizing inspection protocols and ensuring ready availability of replacement parts can reduce downtime and streamline the maintenance process.",
+    solution_breakdown: {"replace": 40.0, "inspect": 33.3, "manufactured and soldered": 6.7, "painting": 6.7, "checked": 6.7, "paint application": 6.7},
+    parts_commonly_involved: ["001-008690-0001", "001-008696-0103", "1008939G-10", "10738000-107"],
+    average_manhours: 26.3,
+    solutions_extracted: 15
+  },
+  {
+    problem: "Composite and Metal Structural Damage Repair Requests",
+    cluster_id: 2,
+    occurrences: 2154,
+    linked_mafs: 4103,
+    typical_solution: "The typical fixes involve replacing or repairing damaged components, often referencing specific manuals. Patterns show reliance on standardized procedures and documents like IETMS or SSS. A maintainer should first inspect the damage using appropriate references to determine repair feasibility. To enhance efficiency, maintainers should ensure quick access to common parts, undergo composite repair training, and use ultrasonic mapping proactively for early detection.",
+    solution_breakdown: {"replace": 33.3, "remove": 20.0, "installed": 6.7, "installation": 6.7, "performed ultrasonic damage mapping": 6.7, "none": 6.7, "repair": 6.7, "clean": 6.7},
+    parts_commonly_involved: ["1370-L283", "180383-008", "180383-012"],
+    average_manhours: 23.6,
+    solutions_extracted: 13
+  },
+  {
+    problem: "Component Failures and Intermittent Faults",
+    cluster_id: 9,
+    occurrences: 2131,
+    linked_mafs: 5140,
+    typical_solution: "The common approach involves part replacement when issues arise, with solutions frequently referencing standardized documents (IETM, PEMA) and diagnostic tools (BCM). Begin with inspections using Eddy Current or visual checks to identify wear, corrosion, or damage before considering replacements. Cross-train staff to handle diverse tasks and ensure quick access to manuals and diagnostic tools.",
+    solution_breakdown: {"replace": 20.0, "inspect": 20.0, "remove": 13.3, "bcm-9": 13.3, "bcm-8 recommend": 6.7, "sanding": 6.7, "complied with": 6.7, "recommend": 6.7, "repair": 6.7},
+    parts_commonly_involved: ["001-008426-0101", "001-008690-0001", "001-008696-0103", "1008939G-10", "1024327G-3", "125150-001"],
+    average_manhours: 17.2,
+    solutions_extracted: 15
+  },
+  {
+    problem: "Test Equipment and Procedure Requests Failure",
+    cluster_id: 6,
+    occurrences: 1821,
+    linked_mafs: 3607,
+    typical_solution: "Typically resolved by replacing faulty components or repairing specific wiring. Patterns show reliance on IETM SSS tasks with common actions like reseating connections. Maintainers should first verify test equipment functionality and calibration, then consult relevant IETM procedures.",
+    solution_breakdown: {"replace": 53.3, "inspect": 13.3, "prepared": 6.7, "repair": 6.7, "treated": 6.7, "verified": 6.7},
+    parts_commonly_involved: ["001-007678-103", "001-007722-2103", "001-008426-0101", "001-008696-0103", "001-008718-0002", "1008939G-10", "1008939G-11", "105E7322G6"],
+    average_manhours: 17.4,
+    solutions_extracted: 14
+  },
+  {
+    problem: "Aircraft Component Failure and Maintenance Requests",
+    cluster_id: 4,
+    occurrences: 1594,
+    linked_mafs: 2347,
+    typical_solution: "The typical fixes involve inspections, operational checks, repairs, replacements, and reinstallation. Patterns suggest frequent issues with corrosion prevention, drive systems, and engine components. Prioritize inspections and operational checks to identify early signs of failure. Standardize common fixes and create checklists for recurring issues.",
+    solution_breakdown: {"inspect": 26.7, "replace": 26.7, "remove": 13.3, "complied with preservation level ii": 6.7, "performed operational check": 6.7, "repair": 6.7, "sys op check good": 6.7, "rebaselined": 6.7},
+    parts_commonly_involved: ["001-008690-0001", "001-008696-0103", "100-193-6-12", "115E1987G24", "115E5661G2"],
+    average_manhours: 26.3,
+    solutions_extracted: 15
+  },
+  {
+    problem: "Maintenance and Repair Procedures Requests",
+    cluster_id: 3,
+    occurrences: 1411,
+    linked_mafs: 3352,
+    typical_solution: "The typical fix involves replacing or removing components, following specific inspection schedules and referencing IETM or PEMA codes. Patterns show reliance on standardized procedures for inspections, replacements, and calibrations. First inspect components using provided references before proceeding with repairs.",
+    solution_breakdown: {"replace": 33.3, "inspect": 26.7, "repair": 6.7, "manufacture": 6.7, "tested and calibrated": 6.7, "rebase": 6.7, "remove": 6.7},
+    parts_commonly_involved: ["001-007678-103", "001-008690-0001", "001-008696-0103", "10069460-102", "132-008", "179730-0006"],
+    average_manhours: 16.8,
+    solutions_extracted: 14
+  },
+  {
+    problem: "Sealing and Structural Integrity Issues",
+    cluster_id: 7,
+    occurrences: 1339,
+    linked_mafs: 3347,
+    typical_solution: "Begin with thorough inspections using standardized procedures to identify root cause. Replace faulty components like bearings, grommets, or CDUs, or repair as needed. Use checklists and established procedures for consistency. Keep common replacement parts readily available to minimize downtime.",
+    solution_breakdown: {"replace": 53.3, "inspect": 20.0, "transfer": 6.7, "returned": 6.7, "remove": 6.7},
+    parts_commonly_involved: ["001-008690-0001", "001-008696-0103", "115E1987G24", "115E5661G2", "132-008", "1370-L283"],
+    average_manhours: 19.4,
+    solutions_extracted: 14
+  },
+  {
+    problem: "Water Intrusion and Corrosion Prevention Procedures",
+    cluster_id: 0,
+    occurrences: 927,
+    linked_mafs: 1624,
+    typical_solution: "The typical fix involves inspections, cleaning, grease application, sealing, painting, or component replacement. Patterns show frequent use of standardized procedures targeting high-risk areas like engines, wings, and panels. Start with thorough inspections to identify early signs of water intrusion or corrosion. Prioritize proactive measures like regular engine washes and grease applications.",
+    solution_breakdown: {"remove": 20.0, "inspect": 13.3, "replace": 13.3, "performed": 6.7, "no further action": 6.7, "prepared": 6.7, "treated": 6.7, "performed ultrasonic": 6.7, "sealed and painted": 6.7, "performed tsii -81915 ground turn": 6.7},
+    parts_commonly_involved: ["001-007678-103", "10738800-3", "1370-L283", "180383-008", "180383-012", "19E0142-1"],
+    average_manhours: 22.9,
+    solutions_extracted: 14
+  },
+  {
+    problem: "Proprotor Gearbox Debris Detection Issues",
+    cluster_id: 1,
+    occurrences: 726,
+    linked_mafs: 1045,
+    typical_solution: "The typical fix involves inspecting components like ATAF, APAF, and debris sensors for corrosion or FOD and replacing parts such as LH/RH PRGB if issues are found. Patterns show frequent use of PEMA standards and inspections of strainers and sensors. Conduct detailed inspections using SSS 6321/6322 and PEMA guidelines before proceeding.",
+    solution_breakdown: {"inspect": 60.0, "replace": 6.7, "complied with chip burn insp": 6.7, "complied with": 6.7, "determined out of limits": 6.7, "performed system operational checks": 6.7},
+    parts_commonly_involved: ["1370-L283", "3205AS107-3", "3392AS2624", "3392AS2706", "3392AS2715", "64510-105", "794HN450-6", "901-011-420-101", "901-044-001-111", "901-044-001-113"],
+    average_manhours: 31.5,
+    solutions_extracted: 15
+  },
+  {
+    problem: "PCA Ball Screw Wear Test Failure",
+    cluster_id: 5,
+    occurrences: 609,
+    linked_mafs: 1525,
+    typical_solution: "Primarily involves inspecting for FOD and corrosion in specific aircraft components such as PEMA 4066 and the ATAF APAF area following standard procedures like SSS 053D. Prioritize high-risk components during inspections and ensure quick access to necessary tools and documentation. Consider preventive maintenance on frequently affected parts.",
+    solution_breakdown: {"inspect": 86.7, "inspec": 6.7, "complied with": 6.7},
+    parts_commonly_involved: ["179250-0003", "3205AS109-12", "3392AS2706", "3392AS2715", "41010810-106", "42555-400", "42555-401", "42555-43", "42555-52"],
+    average_manhours: 9.3,
+    solutions_extracted: 15
+  }
+];
+
+const partsData = [
+  {part_number:"901-011-420-101",failure_count:6831,avg_manhours:3.2,common_wucs:["623220","623212","623119","623218","623111"],ai_summary:"Pitch link assemblies show consistent failure rates across positions, indicating potential design or material weakness. With 6,831 replacements at 3.2 hrs each, root cause investigation and possible redesign recommended."},
+  {part_number:"901-336-007-115",failure_count:5693,avg_manhours:3.2,common_wucs:["324018","324005","32401801"],ai_summary:"Nose landing gear tire failures predominantly due to wear and dimensional discrepancies. Implement more frequent inspections and proper tire balancing and rotation procedures."},
+  {part_number:"MN1400",failure_count:3837,avg_manhours:0.6,common_wucs:["34520101"],ai_summary:"GPS battery depletion is the recurring issue. Batteries not lasting expected lifespan. Investigate usage patterns and implement proactive replacement schedule based on operational hours."},
+  {part_number:"901-363-203-105",failure_count:3649,avg_manhours:6.4,common_wucs:["785206","785105","4220VM","4220VN","785205"],ai_summary:"Failures predominantly associated with Coanda bleed valves, manifesting as intermittent or hard failures linked to exhaust deflector issues. Prioritize inspections and targeted troubleshooting protocols."},
+  {part_number:"901-336-006-115",failure_count:2691,avg_manhours:5.0,common_wucs:["324002","324001","324014","324013"],ai_summary:"MLG tire failures due to wear and leaks, often exceeding tread limitations or containing embedded objects. Implement frequent inspections focused on tread depth and debris checks."},
+  {part_number:"D8565/7-2",failure_count:1824,avg_manhours:5.4,common_wucs:["243004"],ai_summary:"Aircraft battery fails to hold charge or dies completely. Review battery maintenance and replacement schedule. Consider quality assurance checks on new batteries before installation."},
+  {part_number:"132-008",failure_count:1668,avg_manhours:1.0,common_wucs:["262001","262002"],ai_summary:"Frequent CO2 cabin fire extinguisher replacements in forward and aft positions. Investigate potential root causes such as manufacturing defects or environmental factors."},
+  {part_number:"901-060-639-101",failure_count:1460,avg_manhours:3.6,common_wucs:["543114","543214","543113","543213"],ai_summary:"Vertical support strut bearing wear and tear issues on both LH and RH sides. Implement more frequent inspections and possibly preemptive replacement schedules."},
+  {part_number:"901-305-150-111",failure_count:1409,avg_manhours:12.9,common_wucs:["272101","272201","272301"],ai_summary:"Flight Control Computers frequently failing, leading to multiple system malfunctions. Implement rigorous preventive maintenance schedule focusing on FCC Nos. 1 and 2."},
+  {part_number:"901-382-011-115",failure_count:1384,avg_manhours:28.3,common_wucs:["275013","275016","275018","275015","275014"],ai_summary:"Swashplate actuator failures from seal and bearing wear causing leaks. High manhours per replacement. Consider upgrading to more durable seal or bearing material."},
+  {part_number:"TLH-5955/S",failure_count:1333,avg_manhours:1.0,common_wucs:["43110301","43121701","43110201","43121201","43120101"],ai_summary:"COMSEC radio battery shows consistent failures across serial numbers, indicating reliability or durability issues. Investigate root cause and consider more robust battery solution."},
+  {part_number:"BA-5372/U",failure_count:1318,avg_manhours:1.2,common_wucs:["43120101","43110101","43140101"],ai_summary:"COMSEC radio battery shows consistent failures across Radio 1 and Radio 2 positions. Consider enhanced monitoring and exploring alternative battery technologies for better longevity."},
+  {part_number:"901-060-557-101",failure_count:1300,avg_manhours:6.4,common_wucs:["543208","543108"],ai_summary:"Aft nacelle link bearing wear with excessive axial and radial play. Need more frequent inspections and possibly improved lubrication or material quality."},
+  {part_number:"3PD1677",failure_count:1232,avg_manhours:1.8,common_wucs:["34550101"],ai_summary:"IFF transponder crypto module battery depletion is the common failure. Implement more frequent monitoring and proactive replacement schedules."},
+  {part_number:"766101A",failure_count:1220,avg_manhours:20.4,common_wucs:["242001","242002"],ai_summary:"Power generation and distribution issues causing intermittent converter/generator failures and black cockpit scenarios. Enhanced diagnostic checks and more frequent inspections recommended."},
+  {part_number:"901-060-558-103",failure_count:1182,avg_manhours:10.9,common_wucs:["543110","543210"],ai_summary:"Inboard aft nacelle link bearing worn beyond limits with excessive radial play. Systemic wear problem on both LH and RH. Upgrade to higher durability bearings recommended."},
+  {part_number:"1024327G-3",failure_count:1180,avg_manhours:1.6,common_wucs:["34550101","652F11","345501"],ai_summary:"IFF transponder crypto module battery depletion requiring replacement. Implement scheduled maintenance checks for battery levels and carry additional spares."},
+  {part_number:"64510-105",failure_count:1151,avg_manhours:1.3,common_wucs:["256010","91A1N"],ai_summary:"20-person life raft replacements appear to be routine compliance with inspection schedules. Review maintenance intervals to align with manufacturer guidelines and reduce unnecessary replacements."},
+  {part_number:"901-362-210-101",failure_count:1107,avg_manhours:9.2,common_wucs:["718208","718108","718109","718209"],ai_summary:"EAPS actuator malfunction or circuit breaker issues requiring multiple replacements and significant manhours. Review installation procedures and inspect related electrical systems."},
+  {part_number:"901-382-012-105",failure_count:1098,avg_manhours:16.9,common_wucs:["275004","275008","275006","275005","275007"],ai_summary:"Flaperon actuator seal degradation causing active leaks from rod ends. Implement frequent inspections and preemptive seal replacement to reduce leakage-related failures."}
+];
+
+// ============================================================
+// Helper: create element with classes and text
+// ============================================================
+function el(tag, className, textContent) {
+  var e = document.createElement(tag);
+  if (className) e.className = className;
+  if (textContent !== undefined) e.textContent = textContent;
+  return e;
+}
+
+// ============================================================
+// Compute Summary Stats
+// ============================================================
+var totalTARs = analysisData.reduce(function(s, c) { return s + c.occurrences; }, 0);
+var totalMAFs = analysisData.reduce(function(s, c) { return s + c.linked_mafs; }, 0);
+var totalProblemTypes = analysisData.length;
+var totalSolutions = analysisData.reduce(function(s, c) { return s + c.solutions_extracted; }, 0);
+
+// ============================================================
+// Render Summary Stats
+// ============================================================
+(function renderStats() {
+  var bar = document.getElementById('statsBar');
+  var stats = [
+    { value: totalTARs.toLocaleString(), label: 'TARs Analyzed' },
+    { value: totalMAFs.toLocaleString(), label: 'MAFs Linked' },
+    { value: String(totalProblemTypes), label: 'Problem Types Discovered' },
+    { value: String(totalSolutions), label: 'Solutions Extracted' },
+  ];
+  stats.forEach(function(s) {
+    var card = el('div', 'stat-card');
+    card.appendChild(el('div', 'stat-value', s.value));
+    card.appendChild(el('div', 'stat-label', s.label));
+    bar.appendChild(card);
+  });
+  var badge = el('div', 'stat-card badge-card');
+  badge.appendChild(el('div', 'stat-value', 'Powered by Local AI (Ollama)'));
+  var badgeLabel = el('div', 'stat-label');
+  badgeLabel.textContent = 'nomic-embed-text \u00b7 qwen2.5:32b \u00b7 deepseek-r1:32b';
+  badge.appendChild(badgeLabel);
+  bar.appendChild(badge);
+})();
+
+// ============================================================
+// Render Problem Bar Chart
+// ============================================================
+(function renderProblemChart() {
+  var sorted = analysisData.slice().sort(function(a, b) { return b.occurrences - a.occurrences; });
+  var colors = ['#4fc3f7','#66bb6a','#ffa726','#ef5350','#ab47bc','#26c6da','#ffca28','#ec407a','#7e57c2','#8d6e63'];
+  new Chart(document.getElementById('problemChart'), {
+    type: 'bar',
+    data: {
+      labels: sorted.map(function(d) { return d.problem.length > 40 ? d.problem.substring(0, 38) + '...' : d.problem; }),
+      datasets: [{
+        label: 'Occurrences',
+        data: sorted.map(function(d) { return d.occurrences; }),
+        backgroundColor: sorted.map(function(_, i) { return colors[i % colors.length]; }),
+        borderColor: sorted.map(function(_, i) { return colors[i % colors.length]; }),
+        borderWidth: 1,
+        borderRadius: 4,
+        barPercentage: 0.7,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Problem Types by Occurrence Count',
+          color: '#e0e0ec',
+          font: { size: 14, weight: '600' },
+          padding: { bottom: 16 }
+        },
+        tooltip: {
+          backgroundColor: '#1a1a2e',
+          titleColor: '#4fc3f7',
+          bodyColor: '#e0e0ec',
+          borderColor: '#2a2a4a',
+          borderWidth: 1,
+          callbacks: {
+            afterLabel: function(ctx) {
+              var d = sorted[ctx.dataIndex];
+              return 'Linked MAFs: ' + d.linked_mafs.toLocaleString() + '\nAvg Manhours: ' + d.average_manhours;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#a0a0b8' } },
+        y: { grid: { display: false }, ticks: { color: '#a0a0b8', font: { size: 11 } } }
+      }
+    }
+  });
+})();
+
+// ============================================================
+// Render Problem Cards (safe DOM methods)
+// ============================================================
+(function renderProblemCards() {
+  var container = document.getElementById('problemCards');
+  var sorted = analysisData.slice().sort(function(a, b) { return b.occurrences - a.occurrences; });
+
+  sorted.forEach(function(d) {
+    var card = el('div', 'problem-card');
+
+    // Title
+    card.appendChild(el('h3', null, d.problem));
+
+    // Stats row
+    var statsRow = el('div', 'card-stats');
+    var statItems = [
+      { value: d.occurrences.toLocaleString(), label: 'Occurrences' },
+      { value: d.linked_mafs.toLocaleString(), label: 'Linked MAFs' },
+      { value: String(d.average_manhours), label: 'Avg Manhours' }
+    ];
+    statItems.forEach(function(si) {
+      var stat = el('div', 'card-stat');
+      stat.appendChild(el('div', 'card-stat-value', si.value));
+      stat.appendChild(el('div', 'card-stat-label', si.label));
+      statsRow.appendChild(stat);
+    });
+    card.appendChild(statsRow);
+
+    // Typical solution
+    card.appendChild(el('div', 'typical-solution', d.typical_solution));
+
+    // Toggle button
+    var btn = el('button', 'details-toggle', 'Show Details');
+    btn.setAttribute('aria-expanded', 'false');
+    btn.addEventListener('click', function() {
+      var details = this.nextElementSibling;
+      var isOpen = details.classList.toggle('open');
+      this.textContent = isOpen ? 'Hide Details' : 'Show Details';
+      this.setAttribute('aria-expanded', String(isOpen));
+    });
+    card.appendChild(btn);
+
+    // Expandable details
+    var detailsOuter = el('div', 'card-details');
+    var detailsInner = el('div', 'card-details-inner');
+
+    detailsInner.appendChild(el('div', 'breakdown-title', 'Solution Breakdown'));
+
+    // Breakdown bars
+    var entries = Object.entries(d.solution_breakdown).sort(function(a, b) { return b[1] - a[1]; });
+    entries.forEach(function(entry) {
+      var row = el('div', 'breakdown-bar');
+      var label = el('span', 'breakdown-label', entry[0]);
+      label.title = entry[0];
+      row.appendChild(label);
+
+      var track = el('div', 'breakdown-track');
+      var fill = el('div', 'breakdown-fill');
+      fill.style.width = entry[1] + '%';
+      track.appendChild(fill);
+      row.appendChild(track);
+
+      row.appendChild(el('span', 'breakdown-pct', entry[1] + '%'));
+      detailsInner.appendChild(row);
+    });
+
+    // Parts
+    var partsTitle = el('div', 'breakdown-title', 'Parts Commonly Involved');
+    partsTitle.style.marginTop = '0.8rem';
+    detailsInner.appendChild(partsTitle);
+
+    var partsList = el('div', 'parts-list');
+    d.parts_commonly_involved.forEach(function(p) {
+      partsList.appendChild(el('span', null, p));
+    });
+    detailsInner.appendChild(partsList);
+
+    detailsOuter.appendChild(detailsInner);
+    card.appendChild(detailsOuter);
+    container.appendChild(card);
+  });
+})();
+
+// ============================================================
+// Render Parts Bar Chart
+// ============================================================
+(function renderPartsChart() {
+  var top20 = partsData.slice(0, 20);
+  var colors = top20.map(function(d) {
+    if (d.failure_count > 3000) return '#ef5350';
+    if (d.failure_count > 1500) return '#ffa726';
+    return '#66bb6a';
+  });
+  new Chart(document.getElementById('partsChart'), {
+    type: 'bar',
+    data: {
+      labels: top20.map(function(d) { return d.part_number; }),
+      datasets: [{
+        label: 'Failure Count',
+        data: top20.map(function(d) { return d.failure_count; }),
+        backgroundColor: colors,
+        borderColor: colors,
+        borderWidth: 1,
+        borderRadius: 4,
+        barPercentage: 0.7,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        title: {
+          display: true,
+          text: 'Top 20 Parts by Failure Count',
+          color: '#e0e0ec',
+          font: { size: 14, weight: '600' },
+          padding: { bottom: 16 }
+        },
+        tooltip: {
+          backgroundColor: '#1a1a2e',
+          titleColor: '#4fc3f7',
+          bodyColor: '#e0e0ec',
+          borderColor: '#2a2a4a',
+          borderWidth: 1,
+          callbacks: {
+            afterLabel: function(ctx) {
+              var d = top20[ctx.dataIndex];
+              return 'Avg Manhours: ' + d.avg_manhours;
+            }
+          }
+        }
+      },
+      scales: {
+        x: { grid: { color: 'rgba(255,255,255,0.04)' }, ticks: { color: '#a0a0b8' } },
+        y: { grid: { display: false }, ticks: { color: '#a0a0b8', font: { size: 11, family: "'SF Mono', 'Fira Code', monospace" } } }
+      }
+    }
+  });
+})();
+
+// ============================================================
+// Render Parts Table (safe DOM methods)
+// ============================================================
+(function renderPartsTable() {
+  var tbody = document.getElementById('partsTableBody');
+  partsData.forEach(function(d) {
+    var severityClass = d.failure_count > 3000 ? 'severity-high' : (d.failure_count > 1500 ? 'severity-medium' : 'severity-low');
+    var tr = el('tr', severityClass);
+
+    // Part number
+    tr.appendChild(el('td', 'part-number', d.part_number));
+
+    // Failure count
+    tr.appendChild(el('td', 'failure-count', d.failure_count.toLocaleString()));
+
+    // Avg manhours
+    tr.appendChild(el('td', null, String(d.avg_manhours)));
+
+    // WUCs
+    var wucTd = el('td');
+    var wucDiv = el('div', 'wuc-tags');
+    d.common_wucs.forEach(function(w) {
+      wucDiv.appendChild(el('span', 'wuc-tag', w));
+    });
+    wucTd.appendChild(wucDiv);
+    tr.appendChild(wucTd);
+
+    // AI Summary
+    tr.appendChild(el('td', 'ai-summary', d.ai_summary));
+
+    tbody.appendChild(tr);
+  });
+})();
+
+// ============================================================
+// Footer (safe DOM)
+// ============================================================
+(function renderFooter() {
+  var footer = document.getElementById('dashFooter');
+  footer.textContent = 'Powered by Local AI (Ollama) \u2014 nomic-embed-text \u00b7 qwen2.5:32b \u00b7 deepseek-r1:32b \u2014 Generated from 14,925 TARs and 1.8M MAFs';
+})();
+</script>
+
+</body>
+</html>

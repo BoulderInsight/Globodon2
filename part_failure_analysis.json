@@ -1,0 +1,364 @@
+[
+  {
+    "part_number": "901-011-420-101",
+    "failure_count": 6831,
+    "avg_manhours": 3.2,
+    "common_wucs": [
+      "623220",
+      "623212",
+      "623119",
+      "623218",
+      "623111"
+    ],
+    "sample_discrepancies": [
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 901-011-420-101 LEFT RED PITCH LINK ASSEMBLY;  PART NO: 901-011-420-101;  SERNO: BH242503;  POS CD: LRED",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 901-011-420-101 LEFT GREEN PITCH LINK ASSEMBLY;  PART NO: 901-011-420-101;  SERNO: BH242501;  POS CD: LGRN",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 901-011-420-101 LEFT WHITE PITCH LINK ASSEMBLY;  PART NO: 901-011-420-101;  SERNO: BH242504;  POS CD: LWHT",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 901-011-420-101 RIGHT RED PITCH LINK ASSEMBLY;  PART NO: 901-011-420-101;  SERNO: BH242249;  POS CD: RRED",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 901-011-420-101 RIGHT GREEN PITCH LINK ASSEMBLY;  PART NO: 901-011-420-101;  SERNO: BH242505;  POS CD: RGRN"
+    ],
+    "ai_summary": "The part 901-011-420-101, which is used in pitch link assemblies (left and right, in different colors), shows consistent failure rates across its various positions, indicating a potential design or material weakness rather than an isolated issue. Given the high number of replacements (6831) and average manhours per replacement (3.2 hours), it's recommended to investigate the root cause of failures and consider a redesign or material upgrade to reduce maintenance downtime and costs."
+  },
+  {
+    "part_number": "901-336-007-115",
+    "failure_count": 5693,
+    "avg_manhours": 3.2,
+    "common_wucs": [
+      "324018",
+      "324005",
+      "32401801"
+    ],
+    "sample_discrepancies": [
+      "LH NOSE LANDING GEAR TIRE WORN BEYOND LIMITS",
+      "RH NLG TIRE EXCEEDS 1/4 DIFFERENCE IN DIAMETER OF LH",
+      "LEFT NOSE LANDING GEAR TIRE HAS CUT THAT EXCEEDS CUT LIMIT, CUT MEASURED 5/32",
+      "RIGH NOSE LANDING GEAR TIRE IS NOT WITH 1/4 DIAMETER OF LEFT NOSE TIRE",
+      "LH NLG TIRE WORN SHOWING CROSSHATCHES"
+    ],
+    "ai_summary": "The majority of the failures for part number 901-336-007-115 are due to wear and dimensional discrepancies between tires, indicating issues with uneven wear and damage exceeding limits. To mitigate these issues, consider implementing more frequent inspections and ensuring proper tire balancing and rotation procedures are followed."
+  },
+  {
+    "part_number": "MN1400",
+    "failure_count": 3837,
+    "avg_manhours": 0.6,
+    "common_wucs": [
+      "34520101"
+    ],
+    "sample_discrepancies": [
+      "GPS BATTERY LOW",
+      "GPS BATTERY LOW",
+      "GPS BATTERY LOW",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE MN1400 GPS POSITIONING SYSTEM BATTERY;  PART NO: MN1400;  SERNO: 312306;  POS CD: 1",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE MN1400 GPS POSITIONING SYSTEM BATTERY;  PART NO: MN1400;  SERNO: 312305;  POS CD: 2"
+    ],
+    "ai_summary": "The majority of the 3837 failures for part number MN1400 indicate a recurring issue with GPS battery depletion, as evidenced by repeated \"GPS BATTERY LOW\" discrepancies. This suggests that the batteries are not lasting their expected lifespan and require more frequent replacements than anticipated. It is recommended to investigate potential causes such as usage patterns or environmental factors affecting battery life, and consider implementing a proactive replacement schedule based on operational hours rather than waiting for failures."
+  },
+  {
+    "part_number": "901-363-203-105",
+    "failure_count": 3649,
+    "avg_manhours": 6.4,
+    "common_wucs": [
+      "785206",
+      "785105",
+      "4220VM",
+      "4220VN",
+      "785205"
+    ],
+    "sample_discrepancies": [
+      "RIGHT ENGINE AFT BLEED VALVE (COANDA) POSTS F(P) MULTIPLE TIMES ON DOWNLOAD *TROUBLESHOT DOWN TO INTERNALLY FAILING RIGHT ENGINE AFT BLEED VALVE (COANDA)*",
+      "EXDEF INITIALLY CHECKED GOOD DURING CHECKLIST PORTION WITH GOOD DROPS ON BOTH LEFT AND RIGHT ENGINE TEMPS WHEN SELECTING EXDEF TO OFF. DURING GT, R EXDEF FAIL POSTED WITH A CORRESPONDING R COANDA BLEED VALVE F(P). CONFIRMED FAILED/NON-FUNCTIONING WITH A S  ECOND EXDEF CHECK. *** TROUBLE SHOT DOWN DOWN TO RH COANDA VALVE.***",
+      "L EXHAUST DEFLECTOR FAIL POSTED ON STARTUP. ASSOCIATED L COANDA BLEED VALVE F(P). VISUALLY VERIFIED COANDA HARD FAILED (NOT INTERMITTENT) ON FLIR.",
+      "R EXDEF FAIL, CONFIRMED WITH MGT AND FLIR. AVI TROUBLESHOT DOWN TO A BAD VALVE.",
+      "RH COANDA F(P) POSTED 11 TIMES ON THE DOWNLOAD *** TROUBLESHOT DOWN TO BAD RH COANDA VALVE***"
+    ],
+    "ai_summary": "The data indicates that failures are predominantly associated with the right engine aft bleed valve (Coanda) and often manifest as intermittent or hard failures, frequently linked to exhaust deflector issues. Recommendations include prioritizing inspections and replacements of the right Coanda valves and considering targeted troubleshooting protocols focused on this component to reduce manhours and improve reliability."
+  },
+  {
+    "part_number": "901-336-006-115",
+    "failure_count": 2691,
+    "avg_manhours": 5.0,
+    "common_wucs": [
+      "324002",
+      "324001",
+      "324014",
+      "324013"
+    ],
+    "sample_discrepancies": [
+      "LH OB MLG TIRE WORN.",
+      "LEFT HAND OUTBOARD MLG TIRE HAS NO TREAD, EXCEEDS LIMITATIONS OF, TREAD WORN TO BOTTOM OF GROOVE IN MULTIPLE LOCATIONS.",
+      "RH IB MLG TIRE WORN",
+      "RIGHT HAND INBOARD MAIN LANDING GEAR TIRE LEAKING BEYOND LIMITATIONS. DOES NOT HOLD PRESSURE.",
+      "DISCOVERED EMBEDDED OBJECT IN THE RH IB MLG TIRE. CUT ON TIRE IS 4/32 AND LIMIT IS 4/32. EMBEDDED OBJECT IS INSIDE THE CUT."
+    ],
+    "ai_summary": "The majority of the failures for part number 901-336-006-115 are due to tire wear and leaks, often exceeding tread limitations or containing embedded objects causing cuts. To mitigate these issues, consider implementing more frequent inspections focused on tread depth and debris checks, alongside timely replacements before reaching critical limits."
+  },
+  {
+    "part_number": "D8565/7-2",
+    "failure_count": 1824,
+    "avg_manhours": 5.4,
+    "common_wucs": [
+      "243004"
+    ],
+    "sample_discrepancies": [
+      "REMOVE AIRCRAFT BATTERY, REINSTALL UPON RETURN FROM PMI.",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE D8565/7-2 AIRCRAFT BATTERY;  PART NO: D8565/7-2;  SERNO: 41064557",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE D8565/7-2 AIRCRAFT BATTERY;  PART NO: D8565/7-2;  SERNO: 41064547",
+      "AC BATTERY DOES NOT HOLD LOAD",
+      "A/C BATTERY DEAD"
+    ],
+    "ai_summary": "The part D8565/7-2, an aircraft battery, shows a high failure rate with common issues centered around the battery not holding a charge or failing completely. This suggests potential problems with the battery's ability to retain power over time or under load. Recommendations include reviewing the battery maintenance and replacement schedule for optimization and considering quality assurance checks on new batteries before installation to preempt failures."
+  },
+  {
+    "part_number": "132-008",
+    "failure_count": 1668,
+    "avg_manhours": 1.0,
+    "common_wucs": [
+      "262001",
+      "262002"
+    ],
+    "sample_discrepancies": [
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 132-008 AFT CO2 CABIN FIRE EXTINGUISHER;  PART NO: 132-008;  SERNO: EN0026629;  POS CD: AF.  DD: 30NOV23",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 132-008 FWD CO2 CABIN FIRE EXTINGUISHER;  PART NO: 132-008;  SERNO: EN0025770;  POS CD: FW.  DD: 30NOV23",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 132-008 AFT CO2 CABIN FIRE EXTINGUISHER;  PART NO: 132-008;  SERNO: EN0031181;  POS CD: AF DUE NO LATER THAN 31 MAR 2025",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 132-008 FWD CO2 CABIN FIRE EXTINGUISHER;  PART NO: 132-008;  SERNO: EN0033909;  POS CD: FW DUE NO LATER THAN 31 MAR 2025",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 132-008 FWD CO2 CABIN FIRE EXTINGUISHER;  PART NO: 132-008;  SERNO: EN0031368;  POS CD: FW. DD: 31DEC24"
+    ],
+    "ai_summary": "The data indicates frequent replacements of the CO2 cabin fire extinguisher (part 132-008) in both forward and aft positions, suggesting possible issues with component reliability or maintenance protocols. Given the high number of failures, it is recommended to investigate potential root causes such as manufacturing defects or environmental factors affecting these parts, and consider implementing more rigorous inspection criteria or part quality checks."
+  },
+  {
+    "part_number": "901-060-639-101",
+    "failure_count": 1460,
+    "avg_manhours": 3.6,
+    "common_wucs": [
+      "543114",
+      "543214",
+      "543113",
+      "543213"
+    ],
+    "sample_discrepancies": [
+      "LH OUTBOARD FWD NACELLE VERTICAL SUPPORT STRUT ASSEMBLY BEARING HAS AXIAL PLAY ALONG WITH TORN TEFLON ON THE TOP BEARING.",
+      "RIGHTHAND INBOARD VERTICAL SUPPORT STRUT WORN BEYOND LIMITS",
+      "RIGHTHAND OUTBOARD VERTICAL SUPPORT STRUT WORN BEYOND LIMITS",
+      "RH OB VERTICAL SUPPORT STRUT WORN",
+      "LH OB VERTICAL SUPPORT STRUT WORN"
+    ],
+    "ai_summary": "The majority of the failures for part number 901-060-639-101 indicate wear and tear issues, particularly in the vertical support strut assemblies on both left-hand (LH) and right-hand (RH) sides. Given the high frequency of replacements and the common issue of worn components beyond limits, it is recommended to implement more frequent inspections and possibly preemptive replacement schedules for these struts to reduce unexpected downtime."
+  },
+  {
+    "part_number": "901-305-150-111",
+    "failure_count": 1409,
+    "avg_manhours": 12.9,
+    "common_wucs": [
+      "272101",
+      "272201",
+      "272301"
+    ],
+    "sample_discrepancies": [
+      "HARNESS W520 CONNECTOR REFDES 2733RAC55P1 WORN *** UPDATE TROUBLESHOT DOWN TO BAD FCC NO.2. 20240123 ***",
+      "FCC 2 GOES F(T) ALONG WITH RH HPDU'S 1 AND 2 ALONG WITH LH HPDU 1. CLEARS WITH PFCS RESET",
+      "\\FCS - LATERAL CCFDA (FCC 2). **** TROUBLESHOT DOWN TO BAD FCC2.***",
+      "FCC NO. 1 POSTED F(P)",
+      "INSTALLED FLIGHT CONTROL COMPUTER NO. 1 SN: 1288 PN: 901-305-150-111 UPON STARTUP OF A/C ON ELEC. PWR POSTED THE FOLLOWING FAILURES: R CYCLIC GRIP F(T), R COLLECTIVE GRIP F(P), FLIGHT CONTR PANEL F(T), L CYCLIC GRIP F(T), L COLLECTIVE GRIP F(P), COCKPIT I  NTERFACE UNIT 1 F(P), COCKPIT INTERFACE UNIT 1 F(T), AIR DATA UNIT 1 F(P), CENTER ELEVATOR ACTUATOR F(T), R OUTBD INBD FLAPERON ACTR F(P),  AND R OUTBD OUTBD FLAPERON ACTR F(P). FCC NO. 1 SN:1288 ORDERED ON MCN: 2OAJH0N JCN: GC6349719."
+    ],
+    "ai_summary": "Based on the provided failure instances, it appears that Flight Control Computers (FCCs) are frequently failing, often leading to multiple system malfunctions and requiring significant troubleshooting efforts. The failures seem to be predominantly related to FCC No.1 and No.2, indicating potential reliability issues with these components.\n\nRecommendation: Implement a more rigorous preventive maintenance schedule for the Flight Control Computers 901-305-150-111, focusing particularly on FCC Nos. 1 and 2, to preempt failures and reduce downtime."
+  },
+  {
+    "part_number": "901-382-011-115",
+    "failure_count": 1384,
+    "avg_manhours": 28.3,
+    "common_wucs": [
+      "275013",
+      "275016",
+      "275018",
+      "275015",
+      "275014"
+    ],
+    "sample_discrepancies": [
+      "LEFT HAND OB SPA IS DROOPING WHEN NOT BEING ACTUATED",
+      "RH OB SPA FOUND A WORN SEAL LEAKING FROM SERVO BODY WHERE IT MEETS THE ROD END CAUSING LEAKAGE OF AIR AND HYDRAULIC FLUID",
+      "SCIR CHANGE:  1JSPH3I.  REMOVE AND REPLACE COMPONENT NOMENCLATURE 901-382-011-115 RIGHT INBOARD SWASHPLATE ACTUATOR;  PART NO: 901-382-011-115;  SERNO: BDD00779;  POS CD: RI DUE NO LATER THAN 2575 AC HRS. NO EXTENTION",
+      "FCC 3 R CNTR SPA F(P), TS DOWN TO BAD R CENTER SPA, REFER TO MCN:1QO2MK7 FOR T/S.",
+      "LEFT OUTBOARD SWASHPLATE ACTUATOR ROD END BEARING FACE HAS DAMAGE EXCEEDING 0.031'"
+    ],
+    "ai_summary": "The part 901-382-011-115, primarily the swashplate actuator, experiences failures due to wear and damage in seals and bearings, leading to leaks and mechanical issues. Given the high failure rate and average manhours per replacement, it is recommended to implement a more frequent inspection schedule and consider upgrading to a more durable seal or bearing material to reduce maintenance downtime."
+  },
+  {
+    "part_number": "TLH-5955/S",
+    "failure_count": 1333,
+    "avg_manhours": 1.0,
+    "common_wucs": [
+      "43110301",
+      "43121701",
+      "43110201",
+      "43121201",
+      "43120101"
+    ],
+    "sample_discrepancies": [
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE TLH-5955/S  COMSEC RADIO BATTERY (RADIO 2);  PART NO: TLH-5955/S;  SERNO: 810;  POS CD: BAT1",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE TLH-5955/S  COMSEC RADIO BATTERY (RADIO 2);  PART NO: TLH-5955/S;  SERNO: 811;  POS CD: BAT2",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE TLH-5955/S  COMSEC RADIO BATTERY (RADIO 2);  PART NO: TLH-5955/S;  SERNO: 8613COMM2A;  POS CD: BAT1",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE TLH-5955/S  COMSEC RADIO BATTERY (RADIO 2);  PART NO: TLH-5955/S;  SERNO: 8613COMM2B;  POS CD: BAT2",
+      "REPLACE RADIO 1 BATTERY 1 FOR WTI"
+    ],
+    "ai_summary": "The part TLH-5955/S, which is the COMSEC radio battery (RADIO 2), shows consistent failures across various serial numbers and positions, indicating potential issues with its reliability or durability. Given the high number of replacements (1333) and the repetitive nature of the failure descriptions, it appears that these batteries frequently fail, possibly due to manufacturing defects or excessive wear under operational conditions. It is recommended to investigate the root cause of these failures and consider a more robust battery solution or enhanced maintenance protocols to reduce replacement frequency and associated manhours."
+  },
+  {
+    "part_number": "BA-5372/U",
+    "failure_count": 1318,
+    "avg_manhours": 1.2,
+    "common_wucs": [
+      "43120101",
+      "43110101",
+      "43140101"
+    ],
+    "sample_discrepancies": [
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE B-5372/U COMSEC RADIO BATTERY (RADIO 1;  PART NO: BA-5372/U;  SERNO: 167914-5;  POS CD: 1",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE BA-5372/U COMSEC RADIO BATTERY (RADIO 2;  PART NO: BA-5372/U;  SERNO: 5427;  POS CD: 2",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE B-5372/U COMSEC RADIO BATTERY (RADIO 1;  PART NO: BA-5372/U;  SERNO: 4611;  POS CD: 1",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE BA-5372/U COMSEC RADIO BATTERY (RADIO 2;  PART NO: BA-5372/U;  SERNO: 0865310;  POS CD: 2",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE BA-5372/U COMSEC RADIO BATTERY (RADIO 2;  PART NO: BA-5372/U;  SERNO: AK95;  POS CD: 2"
+    ],
+    "ai_summary": "The part BA-5372/U, which is a COMSEC radio battery, shows consistent failures across both Radio 1 and Radio 2 positions, indicating potential issues with its reliability or durability under operational conditions. To mitigate these frequent replacements, consider implementing enhanced monitoring of the battery's performance parameters and possibly exploring alternative battery technologies that offer better longevity in similar environments."
+  },
+  {
+    "part_number": "901-060-557-101",
+    "failure_count": 1300,
+    "avg_manhours": 6.4,
+    "common_wucs": [
+      "543208",
+      "543108"
+    ],
+    "sample_discrepancies": [
+      "RH OB AFT NACELLE LINK HAS TORN TEFLON WITH IN BEARINGS AND HAS EXCESSIVE AXIAL PLAY.",
+      "LEFT OB AFT NACELLE LINK BEARINGS HAVE EXCESSIVE AXIAL AND RADIAL PLAY",
+      "RIGHT HAND OUTBOARD AFT NACELLE LINK BEARING WORN BEYOND LIMITATIONS OF MAXIMUM 0.002 INCH RADIAL MOVEMENT AND 0.010 INCH AXIAL MOVEMENT.",
+      "RH OB AFT NACELLE LINK BEARING IS BEYOND LIMIT OF .002 IN",
+      "LH OB AFT LINK BEARING IS BEYOND LIMIT OF .002 IN"
+    ],
+    "ai_summary": "The analysis reveals that the primary issue is excessive wear in the bearings, leading to beyond-limit axial and radial play. This suggests a need for more frequent inspections and possibly improved lubrication or material quality to extend part life. Recommendation: Implement enhanced monitoring protocols and consider upgrading bearing materials to reduce failure rates."
+  },
+  {
+    "part_number": "3PD1677",
+    "failure_count": 1232,
+    "avg_manhours": 1.8,
+    "common_wucs": [
+      "34550101"
+    ],
+    "sample_discrepancies": [
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 1024327G-3 IFF TRANSPONDER CRYPTO MODULE BATTERY;  PART NO: 3PD1677;  SERNO: 2005811",
+      "IFF BATTERY POST LOW ON DOWNLOAD",
+      "IFF BATTERY POSTED LOW NEED REPLACEMENT.",
+      "IFF BATTERY POST LOW",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 1008939G-11 RADAR RECEIVER/TRANSMITTER  APX-110/APX-118/APX-119/APX-123;  PART NO: 1008939G-11;  SERNO: 8361 DD: 20240129"
+    ],
+    "ai_summary": "The majority of the failures for part number 3PD1677, the IFF transponder crypto module battery, indicate low battery issues, suggesting a common problem with battery depletion. Recommendations include implementing more frequent monitoring and proactive replacement schedules to prevent unexpected failures during operations."
+  },
+  {
+    "part_number": "766101A",
+    "failure_count": 1220,
+    "avg_manhours": 20.4,
+    "common_wucs": [
+      "242001",
+      "242002"
+    ],
+    "sample_discrepancies": [
+      "BLACK COCKPIT WHILE ON APU POWER, ON NC-10 DISPLAYS GEN 1 F(P)",
+      "DURING XTIES, WITH GEN 2 ON BY ITSELF, THERE WAS INTERMITTENT CONV 1, CONV 2, AND CONV 3 FAILURE. THE CONVERTORS FAILED ONE AT A TIME. THERE WAS INTERMITTENT BLACK COCKPIT WITH GEN 2 BY ITSELF. WITH GEN 1, 2, AND 4 OPERATING POST CROSS TIES, CONV 2 AND CO     NV 3 WERE FAILING INTERMITTENTLY AND INDEPENDENTLY. AIRCREW HEARD CONTACTERS CLICKING BEHIND RIGHT SEAT PILOT",
+      "CFG 2 FAILS UPON ENGINE START",
+      "GENERATOR 1 INOP",
+      "AIRCRAFT HAS BLACK COCKPIT WHEN LIGHTING OFF."
+    ],
+    "ai_summary": "The part 766101A, based on the provided failure instances, predominantly experiences issues related to power generation and distribution, leading to intermittent failures of converters and generators, often resulting in black cockpit scenarios. To mitigate these recurring problems, consider implementing enhanced diagnostic checks for the electrical system interfaces and conducting more frequent inspections or replacements of associated converter units."
+  },
+  {
+    "part_number": "901-060-558-103",
+    "failure_count": 1182,
+    "avg_manhours": 10.9,
+    "common_wucs": [
+      "543110",
+      "543210"
+    ],
+    "sample_discrepancies": [
+      "RH INB AFT LINK, OB BEARING OUT OF RADIAL LIMITATIONS OF 0.02.",
+      "LEFTHAND INBOARD AFT NACELLE ATTACH LINK WORN BEYOND .020",
+      "RH IB AFT NACELLE LINK IS WORN",
+      "RIGHT INBOARD AFT NACELLE NACELLE LINK STA 400.00 BEARING WORN, HAS EXCESSIVE PLAY.",
+      "LH IB AFT NACELLE ATTATCHMENT LINK HAS EXCESSIVE WEAR ON BEARING"
+    ],
+    "ai_summary": "The part 901-060-558-103 predominantly fails due to wear and excessive play in the bearing, leading to out-of-limit radial movement. This issue is consistent across both left-hand and right-hand units, indicating a systemic wear problem. To mitigate failures, consider implementing more frequent inspections and possibly upgrading to bearings with higher durability specifications."
+  },
+  {
+    "part_number": "1024327G-3",
+    "failure_count": 1180,
+    "avg_manhours": 1.6,
+    "common_wucs": [
+      "34550101",
+      "652F11",
+      "345501"
+    ],
+    "sample_discrepancies": [
+      "IFF LOW BATTERY",
+      "IFF BATTERY LOW POSTED ON THE DOWNLOAD",
+      "IFF BATTERY LOW, REQUIRES REPLACEMNET OF APX-123 BATTERY REPLACEMENT.",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE 1024327G-3 IFF TRANSPONDER CRYPTO MODULE BATTERY;  PART NO: 1024327G-3;  SERNO: 2202007",
+      "IFF BARRETY LOW POSTED ON DOWNLOAD"
+    ],
+    "ai_summary": "The pattern indicates that the majority of failures are due to low battery issues within the IFF transponder crypto module (part number 1024327G-3). Typically, what goes wrong is the depletion of the internal battery requiring replacement. It's recommended to implement a scheduled maintenance check for battery levels and consider carrying additional spares to minimize downtime."
+  },
+  {
+    "part_number": "64510-105",
+    "failure_count": 1151,
+    "avg_manhours": 1.3,
+    "common_wucs": [
+      "256010",
+      "91A1N"
+    ],
+    "sample_discrepancies": [
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE LRU-34/A 20 PERSON LIFE RAFT;  PART NO: 64510-105;  SERNO: 20C0558",
+      "REMOVE LIFE RAFT FOR PMI. REINSTALL LIFE RAFT AT COMPLETION OF PMI.",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE LRU-34/A 20 PERSON LIFE RAFT;  PART NO: 64510-105;  SERNO: 20L5226",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE LRU-34/A 20 PERSON LIFE RAFT;  PART NO: 64510-105;  SERNO: 20C0624",
+      "REMOVE AND REPLACE COMPONENT NOMENCLATURE LRU-34/A 20 PERSON LIFE RAFT;  PART NO: 64510-105;  SERNO: 20C0688"
+    ],
+    "ai_summary": "The part 64510-105, which is a 20-person life raft, shows consistent replacement patterns due to potential wear or regulatory requirements rather than specific malfunctions. Most discrepancies indicate routine removal and replacement actions rather than emergency repairs, suggesting compliance with inspection or maintenance schedules. It's recommended to review the maintenance intervals for this part to ensure they align with manufacturer guidelines and operational needs, potentially reducing unnecessary replacements and manhours."
+  },
+  {
+    "part_number": "901-362-210-101",
+    "failure_count": 1107,
+    "avg_manhours": 9.2,
+    "common_wucs": [
+      "718208",
+      "718108",
+      "718109",
+      "718209"
+    ],
+    "sample_discrepancies": [
+      "L EAPS STILL POSTING FAIL AFTER REPLACEMENT",
+      "LH IB EAPS DOOR ACTUATOR CAUSES CIRCUIT BREAKER TO POP",
+      "R INBOARD EAPS ACUATOR F(P) WITH SUBSEQUENT R EAPS FAIL ADV. R EAPS DOORS WILL OPEN AND THEN FAIL CLOSED WHEN COMMANDING EAPS TO \"ON\" ON THE MFD",
+      "R OUT BOARD EAPS ACTUATOR F(P)",
+      "RH INB EAPS ACTUATOR DOES NOT ACTUATE."
+    ],
+    "ai_summary": "The part 901-362-210-101, used in EAPS actuators, frequently fails due to actuator malfunction or circuit breaker issues, often requiring multiple replacements and significant manhours (average 9.2 hours per replacement). Recommendations include reviewing the installation procedures and possibly conducting a thorough inspection of related electrical systems to prevent recurring failures."
+  },
+  {
+    "part_number": "901-382-012-105",
+    "failure_count": 1098,
+    "avg_manhours": 16.9,
+    "common_wucs": [
+      "275004",
+      "275008",
+      "275006",
+      "275005",
+      "275007"
+    ],
+    "sample_discrepancies": [
+      "LEFT INBOARD INBOARD FLAPERON ACTUATOR ACTIVE LEAK",
+      "LH OUTBOARD INBOARD FLAPERON ACTUATOR F(P) WITH THE FOLLOWING CODES FCC NO.2 ID/4887 2/0221 3/5D40 5/0040. **T/S DOWN TO BAD LH OUTBOARD INBOARD FLAPERON ACTUATOR**",
+      "LEFT OUTBOARD INBOARD ACTUATOR LEAKING FROM SEAL BEYOND LIMITATIONS.",
+      "RH OB OB FLAPERON ACTUATOR LEAK",
+      "DISCOVERED LEFT HAND OUTBOARD INBOARD FLAP ACTUATOR LEAKING FROM ROD END UPON ACTUATION OF FLAPERON ASSEMBLY."
+    ],
+    "ai_summary": "The majority of the 1098 failure instances indicate leaking issues, primarily from seals and rod ends of the flaperon actuators. This suggests that seal degradation or damage is a common problem with part 901-382-012-105. Recommendations include implementing more frequent inspections and possibly preemptive replacement of seals to reduce leakage-related failures."
+  }
+]
