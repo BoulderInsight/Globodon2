@@ -213,11 +213,23 @@ def load_index() -> None:
         index.part_by_number[p["part_number"]] = p
     print(f"  {len(index.part_failures)} parts tracked")
 
-    # 5. Cluster assignments
-    print("  Assigning TARs to clusters...")
-    index.tar_cluster_ids = _assign_clusters(
-        index.tar_df, index.embeddings, index.cluster_profiles
-    )
+    # 5. Cluster assignments (try cached first)
+    cached_assignments = CACHE_DIR / "cluster_assignments.npy"
+    if cached_assignments.exists():
+        assignments = np.load(cached_assignments)
+        if len(assignments) == len(index.tar_df):
+            print("  Loaded cached cluster assignments")
+            index.tar_cluster_ids = assignments
+        else:
+            print(f"  Cached assignments length mismatch ({len(assignments)} vs {len(index.tar_df)}), recomputing...")
+            index.tar_cluster_ids = _assign_clusters(
+                index.tar_df, index.embeddings, index.cluster_profiles
+            )
+    else:
+        print("  Recomputing cluster assignments...")
+        index.tar_cluster_ids = _assign_clusters(
+            index.tar_df, index.embeddings, index.cluster_profiles
+        )
 
     # 6. MAF JCN index
     tar_jcns = set(index.tar_df["jcn"].dropna().str.strip())

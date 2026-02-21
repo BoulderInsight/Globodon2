@@ -1,0 +1,11 @@
+TAR_Data.csv
+maf.csv
+.cache/
+analysis_results.json
+analysis_results_cleaned.json
+part_failure_analysis.json
+*.png
+*.pyc
+__pycache__/
+.playwright-mcp/
+demo_dashboard.html

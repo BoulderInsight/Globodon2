@@ -7,3 +7,21 @@ maf.csv
 
 # Analysis output
 analysis_results.json
+
+# Python bytecode
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Playwright MCP logs
+.playwright-mcp/
+
+# OS files
+.DS_Store
+Thumbable.db
