@@ -54,9 +54,6 @@ ollama pull deepseek-r1:32b           # reasoning/summarization (slower, uses <t
 ```
 Globodon2/
 ├── CLAUDE.md                         # This file
-├── PROMPT_BUILD_TAR_LOOKUP.md        # Spec for the real-time lookup tool (complete)
-├── PROMPT_BUILD_TPDR_ENGINE_1.md     # Spec for the TPDR recommendation engine (complete)
-├── PROMPT_BUILD_FLEET_ANALYTICS.md   # Spec for the Fleet Analytics tab (complete)
 │
 │  ── Batch Analysis (complete) ──
 ├── tar_maf_analyzer.py               # Task 1: Problem→Solution pipeline
@@ -141,6 +138,8 @@ Results cached to `.cache/tpdr_analysis.json` (24-hour expiry).
 **TAR Lookup:**
 - `POST /api/search` — core RAG search, returns cluster match + similar TARs + MAF actions
 - `POST /api/recommend` — AI recommendation based on search results
+- `GET /api/tars/recent?limit=50&work_center=&activity=&priority=&search=` — browsable TAR list, sorted by date descending
+- `GET /api/tars/filters` — unique values for work_center, activity, priority dropdowns
 - `GET /` — serve frontend
 
 **TPDR Intelligence:**

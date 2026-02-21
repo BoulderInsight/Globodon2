@@ -2,7 +2,7 @@
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -99,6 +99,77 @@ async def api_stats():
         parts_tracked=len(index.part_failures),
         index_loaded=index.loaded,
     )
+
+
+# --- TAR Queue Endpoints ---
+
+@app.get("/api/tars/recent")
+async def api_tars_recent(
+    limit: int = Query(50, ge=1, le=200),
+    work_center: str = Query("", alias="work_center"),
+    activity: str = Query("", alias="activity"),
+    priority: str = Query("", alias="priority"),
+    search: str = Query(""),
+):
+    if not index.loaded:
+        raise HTTPException(503, "Index not loaded yet")
+
+    df = index.tar_df
+
+    # Apply filters
+    if work_center:
+        df = df[df["work_center"].str.strip() == work_center]
+    if activity:
+        df = df[df["activity"].str.strip() == activity]
+    if priority:
+        df = df[df["priority"].str.strip() == priority]
+    if search:
+        search_lower = search.lower()
+        combined = (df["subject"].str.strip() + " " + df["issue"].str.strip()).str.lower()
+        df = df[combined.str.contains(search_lower, na=False)]
+
+    # Sort by submit_dt descending, NaT last
+    df = df.sort_values("submit_dt", ascending=False, na_position="last")
+
+    # Limit
+    df = df.head(limit)
+
+    # Build response
+    records = []
+    for _, row in df.iterrows():
+        records.append({
+            "jcn": str(row.get("jcn", "")).strip(),
+            "subject": str(row.get("subject", "")).strip(),
+            "issue": str(row.get("issue", "")).strip(),
+            "uns": str(row.get("uns", "")).strip(),
+            "submit_date": str(row.get("submit_date", "")).strip(),
+            "priority": str(row.get("priority", "")).strip(),
+            "activity": str(row.get("activity", "")).strip(),
+            "work_center": str(row.get("work_center", "")).strip(),
+            "status": str(row.get("status", "")).strip(),
+            "buno": str(row.get("buno", "")).strip(),
+            "aircraft_type": str(row.get("aircraft_type", "")).strip(),
+        })
+
+    return records
+
+
+@app.get("/api/tars/filters")
+async def api_tars_filters():
+    if not index.loaded:
+        raise HTTPException(503, "Index not loaded yet")
+
+    df = index.tar_df
+
+    def unique_sorted(col):
+        vals = df[col].str.strip().dropna().unique().tolist()
+        return sorted([v for v in vals if v])
+
+    return {
+        "work_centers": unique_sorted("work_center"),
+        "activities": unique_sorted("activity"),
+        "priorities": unique_sorted("priority"),
+    }
 
 
 # --- TPDR Endpoints ---

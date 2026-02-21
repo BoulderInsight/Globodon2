@@ -927,6 +927,185 @@
     }
 
     /* ===================================================================
+       TAR QUEUE
+       =================================================================== */
+    .tar-queue__filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+      align-items: center;
+    }
+
+    .tar-queue__search {
+      flex: 1 1 200px;
+      min-width: 180px;
+      padding: 8px 12px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      transition: border-color var(--transition-fast);
+    }
+
+    .tar-queue__search::placeholder { color: var(--text-muted); }
+    .tar-queue__search:focus { border-color: var(--accent-blue); outline: none; box-shadow: 0 0 0 2px rgba(56,189,248,0.15); }
+
+    .tar-queue__select {
+      padding: 8px 10px;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      cursor: pointer;
+      min-width: 120px;
+    }
+
+    .tar-queue__select:focus { border-color: var(--accent-blue); outline: none; }
+
+    .tar-queue__clear-btn {
+      padding: 8px 12px;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .tar-queue__clear-btn:hover { border-color: var(--accent-blue); color: var(--text-secondary); }
+
+    .tar-queue__table-wrap {
+      max-height: 310px;
+      overflow-y: auto;
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+    }
+
+    .tar-queue__table-wrap::-webkit-scrollbar { width: 6px; }
+    .tar-queue__table-wrap::-webkit-scrollbar-track { background: var(--bg-primary); }
+    .tar-queue__table-wrap::-webkit-scrollbar-thumb { background: var(--bg-tertiary); border-radius: 3px; }
+
+    .tar-queue__table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      table-layout: fixed;
+    }
+
+    .tar-queue__table thead {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    .tar-queue__table th {
+      padding: 8px 10px;
+      text-align: left;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      background: var(--bg-tertiary);
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .tar-queue__table td {
+      padding: 7px 10px;
+      border-bottom: 1px solid rgba(51,65,85,0.5);
+      color: var(--text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tar-queue__table td.tq-subject {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 0;
+    }
+
+    .tar-queue__table td.tq-system {
+      max-width: 160px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .tar-queue__row {
+      cursor: pointer;
+      transition: background var(--transition-fast);
+      height: 36px;
+    }
+
+    .tar-queue__row:nth-child(even) { background: rgba(255,255,255,0.015); }
+    .tar-queue__row:hover { background: var(--bg-card-hover); }
+
+    .tar-queue__row--selected {
+      background: rgba(56,189,248,0.08) !important;
+      border-left: 3px solid var(--accent-blue);
+    }
+
+    .tar-queue__row--selected td:first-child { padding-left: 7px; }
+
+    .tq-jcn { font-family: var(--font-mono); color: var(--text-label); font-size: 0.75rem; }
+    .tq-date { font-size: 0.75rem; color: var(--text-muted); }
+
+    .tq-priority-indicator {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-right: 4px;
+      vertical-align: middle;
+    }
+
+    .tq-priority--urgent { background: var(--accent-red); }
+    .tq-priority--priority { background: var(--accent-amber); }
+
+    .tar-queue__footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+
+    .tar-queue__load-more {
+      padding: 6px 14px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-family: var(--font-sans);
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .tar-queue__load-more:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+
+    .tar-queue__spinner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      color: var(--text-muted);
+      font-size: 0.8125rem;
+      gap: 10px;
+    }
+
+    /* ===================================================================
        HIDDEN (Utility)
        =================================================================== */
     .hidden {
@@ -2072,6 +2251,60 @@
 
     <div id="tabLookup" role="tabpanel" aria-labelledby="tabBtnLookup">
 
+    <!-- TAR QUEUE SECTION -->
+    <section class="section" aria-labelledby="tar-queue-heading">
+      <div class="card">
+        <div class="card__header">
+          <div class="card__header-left">
+            <span class="card__header-icon" aria-hidden="true">
+              <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="2" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="8" width="14" height="2" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="13" width="14" height="2" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+            </span>
+            <h2 class="card__title" id="tar-queue-heading">TAR Queue</h2>
+          </div>
+          <span id="tarQueueCount" class="tech-badge hidden" aria-live="polite"></span>
+        </div>
+        <div class="card__body" id="tarQueueBody">
+          <div id="tarQueueLoading" class="tar-queue__spinner">
+            <span class="spinner" role="status"><span class="sr-only">Loading TAR queue</span></span>
+            Loading recent TARs...
+          </div>
+          <div id="tarQueueContent" class="hidden">
+            <div class="tar-queue__filters">
+              <input type="text" id="tarQueueSearch" class="tar-queue__search" placeholder="Search TARs..." aria-label="Search TARs by subject or issue">
+              <select id="tarQueueWorkCenter" class="tar-queue__select" aria-label="Filter by work center">
+                <option value="">All Work Centers</option>
+              </select>
+              <select id="tarQueueActivity" class="tar-queue__select" aria-label="Filter by activity">
+                <option value="">All Activities</option>
+              </select>
+              <select id="tarQueuePriority" class="tar-queue__select" aria-label="Filter by priority">
+                <option value="">All Priorities</option>
+              </select>
+              <button type="button" id="tarQueueClearBtn" class="tar-queue__clear-btn">Clear Filters</button>
+            </div>
+            <div class="tar-queue__table-wrap">
+              <table class="tar-queue__table" aria-label="Recent TARs">
+                <thead>
+                  <tr>
+                    <th style="width:100px">JCN</th>
+                    <th style="width:90px">Date</th>
+                    <th style="width:80px">Priority</th>
+                    <th style="width:160px">System</th>
+                    <th>Subject</th>
+                  </tr>
+                </thead>
+                <tbody id="tarQueueTableBody"></tbody>
+              </table>
+            </div>
+            <div class="tar-queue__footer">
+              <span id="tarQueueShowing"></span>
+              <button type="button" id="tarQueueLoadMore" class="tar-queue__load-more hidden">Load More</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- INPUT SECTION -->
     <section class="section input-section" aria-labelledby="input-heading">
       <div class="card">
@@ -3069,6 +3302,237 @@
       }
 
       /* ----------------------------------------------------------------
+         TAR QUEUE STATE & LOGIC
+         ---------------------------------------------------------------- */
+      var tarQueueLoaded = false;
+      var tarQueueData = [];
+      var tarQueueFilters = null;
+      var tarQueueSelectedJcn = null;
+      var tarQueueCurrentLimit = 50;
+      var tarQueueDebounceTimer = null;
+      var tarQueueTotalCount = 0;
+
+      var tqDom = {
+        loading: document.getElementById("tarQueueLoading"),
+        content: document.getElementById("tarQueueContent"),
+        count: document.getElementById("tarQueueCount"),
+        search: document.getElementById("tarQueueSearch"),
+        workCenter: document.getElementById("tarQueueWorkCenter"),
+        activity: document.getElementById("tarQueueActivity"),
+        priority: document.getElementById("tarQueuePriority"),
+        clearBtn: document.getElementById("tarQueueClearBtn"),
+        tbody: document.getElementById("tarQueueTableBody"),
+        showing: document.getElementById("tarQueueShowing"),
+        loadMore: document.getElementById("tarQueueLoadMore")
+      };
+
+      function tqFormatDate(dateStr) {
+        if (!dateStr) return "";
+        var d = new Date(dateStr);
+        if (isNaN(d.getTime())) return dateStr.substring(0, 10);
+        var mm = String(d.getMonth() + 1).padStart(2, "0");
+        var dd = String(d.getDate()).padStart(2, "0");
+        return mm + "/" + dd + "/" + d.getFullYear();
+      }
+
+      function tqSystemName(uns) {
+        if (!uns) return "";
+        var parts = uns.match(/^\d+\s+(.+)/);
+        return parts ? parts[1] : uns;
+      }
+
+      function tqPriorityInfo(p) {
+        if (!p) return { cls: "", label: p || "" };
+        var pl = p.toLowerCase();
+        if (pl === "urgent" || pl.indexOf("1") === 0 || pl === "1")
+          return { cls: "tq-priority--urgent", label: p };
+        if (pl === "priority" || pl.indexOf("2") === 0 || pl === "2")
+          return { cls: "tq-priority--priority", label: p };
+        return { cls: "", label: p };
+      }
+
+      function tqBuildParams() {
+        var params = new URLSearchParams();
+        params.set("limit", String(tarQueueCurrentLimit));
+        var sv = tqDom.search.value.trim();
+        if (sv) params.set("search", sv);
+        var wc = tqDom.workCenter.value;
+        if (wc) params.set("work_center", wc);
+        var act = tqDom.activity.value;
+        if (act) params.set("activity", act);
+        var pri = tqDom.priority.value;
+        if (pri) params.set("priority", pri);
+        return params.toString();
+      }
+
+      async function tqFetchTars() {
+        var qs = tqBuildParams();
+        var data = await apiGet("/api/tars/recent?" + qs);
+        return data;
+      }
+
+      function tqRenderRows(data) {
+        tarQueueData = data;
+        while (tqDom.tbody.firstChild) tqDom.tbody.removeChild(tqDom.tbody.firstChild);
+
+        if (data.length === 0) {
+          var emptyRow = h("tr", {}, [
+            h("td", { colspan: "5", style: { textAlign: "center", padding: "24px", color: "var(--text-muted)" } }, ["No TARs match the current filters."])
+          ]);
+          tqDom.tbody.appendChild(emptyRow);
+          hide(tqDom.loadMore);
+          tqDom.showing.textContent = "0 TARs";
+          return;
+        }
+
+        data.forEach(function(tar) {
+          var pri = tqPriorityInfo(tar.priority);
+          var sysName = tqSystemName(tar.uns);
+          var subjectDisplay = tar.subject || "";
+          if (subjectDisplay.length > 80) subjectDisplay = subjectDisplay.substring(0, 80) + "\u2026";
+
+          var priCell = [];
+          if (pri.cls) {
+            priCell.push(h("span", { className: "tq-priority-indicator " + pri.cls }, []));
+          }
+          priCell.push(document.createTextNode(pri.label));
+
+          var row = h("tr", { className: "tar-queue__row" + (tar.jcn === tarQueueSelectedJcn ? " tar-queue__row--selected" : "") }, [
+            h("td", { className: "tq-jcn" }, [tar.jcn]),
+            h("td", { className: "tq-date" }, [tqFormatDate(tar.submit_date)]),
+            h("td", {}, priCell),
+            h("td", { className: "tq-system", title: tar.uns }, [sysName]),
+            h("td", { className: "tq-subject", title: tar.subject }, [subjectDisplay])
+          ]);
+
+          (function(r, t) {
+            r.addEventListener("click", function() {
+              tqSelectRow(r, t);
+            });
+          })(row, tar);
+
+          tqDom.tbody.appendChild(row);
+        });
+
+        tqDom.showing.textContent = "Showing " + data.length + " TARs";
+        show(tqDom.count);
+        tqDom.count.textContent = data.length + " TARs";
+
+        if (data.length >= tarQueueCurrentLimit && tarQueueCurrentLimit < 200) {
+          show(tqDom.loadMore);
+        } else {
+          hide(tqDom.loadMore);
+        }
+      }
+
+      function tqSelectRow(rowEl, tar) {
+        // Deselect previous
+        var prev = tqDom.tbody.querySelector(".tar-queue__row--selected");
+        if (prev) prev.classList.remove("tar-queue__row--selected");
+
+        // Select this row
+        rowEl.classList.add("tar-queue__row--selected");
+        tarQueueSelectedJcn = tar.jcn;
+
+        // Populate textarea with full text
+        var fullText = (tar.subject || "").trim();
+        if (tar.issue) fullText += "\n" + tar.issue.trim();
+        dom.tarInput.value = fullText;
+
+        // Auto-trigger search
+        performSearch();
+
+        // Smooth scroll to diagnosis
+        var diagSection = document.getElementById("diagnosisSection");
+        if (diagSection) {
+          setTimeout(function() {
+            diagSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 100);
+        }
+      }
+
+      async function tqRefresh() {
+        try {
+          var data = await tqFetchTars();
+          tqRenderRows(data);
+        } catch (e) {
+          tqDom.showing.textContent = "Error loading TARs";
+        }
+      }
+
+      function tqDebouncedRefresh() {
+        if (tarQueueDebounceTimer) clearTimeout(tarQueueDebounceTimer);
+        tarQueueDebounceTimer = setTimeout(function() {
+          tarQueueCurrentLimit = 50;
+          tqRefresh();
+        }, 300);
+      }
+
+      async function loadTarQueue() {
+        show(tqDom.loading);
+        hide(tqDom.content);
+
+        try {
+          // Fetch filters and initial data in parallel
+          var filtersPromise = apiGet("/api/tars/filters");
+          var dataPromise = tqFetchTars();
+          var results = await Promise.all([filtersPromise, dataPromise]);
+
+          tarQueueFilters = results[0];
+          var data = results[1];
+
+          // Populate filter dropdowns
+          function populateSelect(selectEl, values, allLabel) {
+            while (selectEl.options.length > 1) selectEl.remove(1);
+            values.forEach(function(v) {
+              var opt = document.createElement("option");
+              opt.value = v;
+              opt.textContent = v;
+              selectEl.appendChild(opt);
+            });
+          }
+
+          populateSelect(tqDom.workCenter, tarQueueFilters.work_centers || []);
+          populateSelect(tqDom.activity, tarQueueFilters.activities || []);
+          populateSelect(tqDom.priority, tarQueueFilters.priorities || []);
+
+          // Render rows
+          tqRenderRows(data);
+
+          hide(tqDom.loading);
+          show(tqDom.content);
+          tarQueueLoaded = true;
+
+        } catch (e) {
+          hide(tqDom.loading);
+          tqDom.loading.parentNode.insertBefore(
+            h("div", { style: { padding: "16px", color: "var(--accent-red)", fontSize: "0.8125rem" } },
+              ["Failed to load TAR queue: " + e.message]),
+            tqDom.loading.nextSibling
+          );
+        }
+      }
+
+      // Wire up TAR Queue events
+      tqDom.search.addEventListener("input", tqDebouncedRefresh);
+      tqDom.workCenter.addEventListener("change", function() { tarQueueCurrentLimit = 50; tqRefresh(); });
+      tqDom.activity.addEventListener("change", function() { tarQueueCurrentLimit = 50; tqRefresh(); });
+      tqDom.priority.addEventListener("change", function() { tarQueueCurrentLimit = 50; tqRefresh(); });
+      tqDom.clearBtn.addEventListener("click", function() {
+        tqDom.search.value = "";
+        tqDom.workCenter.value = "";
+        tqDom.activity.value = "";
+        tqDom.priority.value = "";
+        tarQueueCurrentLimit = 50;
+        tarQueueSelectedJcn = null;
+        tqRefresh();
+      });
+      tqDom.loadMore.addEventListener("click", function() {
+        tarQueueCurrentLimit = 200;
+        tqRefresh();
+      });
+
+      /* ----------------------------------------------------------------
          TPDR STATE
          ---------------------------------------------------------------- */
       var tpdrData = null;
@@ -3119,6 +3583,7 @@
           }
         });
         if (tabName === "tpdr" && !tpdrLoaded) loadTPDRData();
+        if (tabName === "lookup" && !tarQueueLoaded) loadTarQueue();
         if (tabName === "fleet" && !fleetLoaded) loadFleetData();
       }
 
@@ -4378,6 +4843,9 @@
          ---------------------------------------------------------------- */
       loadStats();
       setInterval(loadStats, 30000);
+
+      // TAR Lookup is the default active tab — load queue immediately
+      loadTarQueue();
 
     })();
   </script>
