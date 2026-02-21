@@ -1622,6 +1622,227 @@
       font-family: var(--font-mono);
       margin-left: 8px;
     }
+
+    /* ===================================================================
+       TPDR WORKFLOW
+       =================================================================== */
+    .tpdr-workflow-btn {
+      background: transparent;
+      border: 1px solid;
+      font-size: 0.6875rem;
+      font-family: var(--font-sans);
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+    .tpdr-workflow-btn--file {
+      color: var(--accent-green);
+      border-color: rgba(52, 211, 153, 0.3);
+    }
+    .tpdr-workflow-btn--file:hover {
+      background: rgba(52, 211, 153, 0.12);
+      border-color: var(--accent-green);
+    }
+    .tpdr-workflow-btn--defer {
+      color: var(--accent-amber);
+      border-color: rgba(251, 191, 36, 0.3);
+    }
+    .tpdr-workflow-btn--defer:hover {
+      background: rgba(251, 191, 36, 0.12);
+      border-color: var(--accent-amber);
+    }
+    .tpdr-state-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.6875rem;
+      font-weight: 700;
+    }
+    .tpdr-state-badge--filed {
+      background: rgba(52, 211, 153, 0.15);
+      color: var(--accent-green);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+    .tpdr-state-badge--deferred {
+      background: rgba(251, 191, 36, 0.15);
+      color: var(--accent-amber);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+    .tpdr-undo-link {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 0.6875rem;
+      font-family: var(--font-sans);
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 2px 4px;
+      transition: color var(--transition-fast);
+    }
+    .tpdr-undo-link:hover {
+      color: var(--text-secondary);
+    }
+    .tpdr-candidate--deferred {
+      opacity: 0.65;
+      border-left: 3px solid var(--accent-amber);
+    }
+    .tpdr-candidate--filed {
+      opacity: 0.7;
+      border-left: 3px solid var(--accent-green);
+      padding: 12px 20px;
+    }
+    .tpdr-section-header {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-label);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 24px 0 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .tpdr-section-header--filed {
+      color: var(--accent-green);
+    }
+    .tpdr-section-header--deferred {
+      color: var(--accent-amber);
+    }
+    .tpdr-stats-bar {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 16px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      margin-bottom: 16px;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+    .tpdr-stats-bar span {
+      color: var(--accent-cyan);
+      font-weight: 700;
+    }
+    .tpdr-defer-input {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius-sm);
+    }
+    .tpdr-defer-input input {
+      flex: 1;
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      font-size: 0.8125rem;
+      padding: 6px 10px;
+    }
+    .tpdr-defer-input input:focus {
+      border-color: var(--accent-amber);
+      outline: none;
+    }
+    .tpdr-defer-input button {
+      background: var(--accent-amber);
+      color: var(--bg-primary);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      cursor: pointer;
+      font-family: var(--font-sans);
+    }
+
+    /* ===================================================================
+       TPDR THRESHOLD PANEL
+       =================================================================== */
+    .threshold-panel {
+      margin-bottom: 20px;
+    }
+    .threshold-toggle {
+      background: transparent;
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-secondary);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: var(--font-sans);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+    }
+    .threshold-toggle:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
+    .threshold-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .threshold-field {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .threshold-field label {
+      font-size: 0.6875rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .threshold-field input {
+      background: var(--bg-input);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      padding: 8px 10px;
+      width: 100%;
+    }
+    .threshold-field input:focus {
+      border-color: var(--accent-blue);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+    }
+    .threshold-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .threshold-count {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+    }
+    .threshold-count span {
+      color: var(--accent-cyan);
+      font-weight: 600;
+      font-family: var(--font-mono);
+    }
+    @media (max-width: 900px) {
+      .threshold-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 600px) {
+      .threshold-grid { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -2758,6 +2979,7 @@
         tpdrError: document.getElementById("tpdrError"),
         tpdrErrorText: document.getElementById("tpdrErrorText"),
         tpdrCandidatesResults: document.getElementById("tpdrCandidatesResults"),
+        tpdrCandidatesBody: document.getElementById("tpdrCandidatesBody"),
         tpdrTrendsResults: document.getElementById("tpdrTrendsResults"),
         tpdrRefreshBtn: document.getElementById("tpdrRefreshBtn"),
       };
@@ -2865,6 +3087,52 @@
       }
 
       /* ----------------------------------------------------------------
+         TPDR WORKFLOW HELPERS
+         ---------------------------------------------------------------- */
+      var TPDR_THRESHOLD_DEFAULTS = {
+        minTotalTars: 10,
+        minAircraft: 3,
+        minAcceleration: 1.5,
+        minComebacks: 0,
+        minScore: 0
+      };
+
+      function getWorkflowStates() {
+        return storage.get("tars_tpdrWorkflow") || {};
+      }
+
+      function setWorkflowState(uns, state, note) {
+        var states = getWorkflowStates();
+        if (state === "active") {
+          delete states[uns];
+        } else {
+          states[uns] = {
+            state: state,
+            timestamp: new Date().toISOString(),
+            note: note || ""
+          };
+        }
+        storage.set("tars_tpdrWorkflow", states);
+      }
+
+      function getThresholds() {
+        return storage.get("tars_tpdrThresholds") || Object.assign({}, TPDR_THRESHOLD_DEFAULTS);
+      }
+
+      function setThresholds(vals) {
+        storage.set("tars_tpdrThresholds", vals);
+      }
+
+      function passesThresholds(rec, thresholds) {
+        if ((rec.total_tars || 0) < thresholds.minTotalTars) return false;
+        if ((rec.aircraft_count || 0) < thresholds.minAircraft) return false;
+        if ((rec.acceleration_ratio || 0) < thresholds.minAcceleration) return false;
+        if ((rec.comeback_count || 0) < thresholds.minComebacks) return false;
+        if ((rec.score || 0) < thresholds.minScore) return false;
+        return true;
+      }
+
+      /* ----------------------------------------------------------------
          RENDER TPDR CANDIDATES
          ---------------------------------------------------------------- */
       function renderTPDRCandidates(recs) {
@@ -2879,82 +3147,381 @@
           return;
         }
 
+        var workflowStates = getWorkflowStates();
+        var thresholds = getThresholds();
+
+        // Separate candidates by workflow state
+        var activeRecs = [];
+        var deferredRecs = [];
+        var filedRecs = [];
         var displayCount = Math.min(15, recs.length);
+
         for (var i = 0; i < displayCount; i++) {
           var rec = recs[i];
-          var colors = accelColor(rec.acceleration_ratio);
-          var cardId = "tpdr-detail-" + i;
-
-          var header = h("div", { className: "tpdr-candidate__header" }, [
-            h("div", { className: "tpdr-candidate__rank" }, [
-              h("span", { className: "tpdr-candidate__rank-num" }, ["#" + (i + 1)]),
-              h("span", { className: "tpdr-score-badge" }, ["Score: " + Math.round(rec.score)])
-            ])
-          ]);
-
-          var title = h("div", { className: "tpdr-candidate__title" }, [rec.uns]);
-
-          var statsGrid = h("div", { className: "tpdr-stats-grid" }, [
-            h("div", { className: "tpdr-stat-box" }, [
-              h("div", { className: "tpdr-stat-box__value" }, [formatNumber(rec.total_tars)]),
-              h("div", { className: "tpdr-stat-box__label" }, ["Total TARs"])
-            ]),
-            h("div", { className: "tpdr-stat-box" }, [
-              h("div", { className: "tpdr-stat-box__value", style: { color: colors.color } }, [rec.acceleration_ratio + "x"]),
-              h("div", { className: "tpdr-stat-box__label" }, ["Accel. Rate"])
-            ]),
-            h("div", { className: "tpdr-stat-box" }, [
-              h("div", { className: "tpdr-stat-box__value" }, [String(rec.aircraft_count)]),
-              h("div", { className: "tpdr-stat-box__label" }, ["Aircraft Affected"])
-            ]),
-            h("div", { className: "tpdr-stat-box" }, [
-              h("div", { className: "tpdr-stat-box__value" }, [String(rec.comeback_count || 0)]),
-              h("div", { className: "tpdr-stat-box__label" }, ["Comebacks (90-day)"])
-            ])
-          ]);
-
-          var sparklineRow = h("div", { className: "tpdr-sparkline-row" }, [
-            h("span", { className: "tpdr-sparkline-label" }, ["Trend:"]),
-            createSparkline(rec.monthly_counts || [], 120, 24, colors.color)
-          ]);
-
-          var justificationEl = null;
-          if (rec.justification) {
-            justificationEl = h("div", { className: "tpdr-justification" }, [
-              h("div", { className: "tpdr-justification__label" }, ["AI Justification"]),
-              h("div", { className: "tpdr-justification__text" }, [rec.justification])
-            ]);
+          rec._origRank = i + 1;
+          var ws = workflowStates[rec.uns];
+          if (ws && ws.state === "filed") {
+            filedRecs.push(rec);
+          } else if (ws && ws.state === "deferred") {
+            deferredRecs.push(rec);
+          } else {
+            activeRecs.push(rec);
           }
+        }
 
-          var toggleBtn = h("button", {
-            type: "button",
-            className: "tpdr-details-toggle",
-            "data-target": cardId
-          }, ["View Details"]);
+        // Filter active candidates by thresholds
+        var filteredActive = activeRecs.filter(function(rec) {
+          return passesThresholds(rec, thresholds);
+        });
 
-          var detailSection = h("div", { id: cardId, className: "tpdr-detail hidden" });
-          buildDetailContent(detailSection, rec);
+        var totalCount = displayCount;
+        var filedCount = filedRecs.length;
+        var deferredCount = deferredRecs.length;
+        var activeCount = filteredActive.length;
 
-          (function(btn, detail) {
-            btn.addEventListener("click", function() {
-              if (detail.classList.contains("hidden")) {
-                show(detail);
-                btn.textContent = "Hide Details";
-              } else {
-                hide(detail);
-                btn.textContent = "View Details";
-              }
-            });
-          })(toggleBtn, detailSection);
+        // --- Stats bar ---
+        var statsBar = h("div", { className: "tpdr-stats-bar" }, [
+          h("span", null, [String(totalCount)]),
+          " candidates",
+          h("span", { style: { marginLeft: "8px" } }, [String(filedCount)]),
+          " filed",
+          h("span", { style: { marginLeft: "8px" } }, [String(deferredCount)]),
+          " deferred",
+          h("span", { style: { marginLeft: "8px" } }, [String(activeCount)]),
+          " active"
+        ]);
+        container.appendChild(statsBar);
 
-          var cardChildren = [header, title, statsGrid, sparklineRow];
-          if (justificationEl) cardChildren.push(justificationEl);
-          cardChildren.push(toggleBtn, detailSection);
+        // --- Threshold panel ---
+        container.appendChild(buildThresholdPanel(thresholds, activeRecs.length, filteredActive.length));
 
-          container.appendChild(h("div", { className: "tpdr-candidate" }, cardChildren));
+        // --- Active candidates ---
+        if (filteredActive.length > 0) {
+          filteredActive.forEach(function(rec) {
+            container.appendChild(buildCandidateCard(rec, "active", workflowStates));
+          });
+        } else if (activeRecs.length > 0) {
+          container.appendChild(h("div", { className: "state-message", style: { padding: "16px 0" } }, [
+            h("p", { className: "state-message__text" }, ["No active candidates match current thresholds."])
+          ]));
+        }
+
+        // --- Deferred section ---
+        if (deferredRecs.length > 0) {
+          container.appendChild(h("div", { className: "tpdr-section-header tpdr-section-header--deferred" }, [
+            "Deferred Candidates (" + deferredRecs.length + ")"
+          ]));
+          deferredRecs.forEach(function(rec) {
+            container.appendChild(buildCandidateCard(rec, "deferred", workflowStates));
+          });
+        }
+
+        // --- Filed section ---
+        if (filedRecs.length > 0) {
+          container.appendChild(h("div", { className: "tpdr-section-header tpdr-section-header--filed" }, [
+            "Filed TPDRs (" + filedRecs.length + ")"
+          ]));
+          filedRecs.forEach(function(rec) {
+            container.appendChild(buildFiledCard(rec, workflowStates));
+          });
         }
 
         show(container);
+      }
+
+      /* ----------------------------------------------------------------
+         BUILD CANDIDATE CARD (active or deferred)
+         ---------------------------------------------------------------- */
+      function buildCandidateCard(rec, state, workflowStates) {
+        var colors = accelColor(rec.acceleration_ratio);
+        var cardId = "tpdr-detail-" + rec._origRank;
+
+        // Header with rank, score, and workflow buttons or badge
+        var headerChildren = [
+          h("div", { className: "tpdr-candidate__rank" }, [
+            h("span", { className: "tpdr-candidate__rank-num" }, ["#" + rec._origRank]),
+            h("span", { className: "tpdr-score-badge" }, ["Score: " + Math.round(rec.score)])
+          ])
+        ];
+
+        if (state === "active") {
+          var fileBtn = h("button", {
+            type: "button",
+            className: "tpdr-workflow-btn tpdr-workflow-btn--file"
+          }, ["Mark as Filed"]);
+          var deferBtn = h("button", {
+            type: "button",
+            className: "tpdr-workflow-btn tpdr-workflow-btn--defer"
+          }, ["Defer"]);
+
+          (function(uns, fb, db) {
+            fb.addEventListener("click", function(e) {
+              e.stopPropagation();
+              setWorkflowState(uns, "filed");
+              renderTPDRCandidates(tpdrData.recommendations);
+            });
+            db.addEventListener("click", function(e) {
+              e.stopPropagation();
+              showDeferInput(uns, card);
+            });
+          })(rec.uns, fileBtn, deferBtn);
+
+          headerChildren.push(h("div", { style: { display: "flex", gap: "6px", alignItems: "center" } }, [fileBtn, deferBtn]));
+        } else if (state === "deferred") {
+          var undoBtn = h("button", {
+            type: "button",
+            className: "tpdr-undo-link"
+          }, ["Undo"]);
+          (function(uns, btn) {
+            btn.addEventListener("click", function(e) {
+              e.stopPropagation();
+              setWorkflowState(uns, "active");
+              renderTPDRCandidates(tpdrData.recommendations);
+            });
+          })(rec.uns, undoBtn);
+
+          headerChildren.push(h("div", { style: { display: "flex", gap: "6px", alignItems: "center" } }, [
+            h("span", { className: "tpdr-state-badge tpdr-state-badge--deferred" }, ["Deferred"]),
+            undoBtn
+          ]));
+        }
+
+        var header = h("div", { className: "tpdr-candidate__header" }, headerChildren);
+
+        var title = h("div", { className: "tpdr-candidate__title" }, [rec.uns]);
+
+        var statsGrid = h("div", { className: "tpdr-stats-grid" }, [
+          h("div", { className: "tpdr-stat-box" }, [
+            h("div", { className: "tpdr-stat-box__value" }, [formatNumber(rec.total_tars)]),
+            h("div", { className: "tpdr-stat-box__label" }, ["Total TARs"])
+          ]),
+          h("div", { className: "tpdr-stat-box" }, [
+            h("div", { className: "tpdr-stat-box__value", style: { color: colors.color } }, [rec.acceleration_ratio + "x"]),
+            h("div", { className: "tpdr-stat-box__label" }, ["Accel. Rate"])
+          ]),
+          h("div", { className: "tpdr-stat-box" }, [
+            h("div", { className: "tpdr-stat-box__value" }, [String(rec.aircraft_count)]),
+            h("div", { className: "tpdr-stat-box__label" }, ["Aircraft Affected"])
+          ]),
+          h("div", { className: "tpdr-stat-box" }, [
+            h("div", { className: "tpdr-stat-box__value" }, [String(rec.comeback_count || 0)]),
+            h("div", { className: "tpdr-stat-box__label" }, ["Comebacks (90-day)"])
+          ])
+        ]);
+
+        var sparklineRow = h("div", { className: "tpdr-sparkline-row" }, [
+          h("span", { className: "tpdr-sparkline-label" }, ["Trend:"]),
+          createSparkline(rec.monthly_counts || [], 120, 24, colors.color)
+        ]);
+
+        var justificationEl = null;
+        if (rec.justification) {
+          justificationEl = h("div", { className: "tpdr-justification" }, [
+            h("div", { className: "tpdr-justification__label" }, ["AI Justification"]),
+            h("div", { className: "tpdr-justification__text" }, [rec.justification])
+          ]);
+        }
+
+        var toggleBtn = h("button", {
+          type: "button",
+          className: "tpdr-details-toggle",
+          "data-target": cardId
+        }, ["View Details"]);
+
+        var detailSection = h("div", { id: cardId, className: "tpdr-detail hidden" });
+        buildDetailContent(detailSection, rec);
+
+        (function(btn, detail) {
+          btn.addEventListener("click", function() {
+            if (detail.classList.contains("hidden")) {
+              show(detail);
+              btn.textContent = "Hide Details";
+            } else {
+              hide(detail);
+              btn.textContent = "View Details";
+            }
+          });
+        })(toggleBtn, detailSection);
+
+        var cardChildren = [header, title, statsGrid, sparklineRow];
+        if (justificationEl) cardChildren.push(justificationEl);
+
+        // Deferred note
+        if (state === "deferred") {
+          var ws = workflowStates[rec.uns];
+          if (ws && ws.note) {
+            cardChildren.push(h("div", { style: { fontStyle: "italic", color: "var(--text-muted)", fontSize: "0.8125rem", marginBottom: "8px" } }, [ws.note]));
+          }
+        }
+
+        cardChildren.push(toggleBtn, detailSection);
+
+        var cardClass = "tpdr-candidate";
+        if (state === "deferred") cardClass += " tpdr-candidate--deferred";
+
+        var card = h("div", { className: cardClass }, cardChildren);
+        return card;
+      }
+
+      /* ----------------------------------------------------------------
+         BUILD FILED CARD (compact summary)
+         ---------------------------------------------------------------- */
+      function buildFiledCard(rec, workflowStates) {
+        var ws = workflowStates[rec.uns];
+        var timestamp = ws && ws.timestamp ? new Date(ws.timestamp).toLocaleDateString() : "";
+
+        var undoBtn = h("button", {
+          type: "button",
+          className: "tpdr-undo-link"
+        }, ["Undo"]);
+        (function(uns, btn) {
+          btn.addEventListener("click", function(e) {
+            e.stopPropagation();
+            setWorkflowState(uns, "active");
+            renderTPDRCandidates(tpdrData.recommendations);
+          });
+        })(rec.uns, undoBtn);
+
+        return h("div", { className: "tpdr-candidate tpdr-candidate--filed" }, [
+          h("div", { style: { display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: "8px" } }, [
+            h("div", { style: { display: "flex", alignItems: "center", gap: "10px" } }, [
+              h("span", { className: "tpdr-candidate__rank-num" }, ["#" + rec._origRank]),
+              h("span", { style: { fontWeight: "600", color: "var(--text-primary)", fontSize: "0.875rem" } }, [rec.uns]),
+              h("span", { className: "tpdr-score-badge" }, ["Score: " + Math.round(rec.score)])
+            ]),
+            h("div", { style: { display: "flex", alignItems: "center", gap: "8px" } }, [
+              h("span", { className: "tpdr-state-badge tpdr-state-badge--filed" }, ["Filed"]),
+              timestamp ? h("span", { style: { fontSize: "0.6875rem", color: "var(--text-muted)" } }, [timestamp]) : null,
+              undoBtn
+            ])
+          ])
+        ]);
+      }
+
+      /* ----------------------------------------------------------------
+         SHOW DEFER INPUT
+         ---------------------------------------------------------------- */
+      function showDeferInput(uns, card) {
+        // Remove any existing defer input in this card
+        var existing = card.querySelector(".tpdr-defer-input");
+        if (existing) { card.removeChild(existing); return; }
+
+        var noteInput = h("input", {
+          type: "text",
+          placeholder: "Add a note (optional)..."
+        });
+        var saveBtn = h("button", { type: "button" }, ["Save"]);
+
+        (function(u, inp, btn) {
+          btn.addEventListener("click", function() {
+            setWorkflowState(u, "deferred", inp.value || "");
+            renderTPDRCandidates(tpdrData.recommendations);
+          });
+          inp.addEventListener("keydown", function(e) {
+            if (e.key === "Enter") {
+              setWorkflowState(u, "deferred", inp.value || "");
+              renderTPDRCandidates(tpdrData.recommendations);
+            }
+          });
+        })(uns, noteInput, saveBtn);
+
+        var inputRow = h("div", { className: "tpdr-defer-input" }, [
+          noteInput,
+          saveBtn
+        ]);
+
+        // Insert after the header
+        var headerEl = card.querySelector(".tpdr-candidate__header");
+        if (headerEl && headerEl.nextSibling) {
+          card.insertBefore(inputRow, headerEl.nextSibling);
+        } else {
+          card.appendChild(inputRow);
+        }
+        noteInput.focus();
+      }
+
+      /* ----------------------------------------------------------------
+         BUILD THRESHOLD PANEL
+         ---------------------------------------------------------------- */
+      function buildThresholdPanel(thresholds, totalActive, filteredCount) {
+        var panelContent = h("div", { className: "hidden" });
+        var toggleBtn = h("button", {
+          type: "button",
+          className: "threshold-toggle"
+        }, ["Configure Thresholds"]);
+
+        (function(btn, content) {
+          btn.addEventListener("click", function() {
+            if (content.classList.contains("hidden")) {
+              show(content);
+              btn.textContent = "Hide Thresholds";
+            } else {
+              hide(content);
+              btn.textContent = "Configure Thresholds";
+            }
+          });
+        })(toggleBtn, panelContent);
+
+        var fields = [
+          { key: "minTotalTars", label: "Min Total TARs", min: 1, max: 500, step: 1 },
+          { key: "minAircraft", label: "Min Aircraft Affected", min: 1, max: 100, step: 1 },
+          { key: "minAcceleration", label: "Min Acceleration Rate", min: 0.5, max: 20, step: 0.5 },
+          { key: "minComebacks", label: "Min Comebacks", min: 0, max: 50, step: 1 },
+          { key: "minScore", label: "Min Score", min: 0, max: 500, step: 1 }
+        ];
+
+        var grid = h("div", { className: "threshold-grid" });
+        var inputs = {};
+
+        fields.forEach(function(f) {
+          var inp = h("input", {
+            type: "number",
+            min: String(f.min),
+            max: String(f.max),
+            step: String(f.step),
+            value: String(thresholds[f.key])
+          });
+          inputs[f.key] = inp;
+
+          (function(input, key) {
+            input.addEventListener("change", function() {
+              var val = parseFloat(input.value);
+              if (isNaN(val)) return;
+              var current = getThresholds();
+              current[key] = val;
+              setThresholds(current);
+              renderTPDRCandidates(tpdrData.recommendations);
+            });
+          })(inp, f.key);
+
+          grid.appendChild(h("div", { className: "threshold-field" }, [
+            h("label", null, [f.label]),
+            inp
+          ]));
+        });
+
+        var countText = h("div", { className: "threshold-count" }, [
+          "Showing ", h("span", null, [String(filteredCount)]), " of ", h("span", null, [String(totalActive)]), " active candidates matching thresholds"
+        ]);
+
+        var resetBtn = h("button", {
+          type: "button",
+          className: "tpdr-workflow-btn",
+          style: { color: "var(--text-secondary)", borderColor: "var(--border-color)" }
+        }, ["Reset to Defaults"]);
+
+        resetBtn.addEventListener("click", function() {
+          setThresholds(Object.assign({}, TPDR_THRESHOLD_DEFAULTS));
+          renderTPDRCandidates(tpdrData.recommendations);
+        });
+
+        var actions = h("div", { className: "threshold-actions" }, [countText, resetBtn]);
+
+        panelContent.appendChild(grid);
+        panelContent.appendChild(actions);
+
+        var panel = h("div", { className: "threshold-panel" }, [toggleBtn, panelContent]);
+        return panel;
       }
 
       /* ----------------------------------------------------------------
