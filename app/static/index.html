@@ -3334,9 +3334,8 @@
           );
         });
 
-        // Parts list
+        // Parts list — only from similar TARs' actual maintenance records
         var relatedParts = results.related_parts || [];
-        var clusterParts = cluster.parts_commonly_involved || [];
         var partsToShow = [];
 
         if (relatedParts.length > 0) {
@@ -3346,10 +3345,6 @@
               failure_count: rp.failure_count,
               ai_summary: rp.ai_summary || ""
             });
-          });
-        } else if (clusterParts.length > 0) {
-          clusterParts.forEach(function (pn) {
-            partsToShow.push({ part_number: pn, failure_count: 0, ai_summary: "" });
           });
         }
 
