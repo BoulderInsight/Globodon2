@@ -105,15 +105,9 @@ def search_tar(text: str, top_k: int = 10) -> SearchResponse:
             ))
 
     # Also include parts from the matched cluster that are in part_failures
-    if matched_cluster:
-        for pn in matched_cluster.parts_commonly_involved:
-            if pn in index.part_by_number and pn not in all_part_numbers:
-                p = index.part_by_number[pn]
-                related_parts.append(RelatedPart(
-                    part_number=p["part_number"],
-                    failure_count=p["failure_count"],
-                    ai_summary=p.get("ai_summary", ""),
-                ))
+    # NOTE: Disabled — cluster-level parts include noise from concurrent/unrelated
+    # maintenance sharing the same JCN (e.g., life raft inspections during gearbox work).
+    # Parts from the actual similar TARs' MAFs (all_part_numbers above) are more precise.
 
     # Sort by failure count descending
     related_parts.sort(key=lambda p: -p.failure_count)

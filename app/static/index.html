@@ -3157,8 +3157,14 @@
           var stats = await apiGet("/api/stats");
           dom.statTars.textContent = formatNumber(stats.total_tars);
           dom.statMafs.textContent = formatNumber(stats.total_mafs);
-          dom.statClusters.textContent = String(stats.cluster_count);
           dom.statParts.textContent = String(stats.parts_tracked);
+
+          // Only set cluster count if System View isn't active (toggle manages this stat)
+          var sysBtn = document.getElementById("fleetViewBtnSystem");
+          var isSystemView = sysBtn && sysBtn.classList.contains("fleet-view-toggle__btn--active");
+          if (!isSystemView) {
+            dom.statClusters.textContent = String(stats.cluster_count);
+          }
 
           if (stats.index_loaded) {
             dom.statusDot.classList.remove("status-indicator__dot--offline");
@@ -5258,6 +5264,8 @@
         var statLabel = statValue ? statValue.nextElementSibling : null;
 
         function showView(view) {
+          var fVal = document.getElementById("fleetStatClusterVal");
+          var fLabel = document.getElementById("fleetStatClusterLabel");
           if (view === "system") {
             show(systemView);
             hide(clustersView);
@@ -5268,6 +5276,10 @@
             if (statValue && systemsData) {
               statValue.textContent = systemsData.total_systems || "--";
               if (statLabel) statLabel.textContent = "Systems Tracked";
+            }
+            if (fVal && systemsData) {
+              fVal.textContent = systemsData.total_systems || "--";
+              if (fLabel) fLabel.textContent = "Systems Tracked";
             }
           } else {
             hide(systemView);
@@ -5280,6 +5292,10 @@
               statValue.textContent = "10";
               if (statLabel) statLabel.textContent = "Problem Categories";
             }
+            if (fVal) {
+              fVal.textContent = "10";
+              if (fLabel) fLabel.textContent = "Problem Categories";
+            }
           }
         }
 
@@ -5287,9 +5303,17 @@
         btnClusters.addEventListener("click", function() { showView("clusters"); });
 
         // Set initial state to match default (System View active)
-        if (statValue && systemsData) {
-          statValue.textContent = systemsData.total_systems || "--";
-          if (statLabel) statLabel.textContent = "Systems Tracked";
+        if (systemsData) {
+          if (statValue) {
+            statValue.textContent = systemsData.total_systems || "--";
+            if (statLabel) statLabel.textContent = "Systems Tracked";
+          }
+          var fVal = document.getElementById("fleetStatClusterVal");
+          var fLabel = document.getElementById("fleetStatClusterLabel");
+          if (fVal) {
+            fVal.textContent = systemsData.total_systems || "--";
+            if (fLabel) fLabel.textContent = "Systems Tracked";
+          }
         }
       }
 
@@ -5518,18 +5542,25 @@
         if (!container) return;
         while (container.firstChild) container.removeChild(container.firstChild);
 
+        // Default to system count if system view will be default
+        var clusterValue = systemsData ? String(systemsData.total_systems) : String(stats.cluster_count);
+        var clusterLabel = systemsData ? "Systems Tracked" : "Problem Categories";
+
         var items = [
-          { value: formatNumber(stats.total_tars), label: "TARs Analyzed" },
-          { value: formatNumber(stats.total_mafs), label: "MAF Records" },
-          { value: String(stats.cluster_count), label: "Problem Categories" },
-          { value: String(stats.parts_tracked), label: "Parts Tracked" }
+          { value: formatNumber(stats.total_tars), label: "TARs Analyzed", id: null },
+          { value: formatNumber(stats.total_mafs), label: "MAF Records", id: null },
+          { value: clusterValue, label: clusterLabel, id: "fleetStatCluster" },
+          { value: String(stats.parts_tracked), label: "Parts Tracked", id: null }
         ];
 
         items.forEach(function(item) {
-          container.appendChild(h("div", { className: "fleet-stat-box" }, [
-            h("div", { className: "fleet-stat-box__value" }, [item.value]),
-            h("div", { className: "fleet-stat-box__label" }, [item.label])
-          ]));
+          var valEl = h("div", { className: "fleet-stat-box__value" }, [item.value]);
+          var labelEl = h("div", { className: "fleet-stat-box__label" }, [item.label]);
+          if (item.id) {
+            valEl.id = item.id + "Val";
+            labelEl.id = item.id + "Label";
+          }
+          container.appendChild(h("div", { className: "fleet-stat-box" }, [valEl, labelEl]));
         });
       }
 
@@ -5831,7 +5862,6 @@
          INIT
          ---------------------------------------------------------------- */
       loadStats();
-      setInterval(loadStats, 30000);
 
       // TAR Lookup is the default active tab — load queue immediately
       loadTarQueue();
