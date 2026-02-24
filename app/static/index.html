@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -44,8 +45,8 @@
       --radius-md: 8px;
       --radius-lg: 12px;
 
-      --shadow-card: 0 1px 3px rgba(0,0,0,0.3), 0 1px 2px rgba(0,0,0,0.2);
-      --shadow-elevated: 0 4px 6px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+      --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2);
+      --shadow-elevated: 0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2);
 
       --transition-fast: 150ms ease;
       --transition-normal: 250ms ease;
@@ -55,7 +56,9 @@
     /* ===================================================================
        RESET & BASE
        =================================================================== */
-    *, *::before, *::after {
+    *,
+    *::before,
+    *::after {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
@@ -216,8 +219,15 @@
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.4;
+      }
     }
 
     /* ===================================================================
@@ -251,7 +261,7 @@
       justify-content: space-between;
       padding: 16px 20px;
       border-bottom: 1px solid var(--border-color);
-      background: rgba(255,255,255,0.02);
+      background: rgba(255, 255, 255, 0.02);
     }
 
     .card__header-left {
@@ -437,7 +447,9 @@
     }
 
     @keyframes spin {
-      to { transform: rotate(360deg); }
+      to {
+        transform: rotate(360deg);
+      }
     }
 
     /* ===================================================================
@@ -515,9 +527,9 @@
       flex-direction: column;
       gap: 2px;
       padding: 10px 12px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: var(--radius-md);
-      border: 1px solid rgba(255,255,255,0.04);
+      border: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .diagnosis-stat__value {
@@ -647,7 +659,7 @@
       align-items: center;
       gap: 10px;
       padding: 6px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .parts-list li:last-child {
@@ -725,8 +737,8 @@
       align-items: center;
       justify-content: space-between;
       padding: 12px 16px;
-      background: rgba(255,255,255,0.02);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      background: rgba(255, 255, 255, 0.02);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     .case-card__header-left {
@@ -775,7 +787,7 @@
       font-size: 0.6875rem;
       color: var(--text-muted);
       padding: 2px 8px;
-      background: rgba(255,255,255,0.05);
+      background: rgba(255, 255, 255, 0.05);
       border-radius: var(--radius-sm);
     }
 
@@ -802,7 +814,7 @@
     }
 
     .maf-actions {
-      border-top: 1px solid rgba(255,255,255,0.04);
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
       padding-top: 10px;
     }
 
@@ -821,7 +833,7 @@
       gap: 12px;
       align-items: start;
       padding: 6px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
       font-size: 0.8125rem;
     }
 
@@ -885,7 +897,11 @@
     /* ===================================================================
        STRUCTURED RECOMMENDATION CARD
        =================================================================== */
-    .rec-card { display: flex; flex-direction: column; gap: 16px; }
+    .rec-card {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
     .rec-section__label {
       font-size: 0.6875rem;
@@ -934,7 +950,7 @@
       width: 22px;
       height: 22px;
       border-radius: 50%;
-      background: rgba(56,189,248,0.12);
+      background: rgba(56, 189, 248, 0.12);
       color: var(--accent-blue);
       font-size: 0.6875rem;
       font-weight: 700;
@@ -951,8 +967,8 @@
     .rec-part-chip {
       display: inline-block;
       padding: 4px 10px;
-      background: rgba(251,191,36,0.08);
-      border: 1px solid rgba(251,191,36,0.2);
+      background: rgba(251, 191, 36, 0.08);
+      border: 1px solid rgba(251, 191, 36, 0.2);
       border-radius: 100px;
       font-size: 0.75rem;
       font-family: var(--font-mono);
@@ -987,8 +1003,8 @@
     .rec-ref-chip {
       display: inline-block;
       padding: 4px 10px;
-      background: rgba(34,211,238,0.08);
-      border: 1px solid rgba(34,211,238,0.2);
+      background: rgba(34, 211, 238, 0.08);
+      border: 1px solid rgba(34, 211, 238, 0.2);
       border-radius: var(--radius-sm);
       font-size: 0.75rem;
       font-family: var(--font-mono);
@@ -1004,13 +1020,57 @@
     }
 
     /* Markdown fallback styles */
-    .rec-fallback { white-space: normal; }
-    .rec-fallback p { margin-bottom: 10px; line-height: 1.7; }
-    .rec-fallback strong { color: var(--text-primary); font-weight: 600; }
-    .rec-fallback .rec-md-heading { font-size: 0.875rem; font-weight: 600; color: var(--text-label); text-transform: uppercase; letter-spacing: 0.04em; margin: 14px 0 6px; }
-    .rec-fallback ol, .rec-fallback ul { margin: 0 0 10px 0; padding-left: 0; list-style: none; }
-    .rec-fallback li { display: flex; align-items: flex-start; gap: 8px; margin-bottom: 4px; color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
-    .rec-fallback li::before { content: attr(data-marker); flex-shrink: 0; color: var(--accent-blue); font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600; min-width: 18px; text-align: right; margin-top: 2px; }
+    .rec-fallback {
+      white-space: normal;
+    }
+
+    .rec-fallback p {
+      margin-bottom: 10px;
+      line-height: 1.7;
+    }
+
+    .rec-fallback strong {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    .rec-fallback .rec-md-heading {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text-label);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin: 14px 0 6px;
+    }
+
+    .rec-fallback ol,
+    .rec-fallback ul {
+      margin: 0 0 10px 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .rec-fallback li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      margin-bottom: 4px;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      line-height: 1.6;
+    }
+
+    .rec-fallback li::before {
+      content: attr(data-marker);
+      flex-shrink: 0;
+      color: var(--accent-blue);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      min-width: 18px;
+      text-align: right;
+      margin-top: 2px;
+    }
 
     /* ===================================================================
        FOOTER
@@ -1040,8 +1100,8 @@
       align-items: center;
       gap: 4px;
       padding: 3px 10px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-sm);
       font-size: 0.6875rem;
       font-family: var(--font-mono);
@@ -1083,8 +1143,15 @@
       transition: border-color var(--transition-fast);
     }
 
-    .tar-queue__search::placeholder { color: var(--text-muted); }
-    .tar-queue__search:focus { border-color: var(--accent-blue); outline: none; box-shadow: 0 0 0 2px rgba(56,189,248,0.15); }
+    .tar-queue__search::placeholder {
+      color: var(--text-muted);
+    }
+
+    .tar-queue__search:focus {
+      border-color: var(--accent-blue);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
+    }
 
     .tar-queue__select {
       padding: 8px 10px;
@@ -1098,7 +1165,10 @@
       min-width: 120px;
     }
 
-    .tar-queue__select:focus { border-color: var(--accent-blue); outline: none; }
+    .tar-queue__select:focus {
+      border-color: var(--accent-blue);
+      outline: none;
+    }
 
     .tar-queue__clear-btn {
       padding: 8px 12px;
@@ -1113,7 +1183,10 @@
       white-space: nowrap;
     }
 
-    .tar-queue__clear-btn:hover { border-color: var(--accent-blue); color: var(--text-secondary); }
+    .tar-queue__clear-btn:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-secondary);
+    }
 
     .tar-queue__table-wrap {
       max-height: 310px;
@@ -1122,9 +1195,18 @@
       border-radius: var(--radius-sm);
     }
 
-    .tar-queue__table-wrap::-webkit-scrollbar { width: 6px; }
-    .tar-queue__table-wrap::-webkit-scrollbar-track { background: var(--bg-primary); }
-    .tar-queue__table-wrap::-webkit-scrollbar-thumb { background: var(--bg-tertiary); border-radius: 3px; }
+    .tar-queue__table-wrap::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .tar-queue__table-wrap::-webkit-scrollbar-track {
+      background: var(--bg-primary);
+    }
+
+    .tar-queue__table-wrap::-webkit-scrollbar-thumb {
+      background: var(--bg-tertiary);
+      border-radius: 3px;
+    }
 
     .tar-queue__table {
       width: 100%;
@@ -1150,26 +1232,45 @@
       background: var(--bg-tertiary);
       border-bottom: 1px solid var(--border-color);
       white-space: nowrap;
+      cursor: pointer;
+      user-select: none;
+      transition: background var(--transition-fast), color var(--transition-fast);
+    }
+
+    .tar-queue__table th:hover {
+      background: var(--bg-card-hover);
+      color: var(--text-primary);
+    }
+
+    .tar-queue__table th.sorted-asc::after {
+      content: " \2191";
+      color: var(--accent-blue);
+    }
+
+    .tar-queue__table th.sorted-desc::after {
+      content: " \2193";
+      color: var(--accent-blue);
     }
 
     .tar-queue__table td {
       padding: 7px 10px;
-      border-bottom: 1px solid rgba(51,65,85,0.5);
+      border-bottom: 1px solid rgba(51, 65, 85, 0.5);
       color: var(--text-secondary);
-      white-space: nowrap;
+      vertical-align: top;
       overflow: hidden;
       text-overflow: ellipsis;
     }
 
     .tar-queue__table td.tq-subject {
-      white-space: nowrap;
+      white-space: normal;
       overflow: hidden;
       text-overflow: ellipsis;
       max-width: 0;
     }
 
     .tar-queue__table td.tq-system {
-      max-width: 160px;
+      max-width: 260px;
+      white-space: normal;
       overflow: hidden;
       text-overflow: ellipsis;
     }
@@ -1177,21 +1278,35 @@
     .tar-queue__row {
       cursor: pointer;
       transition: background var(--transition-fast);
-      height: 36px;
     }
 
-    .tar-queue__row:nth-child(even) { background: rgba(255,255,255,0.015); }
-    .tar-queue__row:hover { background: var(--bg-card-hover); }
+    .tar-queue__row:nth-child(even) {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .tar-queue__row:hover {
+      background: var(--bg-card-hover);
+    }
 
     .tar-queue__row--selected {
-      background: rgba(56,189,248,0.08) !important;
+      background: rgba(56, 189, 248, 0.08) !important;
       border-left: 3px solid var(--accent-blue);
     }
 
-    .tar-queue__row--selected td:first-child { padding-left: 7px; }
+    .tar-queue__row--selected td:first-child {
+      padding-left: 7px;
+    }
 
-    .tq-jcn { font-family: var(--font-mono); color: var(--text-label); font-size: 0.75rem; }
-    .tq-date { font-size: 0.75rem; color: var(--text-muted); }
+    .tq-jcn {
+      font-family: var(--font-mono);
+      color: var(--text-label);
+      font-size: 0.75rem;
+    }
+
+    .tq-date {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
 
     .tq-priority-indicator {
       display: inline-block;
@@ -1202,8 +1317,13 @@
       vertical-align: middle;
     }
 
-    .tq-priority--urgent { background: var(--accent-red); }
-    .tq-priority--priority { background: var(--accent-amber); }
+    .tq-priority--urgent {
+      background: var(--accent-red);
+    }
+
+    .tq-priority--priority {
+      background: var(--accent-amber);
+    }
 
     .tar-queue__footer {
       display: flex;
@@ -1226,7 +1346,10 @@
       transition: all var(--transition-fast);
     }
 
-    .tar-queue__load-more:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+    .tar-queue__load-more:hover {
+      border-color: var(--accent-blue);
+      color: var(--text-primary);
+    }
 
     .tar-queue__spinner {
       display: flex;
@@ -1252,7 +1375,7 @@
       padding: 0;
       margin: -1px;
       overflow: hidden;
-      clip: rect(0,0,0,0);
+      clip: rect(0, 0, 0, 0);
       white-space: nowrap;
       border: 0;
     }
@@ -1309,7 +1432,10 @@
        REDUCED MOTION
        =================================================================== */
     @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after {
+
+      *,
+      *::before,
+      *::after {
         animation-duration: 0.01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
@@ -1355,7 +1481,7 @@
 
     .tab-btn:hover {
       color: var(--text-secondary);
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
     }
 
     .tab-btn--active {
@@ -1560,8 +1686,8 @@
     .tpdr-bar-label {
       flex: 1;
       text-align: center;
-      font-size: 0.5rem;
-      color: var(--text-muted);
+      font-size: 0.625rem;
+      color: #ccc;
       font-family: var(--font-mono);
     }
 
@@ -1574,8 +1700,8 @@
     .tpdr-aircraft-badge {
       display: inline-flex;
       padding: 3px 8px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: var(--radius-sm);
       font-size: 0.6875rem;
       font-family: var(--font-mono);
@@ -1602,7 +1728,7 @@
     .tpdr-comeback-table td {
       padding: 6px 8px;
       color: var(--text-secondary);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     /* Fleet Trend Overview */
@@ -1633,7 +1759,7 @@
     }
 
     .tpdr-trend-item:hover {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
     }
 
     .tpdr-trend-dot {
@@ -1643,10 +1769,21 @@
       flex-shrink: 0;
     }
 
-    .tpdr-trend-dot--critical { background: var(--accent-red); }
-    .tpdr-trend-dot--moderate { background: var(--accent-amber); }
-    .tpdr-trend-dot--stable { background: var(--text-muted); }
-    .tpdr-trend-dot--declining { background: var(--accent-green); }
+    .tpdr-trend-dot--critical {
+      background: var(--accent-red);
+    }
+
+    .tpdr-trend-dot--moderate {
+      background: var(--accent-amber);
+    }
+
+    .tpdr-trend-dot--stable {
+      background: var(--text-muted);
+    }
+
+    .tpdr-trend-dot--declining {
+      background: var(--accent-green);
+    }
 
     .tpdr-trend-name {
       flex: 1;
@@ -1666,16 +1803,28 @@
       text-align: right;
     }
 
-    .tpdr-trend-ratio--critical { color: var(--accent-red); }
-    .tpdr-trend-ratio--moderate { color: var(--accent-amber); }
-    .tpdr-trend-ratio--stable { color: var(--text-muted); }
-    .tpdr-trend-ratio--declining { color: var(--accent-green); }
+    .tpdr-trend-ratio--critical {
+      color: var(--accent-red);
+    }
+
+    .tpdr-trend-ratio--moderate {
+      color: var(--accent-amber);
+    }
+
+    .tpdr-trend-ratio--stable {
+      color: var(--text-muted);
+    }
+
+    .tpdr-trend-ratio--declining {
+      color: var(--accent-green);
+    }
 
     /* Responsive -- TPDR */
     @media (max-width: 900px) {
       .tpdr-stats-grid {
         grid-template-columns: repeat(2, 1fr);
       }
+
       .tab-nav {
         padding: 0 16px;
       }
@@ -1685,11 +1834,13 @@
       .tpdr-stats-grid {
         grid-template-columns: 1fr 1fr;
       }
+
       .tab-btn {
         font-size: 0.8125rem;
         padding: 10px 14px;
       }
     }
+
     /* ===================================================================
        FLEET ANALYTICS TAB
        =================================================================== */
@@ -1735,7 +1886,7 @@
     }
 
     .fleet-bar-row:hover {
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
     }
 
     .fleet-bar-row__label {
@@ -1855,9 +2006,11 @@
       .fleet-stats-row {
         grid-template-columns: repeat(2, 1fr);
       }
+
       .fleet-bar-row__label {
         width: 180px;
       }
+
       .fleet-detail__grid {
         grid-template-columns: 1fr;
       }
@@ -1867,6 +2020,7 @@
       .fleet-stats-row {
         grid-template-columns: 1fr 1fr;
       }
+
       .fleet-bar-row__label {
         width: 120px;
         font-size: 0.75rem;
@@ -1899,7 +2053,7 @@
 
     .fleet-view-toggle__btn:hover {
       color: var(--text-secondary);
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
     }
 
     .fleet-view-toggle__btn--active {
@@ -1976,7 +2130,7 @@
       padding: 10px 14px;
       border-left: 2px solid var(--border-color);
       margin-bottom: 8px;
-      background: rgba(255,255,255,0.015);
+      background: rgba(255, 255, 255, 0.015);
       border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     }
 
@@ -1995,13 +2149,13 @@
 
     .sys-mode-card__count {
       font-size: 0.75rem;
-      color: var(--text-muted);
+      color: #ccc;
       font-family: var(--font-mono);
     }
 
     .sys-mode-card__actions {
       font-size: 0.75rem;
-      color: var(--text-secondary);
+      color: #ccc;
       margin-top: 4px;
     }
 
@@ -2012,7 +2166,7 @@
     .sys-mode-card__action-list {
       margin-top: 6px;
       padding-top: 4px;
-      border-top: 1px solid rgba(255,255,255,0.04);
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     /* Corrective actions table within system detail */
@@ -2022,7 +2176,7 @@
       gap: 8px;
       padding: 4px 0;
       font-size: 0.8125rem;
-      border-bottom: 1px solid rgba(255,255,255,0.03);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     }
 
     .sys-action-row:last-child {
@@ -2031,7 +2185,7 @@
 
     .sys-action-row__rank {
       width: 22px;
-      color: var(--text-muted);
+      color: #ccc;
       font-size: 0.75rem;
       font-family: var(--font-mono);
       flex-shrink: 0;
@@ -2039,7 +2193,7 @@
 
     .sys-action-row__text {
       flex: 1;
-      color: var(--text-secondary);
+      color: #ccc;
       font-size: 0.75rem;
       word-break: break-word;
     }
@@ -2047,7 +2201,7 @@
     .sys-action-row__meta {
       flex-shrink: 0;
       font-size: 0.6875rem;
-      color: var(--text-muted);
+      color: #ccc;
       font-family: var(--font-mono);
       text-align: right;
       white-space: nowrap;
@@ -2059,7 +2213,7 @@
       gap: 16px;
       margin-top: 12px;
       padding-top: 12px;
-      border-top: 1px solid rgba(255,255,255,0.06);
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
     }
 
     .sys-quick-stat {
@@ -2094,7 +2248,7 @@
     .extracted-solutions-table td {
       padding: 5px 8px;
       color: var(--text-secondary);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
     }
 
     /* ===================================================================
@@ -2112,20 +2266,24 @@
       transition: all var(--transition-fast);
       white-space: nowrap;
     }
+
     .flag-btn:hover {
       color: var(--accent-amber);
       border-color: rgba(251, 191, 36, 0.3);
       background: rgba(251, 191, 36, 0.08);
     }
+
     .flag-btn--flagged {
       color: var(--text-muted);
       opacity: 0.6;
       cursor: default;
       pointer-events: none;
     }
+
     .case-card--flagged {
       opacity: 0.5;
     }
+
     .flag-counter {
       font-size: 0.75rem;
       color: var(--accent-amber);
@@ -2138,6 +2296,7 @@
       cursor: pointer;
       user-select: none;
     }
+
     .case-card__expand-icon {
       font-size: 0.75rem;
       color: var(--text-muted);
@@ -2145,52 +2304,62 @@
       margin-right: 4px;
       flex-shrink: 0;
     }
+
     .case-card--expanded .case-card__expand-icon {
       transform: rotate(90deg);
     }
+
     .case-card--expanded .case-issue {
       display: block;
       -webkit-line-clamp: unset;
       -webkit-box-orient: unset;
       overflow: visible;
     }
+
     .case-card__details {
       display: none;
       padding: 0 16px 12px;
     }
+
     .case-card--expanded .case-card__details {
       display: block;
     }
+
     .case-meta-row {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
       margin-bottom: 12px;
       padding: 8px 12px;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       border-radius: var(--radius-sm);
     }
+
     .case-meta-item {
       display: flex;
       align-items: center;
       gap: 4px;
       font-size: 0.75rem;
     }
+
     .case-meta-item__label {
       color: var(--text-muted);
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.03em;
     }
+
     .case-meta-item__value {
       color: var(--text-secondary);
       font-family: var(--font-mono);
     }
+
     .case-card__maf-full {
-      border-top: 1px solid rgba(255,255,255,0.04);
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
       padding-top: 10px;
       margin-bottom: 12px;
     }
+
     .case-analyze-btn {
       display: inline-flex;
       align-items: center;
@@ -2206,6 +2375,7 @@
       cursor: pointer;
       transition: all var(--transition-fast);
     }
+
     .case-analyze-btn:hover {
       background: rgba(56, 189, 248, 0.2);
       border-color: rgba(56, 189, 248, 0.5);
@@ -2220,6 +2390,7 @@
       cursor: pointer;
       transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
     }
+
     .rec-footer-link:hover {
       color: var(--accent-blue);
       text-decoration-color: var(--accent-blue);
@@ -2239,22 +2410,27 @@
       cursor: pointer;
       transition: all var(--transition-fast);
     }
+
     .tpdr-workflow-btn--file {
       color: var(--accent-green);
       border-color: rgba(52, 211, 153, 0.3);
     }
+
     .tpdr-workflow-btn--file:hover {
       background: rgba(52, 211, 153, 0.12);
       border-color: var(--accent-green);
     }
+
     .tpdr-workflow-btn--defer {
       color: var(--accent-amber);
       border-color: rgba(251, 191, 36, 0.3);
     }
+
     .tpdr-workflow-btn--defer:hover {
       background: rgba(251, 191, 36, 0.12);
       border-color: var(--accent-amber);
     }
+
     .tpdr-state-badge {
       display: inline-flex;
       align-items: center;
@@ -2264,16 +2440,19 @@
       font-size: 0.6875rem;
       font-weight: 700;
     }
+
     .tpdr-state-badge--filed {
       background: rgba(52, 211, 153, 0.15);
       color: var(--accent-green);
       border: 1px solid rgba(52, 211, 153, 0.3);
     }
+
     .tpdr-state-badge--deferred {
       background: rgba(251, 191, 36, 0.15);
       color: var(--accent-amber);
       border: 1px solid rgba(251, 191, 36, 0.3);
     }
+
     .tpdr-undo-link {
       background: none;
       border: none;
@@ -2285,18 +2464,64 @@
       padding: 2px 4px;
       transition: color var(--transition-fast);
     }
+
     .tpdr-undo-link:hover {
       color: var(--text-secondary);
     }
+
     .tpdr-candidate--deferred {
       opacity: 0.65;
       border-left: 3px solid var(--accent-amber);
     }
+
     .tpdr-candidate--filed {
       opacity: 0.7;
       border-left: 3px solid var(--accent-green);
       padding: 12px 20px;
     }
+
+    .tpdr-candidate--below-threshold {
+      border-left: 3px solid var(--accent-amber);
+    }
+
+    .tpdr-threshold-reasons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .tpdr-threshold-reason {
+      font-size: 0.6875rem;
+      color: var(--accent-amber);
+      background: rgba(251, 191, 36, 0.1);
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 2px 8px;
+      font-family: var(--font-mono);
+    }
+
+    .tpdr-below-toggle {
+      background: transparent;
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      color: var(--text-muted);
+      font-size: 0.8125rem;
+      font-weight: 500;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      font-family: var(--font-sans);
+      width: 100%;
+      text-align: center;
+      margin: 20px 0 12px;
+    }
+
+    .tpdr-below-toggle:hover {
+      border-color: var(--text-muted);
+      color: var(--text-secondary);
+    }
+
     .tpdr-section-header {
       font-size: 0.8125rem;
       font-weight: 600;
@@ -2308,12 +2533,15 @@
       align-items: center;
       gap: 8px;
     }
+
     .tpdr-section-header--filed {
       color: var(--accent-green);
     }
+
     .tpdr-section-header--deferred {
       color: var(--accent-amber);
     }
+
     .tpdr-stats-bar {
       display: flex;
       align-items: center;
@@ -2327,10 +2555,12 @@
       color: var(--text-secondary);
       font-family: var(--font-mono);
     }
+
     .tpdr-stats-bar span {
       color: var(--accent-cyan);
       font-weight: 700;
     }
+
     .tpdr-defer-input {
       display: flex;
       align-items: center;
@@ -2340,6 +2570,7 @@
       background: var(--bg-secondary);
       border-radius: var(--radius-sm);
     }
+
     .tpdr-defer-input input {
       flex: 1;
       background: var(--bg-input);
@@ -2350,10 +2581,12 @@
       font-size: 0.8125rem;
       padding: 6px 10px;
     }
+
     .tpdr-defer-input input:focus {
       border-color: var(--accent-amber);
       outline: none;
     }
+
     .tpdr-defer-input button {
       background: var(--accent-amber);
       color: var(--bg-primary);
@@ -2372,6 +2605,7 @@
     .threshold-panel {
       margin-bottom: 20px;
     }
+
     .threshold-toggle {
       background: transparent;
       border: 1px dashed var(--border-color);
@@ -2388,27 +2622,32 @@
       gap: 6px;
       margin-bottom: 12px;
     }
+
     .threshold-toggle:hover {
       border-color: var(--accent-blue);
       color: var(--text-primary);
     }
+
     .threshold-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-bottom: 12px;
     }
+
     .threshold-field {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
+
     .threshold-field label {
       font-size: 0.6875rem;
       color: var(--text-muted);
       text-transform: uppercase;
       letter-spacing: 0.04em;
     }
+
     .threshold-field input,
     .threshold-field select {
       background: var(--bg-input);
@@ -2420,39 +2659,45 @@
       padding: 8px 10px;
       width: 100%;
     }
+
     .threshold-field input:focus,
     .threshold-field select:focus {
       border-color: var(--accent-blue);
       outline: none;
       box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.15);
     }
+
     .threshold-actions {
       display: flex;
       align-items: center;
       gap: 12px;
       margin-top: 8px;
     }
+
     .threshold-count {
       font-size: 0.8125rem;
       color: var(--text-secondary);
     }
+
     .threshold-count span {
       color: var(--accent-cyan);
       font-weight: 600;
       font-family: var(--font-mono);
     }
+
     .threshold-multiselect {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
       margin-top: 4px;
     }
+
     .threshold-chip {
       display: inline-flex;
       align-items: center;
       gap: 4px;
       padding: 4px 10px;
-      background: rgba(255,255,255,0.04);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-color);
       border-radius: var(--radius-sm);
       font-size: 0.6875rem;
@@ -2462,15 +2707,18 @@
       transition: all var(--transition-fast);
       user-select: none;
     }
+
     .threshold-chip:hover {
       border-color: var(--accent-blue);
       color: var(--text-primary);
     }
+
     .threshold-chip--active {
       background: rgba(56, 189, 248, 0.12);
       border-color: var(--accent-blue);
       color: var(--accent-blue);
     }
+
     .threshold-multiselect-label {
       font-size: 0.6875rem;
       color: var(--text-muted);
@@ -2479,11 +2727,13 @@
       margin-top: 12px;
       margin-bottom: 4px;
     }
+
     .threshold-multiselect-actions {
       display: flex;
       gap: 8px;
       margin-top: 6px;
     }
+
     .threshold-link-btn {
       background: none;
       border: none;
@@ -2495,20 +2745,24 @@
       padding: 2px 4px;
       transition: color var(--transition-fast);
     }
+
     .threshold-link-btn:hover {
       color: var(--text-secondary);
     }
+
     .threshold-summary {
       font-size: 0.8125rem;
       color: var(--text-muted);
       line-height: 1.6;
       margin-bottom: 14px;
     }
+
     .threshold-summary .tv {
       font-family: var(--font-mono);
       color: var(--accent-cyan);
       font-weight: 600;
     }
+
     .threshold-tip {
       position: relative;
       display: inline-flex;
@@ -2526,6 +2780,7 @@
       vertical-align: middle;
       flex-shrink: 0;
     }
+
     .threshold-tip .threshold-tiptext {
       visibility: hidden;
       opacity: 0;
@@ -2545,22 +2800,31 @@
       transition: opacity 0.15s;
       z-index: 10;
     }
+
     .threshold-tip:hover .threshold-tiptext {
       visibility: visible;
       opacity: 1;
     }
+
     .threshold-field label {
       display: flex;
       align-items: center;
     }
+
     @media (max-width: 900px) {
-      .threshold-grid { grid-template-columns: repeat(2, 1fr); }
+      .threshold-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
+
     @media (max-width: 600px) {
-      .threshold-grid { grid-template-columns: 1fr; }
+      .threshold-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
+
 <body>
   <!-- Skip link for keyboard navigation -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
@@ -2572,10 +2836,11 @@
     <div class="app-header__title-group">
       <div class="app-header__icon" aria-hidden="true">
         <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="2" width="32" height="32" rx="6" stroke="#38bdf8" stroke-width="2"/>
-          <path d="M10 18h16M18 10v16M12 12l12 12M24 12L12 24" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" opacity="0.3"/>
-          <circle cx="18" cy="18" r="5" stroke="#22d3ee" stroke-width="2"/>
-          <circle cx="18" cy="18" r="1.5" fill="#22d3ee"/>
+          <rect x="2" y="2" width="32" height="32" rx="6" stroke="#38bdf8" stroke-width="2" />
+          <path d="M10 18h16M18 10v16M12 12l12 12M24 12L12 24" stroke="#38bdf8" stroke-width="1.5"
+            stroke-linecap="round" opacity="0.3" />
+          <circle cx="18" cy="18" r="5" stroke="#22d3ee" stroke-width="2" />
+          <circle cx="18" cy="18" r="1.5" fill="#22d3ee" />
         </svg>
       </div>
       <div>
@@ -2615,15 +2880,25 @@
   <!-- TAB NAVIGATION -->
   <nav class="tab-nav" role="tablist" aria-label="Application views">
     <button class="tab-btn" id="tabBtnFleet" role="tab" aria-selected="false" aria-controls="tabFleetAnalytics">
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><rect x="1" y="9" width="3" height="6" rx="0.5" fill="currentColor" opacity="0.6"/><rect x="5.5" y="5" width="3" height="10" rx="0.5" fill="currentColor" opacity="0.8"/><rect x="10" y="2" width="3" height="13" rx="0.5" fill="currentColor"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <rect x="1" y="9" width="3" height="6" rx="0.5" fill="currentColor" opacity="0.6" />
+        <rect x="5.5" y="5" width="3" height="10" rx="0.5" fill="currentColor" opacity="0.8" />
+        <rect x="10" y="2" width="3" height="13" rx="0.5" fill="currentColor" />
+      </svg>
       Fleet Analytics
     </button>
     <button class="tab-btn tab-btn--active" id="tabBtnLookup" role="tab" aria-selected="true" aria-controls="tabLookup">
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="2"/><path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="2" />
+        <path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+      </svg>
       TAR Lookup
     </button>
     <button class="tab-btn" id="tabBtnTPDR" role="tab" aria-selected="false" aria-controls="tabTPDR">
-      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 12l4-8 3 4 2-3 3 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M2 12l4-8 3 4 2-3 3 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
       TPDR Intelligence
     </button>
   </nav>
@@ -2639,14 +2914,21 @@
           <div class="card__header">
             <div class="card__header-left">
               <span class="card__header-icon" aria-hidden="true">
-                <svg viewBox="0 0 18 18" fill="none"><rect x="1" y="10" width="3.5" height="7" rx="0.5" stroke="currentColor" stroke-width="1.5"/><rect x="7.25" y="5" width="3.5" height="12" rx="0.5" stroke="currentColor" stroke-width="1.5"/><rect x="13.5" y="1" width="3.5" height="16" rx="0.5" stroke="currentColor" stroke-width="1.5"/></svg>
+                <svg viewBox="0 0 18 18" fill="none">
+                  <rect x="1" y="10" width="3.5" height="7" rx="0.5" stroke="currentColor" stroke-width="1.5" />
+                  <rect x="7.25" y="5" width="3.5" height="12" rx="0.5" stroke="currentColor" stroke-width="1.5" />
+                  <rect x="13.5" y="1" width="3.5" height="16" rx="0.5" stroke="currentColor" stroke-width="1.5" />
+                </svg>
               </span>
               <h2 class="card__title" id="fleet-overview-heading">Fleet Analytics</h2>
             </div>
           </div>
           <div class="card__body" id="fleetBody">
             <div class="state-message state-message--loading" id="fleetLoading">
-              <div class="state-message__icon"><div class="spinner spinner--large" role="status"><span class="sr-only">Loading fleet analytics</span></div></div>
+              <div class="state-message__icon">
+                <div class="spinner spinner--large" role="status"><span class="sr-only">Loading fleet analytics</span>
+                </div>
+              </div>
               <p class="state-message__text">Loading fleet analytics data...</p>
             </div>
             <div class="hidden" id="fleetError">
@@ -2658,8 +2940,10 @@
               <div id="fleetStatsRow" class="fleet-stats-row"></div>
 
               <div class="fleet-view-toggle" role="tablist" aria-label="Fleet analytics view">
-                <button type="button" class="fleet-view-toggle__btn fleet-view-toggle__btn--active" id="fleetViewBtnSystem" role="tab" aria-selected="true">System View</button>
-                <button type="button" class="fleet-view-toggle__btn" id="fleetViewBtnClusters" role="tab" aria-selected="false">Problem Categories</button>
+                <button type="button" class="fleet-view-toggle__btn fleet-view-toggle__btn--active"
+                  id="fleetViewBtnSystem" role="tab" aria-selected="true">System View</button>
+                <button type="button" class="fleet-view-toggle__btn" id="fleetViewBtnClusters" role="tab"
+                  aria-selected="false">Problem Categories</button>
               </div>
 
               <!-- System View -->
@@ -2671,12 +2955,14 @@
               <!-- Problem Categories View (existing) -->
               <div id="fleetClustersView" class="hidden">
                 <div class="fleet-detail__section">
-                  <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Problem Categories</div>
+                  <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Problem
+                    Categories</div>
                   <div id="fleetClustersChart"></div>
                 </div>
 
                 <div class="fleet-detail__section" style="margin-top: 32px;">
-                  <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Top Failing Parts</div>
+                  <div class="fleet-detail__section-title" style="font-size: 0.875rem; margin-bottom: 16px;">Top Failing
+                    Parts</div>
                   <div id="fleetPartsChart"></div>
                 </div>
               </div>
@@ -2688,217 +2974,262 @@
 
     <div id="tabLookup" role="tabpanel" aria-labelledby="tabBtnLookup">
 
-    <!-- TAR QUEUE SECTION -->
-    <section class="section" aria-labelledby="tar-queue-heading">
-      <div class="card">
-        <div class="card__header">
-          <div class="card__header-left">
-            <span class="card__header-icon" aria-hidden="true">
-              <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="3" width="14" height="2" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="8" width="14" height="2" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="13" width="14" height="2" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
-            </span>
-            <h2 class="card__title" id="tar-queue-heading">TAR Queue</h2>
-          </div>
-          <span id="tarQueueCount" class="tech-badge hidden" aria-live="polite"></span>
-        </div>
-        <div class="card__body" id="tarQueueBody">
-          <div id="tarQueueLoading" class="tar-queue__spinner">
-            <span class="spinner" role="status"><span class="sr-only">Loading TAR queue</span></span>
-            Loading recent TARs...
-          </div>
-          <div id="tarQueueContent" class="hidden">
-            <div class="tar-queue__filters">
-              <input type="text" id="tarQueueSearch" class="tar-queue__search" placeholder="Search TARs..." aria-label="Search TARs by subject or issue">
-              <select id="tarQueueWorkCenter" class="tar-queue__select" aria-label="Filter by work center">
-                <option value="">All Work Centers</option>
-              </select>
-              <select id="tarQueueActivity" class="tar-queue__select" aria-label="Filter by activity">
-                <option value="">All Activities</option>
-              </select>
-              <select id="tarQueuePriority" class="tar-queue__select" aria-label="Filter by priority">
-                <option value="">All Priorities</option>
-              </select>
-              <button type="button" id="tarQueueClearBtn" class="tar-queue__clear-btn">Clear Filters</button>
+      <!-- TAR QUEUE SECTION -->
+      <section class="section" aria-labelledby="tar-queue-heading">
+        <div class="card">
+          <div class="card__header">
+            <div class="card__header-left">
+              <span class="card__header-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <rect x="2" y="3" width="14" height="2" rx="1" stroke="currentColor" stroke-width="1.5" />
+                  <rect x="2" y="8" width="14" height="2" rx="1" stroke="currentColor" stroke-width="1.5" />
+                  <rect x="2" y="13" width="14" height="2" rx="1" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              </span>
+              <h2 class="card__title" id="tar-queue-heading">TAR Queue</h2>
             </div>
-            <div class="tar-queue__table-wrap">
-              <table class="tar-queue__table" aria-label="Recent TARs">
-                <thead>
-                  <tr>
-                    <th style="width:100px">JCN</th>
-                    <th style="width:90px">Date</th>
-                    <th style="width:80px">Priority</th>
-                    <th style="width:160px">System</th>
-                    <th>Subject</th>
-                  </tr>
-                </thead>
-                <tbody id="tarQueueTableBody"></tbody>
-              </table>
+            <span id="tarQueueCount" class="tech-badge hidden" aria-live="polite"></span>
+          </div>
+          <div class="card__body" id="tarQueueBody">
+            <div id="tarQueueLoading" class="tar-queue__spinner">
+              <span class="spinner" role="status"><span class="sr-only">Loading TAR queue</span></span>
+              Loading recent TARs...
             </div>
-            <div class="tar-queue__footer">
-              <span id="tarQueueShowing"></span>
-              <button type="button" id="tarQueueLoadMore" class="tar-queue__load-more hidden">Load More</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- INPUT SECTION -->
-    <section class="section input-section" aria-labelledby="input-heading">
-      <div class="card">
-        <div class="card__header">
-          <div class="card__header-left">
-            <span class="card__header-icon" aria-hidden="true">
-              <svg viewBox="0 0 18 18" fill="none"><path d="M9 1.5v15M1.5 9h15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-            </span>
-            <h2 class="card__title" id="input-heading">TAR Input</h2>
-          </div>
-        </div>
-        <div class="card__body">
-          <label for="tarInput" class="textarea-label">Enter TAR description or paste a Technical Assistance Request for analysis</label>
-          <textarea
-            id="tarInput"
-            class="tar-textarea"
-            placeholder="Describe the maintenance issue, fault, or discrepancy. Include details such as component, symptom, and when the issue was observed..."
-            rows="5"
-            aria-describedby="tarInputHelp"
-          ></textarea>
-          <div id="tarInputHelp" class="sr-only">
-            Enter a TAR description to search historical maintenance data. You can also select a sample TAR below to auto-fill. Press Ctrl+Enter or Cmd+Enter to search.
-          </div>
-
-          <div class="sample-tars">
-            <span class="sample-tars__label">Sample TARs:</span>
-            <button
-              type="button"
-              class="sample-tar-btn"
-              data-tar="FADEC channel A fault during ground turn, posted F(P) three times on download. LH engine slow to respond to throttle inputs."
-              aria-label="Load sample: FADEC channel A fault"
-            >FADEC Channel A Fault</button>
-            <button
-              type="button"
-              class="sample-tar-btn"
-              data-tar="Water intrusion discovered in LH wing root area during phase inspection. Standing water approximately 2 inches deep in lower cavity."
-              aria-label="Load sample: Water intrusion in wing root"
-            >Water Intrusion - Wing Root</button>
-            <button
-              type="button"
-              class="sample-tar-btn"
-              data-tar="RH proprotor gearbox chip detector illuminated during flight. Debris found on mag plug during post-flight inspection."
-              aria-label="Load sample: Gearbox chip detector"
-            >Gearbox Chip Detector</button>
-          </div>
-
-          <div class="action-buttons">
-            <button type="button" class="btn btn--primary" id="btnSearch" aria-describedby="searchDesc">
-              <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="2"/><path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-              Search Historical Data
-            </button>
-            <span id="searchDesc" class="sr-only">Searches 15,000+ historical TARs and maintenance records for similar cases</span>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- DIAGNOSIS SECTION -->
-    <section class="section" aria-labelledby="diagnosis-heading" id="diagnosisSection">
-      <div class="card" id="diagnosisCard">
-        <div class="card__header">
-          <div class="card__header-left">
-            <span class="card__header-icon" aria-hidden="true">
-              <svg viewBox="0 0 18 18" fill="none"><path d="M9 1.5L16.5 16.5H1.5L9 1.5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M9 7v3.5M9 13v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
-            <h2 class="card__title" id="diagnosis-heading">Diagnosis</h2>
-          </div>
-          <span id="diagnosisTimer" class="tech-badge hidden" aria-live="polite"></span>
-        </div>
-        <div class="card__body" id="diagnosisBody">
-          <div class="state-message" id="diagnosisEmpty">
-            <div class="state-message__icon" aria-hidden="true">
-              <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="32" height="32" rx="6" stroke="currentColor" stroke-width="2"/><path d="M14 20h12M20 14v12" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/></svg>
-            </div>
-            <p class="state-message__text">Enter a TAR description above and search to see diagnosis results based on historical maintenance data.</p>
-          </div>
-          <div class="hidden" id="diagnosisLoading">
-            <div class="state-message state-message--loading">
-              <div class="state-message__icon"><div class="spinner spinner--large" role="status"><span class="sr-only">Searching historical database</span></div></div>
-              <p class="state-message__text">Analyzing TAR against historical database...</p>
-            </div>
-          </div>
-          <div class="hidden" id="diagnosisError">
-            <div class="state-message state-message--error" role="alert">
-              <div class="state-message__icon" aria-hidden="true">
-                <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2"/><path d="M14 14l12 12M26 14L14 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <div id="tarQueueContent" class="hidden">
+              <div class="tar-queue__filters">
+                <input type="text" id="tarQueueSearch" class="tar-queue__search" placeholder="Search TARs..."
+                  aria-label="Search TARs by subject or issue">
+                <select id="tarQueueWorkCenter" class="tar-queue__select" aria-label="Filter by work center">
+                  <option value="">All Work Centers</option>
+                </select>
+                <select id="tarQueueActivity" class="tar-queue__select" aria-label="Filter by activity">
+                  <option value="">All Activities</option>
+                </select>
+                <select id="tarQueuePriority" class="tar-queue__select" aria-label="Filter by priority">
+                  <option value="">All Priorities</option>
+                </select>
+                <button type="button" id="tarQueueClearBtn" class="tar-queue__clear-btn">Clear Filters</button>
               </div>
-              <p class="state-message__text" id="diagnosisErrorText">An error occurred during search.</p>
-            </div>
-          </div>
-          <div class="hidden" id="diagnosisResults" role="region" aria-label="Diagnosis results"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SIMILAR CASES SECTION -->
-    <section class="section" aria-labelledby="cases-heading" id="casesSection">
-      <div class="card" id="casesCard">
-        <div class="card__header">
-          <div class="card__header-left">
-            <span class="card__header-icon" aria-hidden="true">
-              <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="10" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
-            </span>
-            <h2 class="card__title" id="cases-heading">Similar Past Cases</h2>
-          </div>
-          <span id="casesCount" class="tech-badge hidden" aria-live="polite"></span>
-        </div>
-        <div class="card__body" id="casesBody">
-          <div class="state-message" id="casesEmpty">
-            <div class="state-message__icon" aria-hidden="true">
-              <svg viewBox="0 0 40 40" fill="none"><rect x="4" y="4" width="32" height="14" rx="4" stroke="currentColor" stroke-width="2" opacity="0.5"/><rect x="4" y="22" width="32" height="14" rx="4" stroke="currentColor" stroke-width="2" opacity="0.3"/></svg>
-            </div>
-            <p class="state-message__text">Similar historical cases will appear here after searching.</p>
-          </div>
-          <div class="hidden" id="casesResults"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- AI RECOMMENDATION SECTION -->
-    <section class="section" aria-labelledby="recommendation-heading" id="recommendSection">
-      <div class="card" id="recommendCard">
-        <div class="card__header">
-          <div class="card__header-left">
-            <span class="card__header-icon" aria-hidden="true">
-              <svg viewBox="0 0 18 18" fill="none"><path d="M9 1v2M9 15v2M1 9h2M15 9h2M3.05 3.05l1.41 1.41M13.54 13.54l1.41 1.41M3.05 14.95l1.41-1.41M13.54 4.46l1.41-1.41" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="1.5"/></svg>
-            </span>
-            <h2 class="card__title" id="recommendation-heading">AI Recommendation</h2>
-          </div>
-          <span id="recommendTimer" class="tech-badge hidden" aria-live="polite"></span>
-        </div>
-        <div class="card__body" id="recommendBody">
-          <div class="state-message" id="recommendEmpty">
-            <div class="state-message__icon" aria-hidden="true">
-              <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2" opacity="0.3"/><path d="M20 12v8M20 24v2" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity="0.5"/></svg>
-            </div>
-            <p class="state-message__text">AI recommendation will generate automatically after search completes. This typically takes 10-15 seconds.</p>
-          </div>
-          <div class="hidden" id="recommendLoading">
-            <div class="state-message state-message--loading">
-              <div class="state-message__icon"><div class="spinner spinner--large" role="status"><span class="sr-only">Generating AI recommendation</span></div></div>
-              <p class="state-message__text" id="recommendLoadingText">Generating AI recommendation via local LLM...</p>
-            </div>
-          </div>
-          <div class="hidden" id="recommendError">
-            <div class="state-message state-message--error" role="alert">
-              <div class="state-message__icon" aria-hidden="true">
-                <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2"/><path d="M14 14l12 12M26 14L14 26" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <div class="tar-queue__table-wrap">
+                <table class="tar-queue__table" aria-label="Recent TARs">
+                  <thead>
+                    <tr>
+                      <th id="th-jcn" style="width:100px">JCN</th>
+                      <th id="th-date" style="width:100px">Date</th>
+                      <th id="th-priority" style="width:110px">Priority</th>
+                      <th id="th-system" style="width:260px">System</th>
+                      <th id="th-subject">Subject</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tarQueueTableBody"></tbody>
+                </table>
               </div>
-              <p class="state-message__text"><span id="recommendErrorText">Failed to generate recommendation.</span> <a href="#" id="recommendRetry" style="color:var(--accent-blue);text-decoration:underline;cursor:pointer;margin-left:6px">Retry</a></p>
+              <div class="tar-queue__footer">
+                <span id="tarQueueShowing"></span>
+                <button type="button" id="tarQueueLoadMore" class="tar-queue__load-more hidden">Load More</button>
+              </div>
             </div>
           </div>
-          <div class="hidden" id="recommendResults" role="region" aria-label="AI recommendation"></div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      <!-- INPUT SECTION -->
+      <section class="section input-section" aria-labelledby="input-heading">
+        <div class="card">
+          <div class="card__header">
+            <div class="card__header-left">
+              <span class="card__header-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path d="M9 1.5v15M1.5 9h15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </span>
+              <h2 class="card__title" id="input-heading">TAR Input</h2>
+            </div>
+          </div>
+          <div class="card__body">
+            <label for="tarInput" class="textarea-label">Enter TAR description or paste a Technical Assistance Request
+              for analysis</label>
+            <textarea id="tarInput" class="tar-textarea"
+              placeholder="Describe the maintenance issue, fault, or discrepancy. Include details such as component, symptom, and when the issue was observed..."
+              rows="5" aria-describedby="tarInputHelp"></textarea>
+            <div id="tarInputHelp" class="sr-only">
+              Enter a TAR description to search historical maintenance data. You can also select a sample TAR below to
+              auto-fill. Press Ctrl+Enter or Cmd+Enter to search.
+            </div>
+
+            <div class="sample-tars">
+              <span class="sample-tars__label">Sample TARs:</span>
+              <button type="button" class="sample-tar-btn"
+                data-tar="FADEC channel A fault during ground turn, posted F(P) three times on download. LH engine slow to respond to throttle inputs."
+                aria-label="Load sample: FADEC channel A fault">FADEC Channel A Fault</button>
+              <button type="button" class="sample-tar-btn"
+                data-tar="Water intrusion discovered in LH wing root area during phase inspection. Standing water approximately 2 inches deep in lower cavity."
+                aria-label="Load sample: Water intrusion in wing root">Water Intrusion - Wing Root</button>
+              <button type="button" class="sample-tar-btn"
+                data-tar="RH proprotor gearbox chip detector illuminated during flight. Debris found on mag plug during post-flight inspection."
+                aria-label="Load sample: Gearbox chip detector">Gearbox Chip Detector</button>
+            </div>
+
+            <div class="action-buttons">
+              <button type="button" class="btn btn--primary" id="btnSearch" aria-describedby="searchDesc">
+                <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="2" />
+                  <path d="M11.5 11.5L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+                Search Historical Data
+              </button>
+              <span id="searchDesc" class="sr-only">Searches 15,000+ historical TARs and maintenance records for similar
+                cases</span>
+
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- DIAGNOSIS SECTION -->
+      <section class="section" aria-labelledby="diagnosis-heading" id="diagnosisSection">
+        <div class="card" id="diagnosisCard">
+          <div class="card__header">
+            <div class="card__header-left">
+              <span class="card__header-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path d="M9 1.5L16.5 16.5H1.5L9 1.5z" stroke="currentColor" stroke-width="1.5"
+                    stroke-linejoin="round" />
+                  <path d="M9 7v3.5M9 13v.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                </svg>
+              </span>
+              <h2 class="card__title" id="diagnosis-heading">Diagnosis</h2>
+            </div>
+            <span id="diagnosisTimer" class="tech-badge hidden" aria-live="polite"></span>
+          </div>
+          <div class="card__body" id="diagnosisBody">
+            <div class="state-message" id="diagnosisEmpty">
+              <div class="state-message__icon" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none">
+                  <rect x="4" y="4" width="32" height="32" rx="6" stroke="currentColor" stroke-width="2" />
+                  <path d="M14 20h12M20 14v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    opacity="0.5" />
+                </svg>
+              </div>
+              <p class="state-message__text">Enter a TAR description above and search to see diagnosis results based on
+                historical maintenance data.</p>
+            </div>
+            <div class="hidden" id="diagnosisLoading">
+              <div class="state-message state-message--loading">
+                <div class="state-message__icon">
+                  <div class="spinner spinner--large" role="status"><span class="sr-only">Searching historical
+                      database</span></div>
+                </div>
+                <p class="state-message__text">Analyzing TAR against historical database...</p>
+              </div>
+            </div>
+            <div class="hidden" id="diagnosisError">
+              <div class="state-message state-message--error" role="alert">
+                <div class="state-message__icon" aria-hidden="true">
+                  <svg viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2" />
+                    <path d="M14 14l12 12M26 14L14 26" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <p class="state-message__text" id="diagnosisErrorText">An error occurred during search.</p>
+              </div>
+            </div>
+            <div class="hidden" id="diagnosisResults" role="region" aria-label="Diagnosis results"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SIMILAR CASES SECTION -->
+      <section class="section" aria-labelledby="cases-heading" id="casesSection">
+        <div class="card" id="casesCard">
+          <div class="card__header">
+            <div class="card__header-left">
+              <span class="card__header-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <rect x="2" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
+                  <rect x="10" y="2" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
+                  <rect x="2" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
+                  <rect x="10" y="10" width="6" height="6" rx="1" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              </span>
+              <h2 class="card__title" id="cases-heading">Similar Past Cases</h2>
+            </div>
+            <span id="casesCount" class="tech-badge hidden" aria-live="polite"></span>
+          </div>
+          <div class="card__body" id="casesBody">
+            <div class="state-message" id="casesEmpty">
+              <div class="state-message__icon" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none">
+                  <rect x="4" y="4" width="32" height="14" rx="4" stroke="currentColor" stroke-width="2"
+                    opacity="0.5" />
+                  <rect x="4" y="22" width="32" height="14" rx="4" stroke="currentColor" stroke-width="2"
+                    opacity="0.3" />
+                </svg>
+              </div>
+              <p class="state-message__text">Similar historical cases will appear here after searching.</p>
+            </div>
+            <div class="hidden" id="casesResults"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- AI RECOMMENDATION SECTION -->
+      <section class="section" aria-labelledby="recommendation-heading" id="recommendSection">
+        <div class="card" id="recommendCard">
+          <div class="card__header">
+            <div class="card__header-left">
+              <span class="card__header-icon" aria-hidden="true">
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path
+                    d="M9 1v2M9 15v2M1 9h2M15 9h2M3.05 3.05l1.41 1.41M13.54 13.54l1.41 1.41M3.05 14.95l1.41-1.41M13.54 4.46l1.41-1.41"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+                  <circle cx="9" cy="9" r="4" stroke="currentColor" stroke-width="1.5" />
+                </svg>
+              </span>
+              <h2 class="card__title" id="recommendation-heading">AI Recommendation</h2>
+            </div>
+            <span id="recommendTimer" class="tech-badge hidden" aria-live="polite"></span>
+          </div>
+          <div class="card__body" id="recommendBody">
+            <div class="state-message" id="recommendEmpty">
+              <div class="state-message__icon" aria-hidden="true">
+                <svg viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2" opacity="0.3" />
+                  <path d="M20 12v8M20 24v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    opacity="0.5" />
+                </svg>
+              </div>
+              <p class="state-message__text">AI recommendation will generate automatically after search completes. This
+                typically takes 10-15 seconds.</p>
+            </div>
+            <div class="hidden" id="recommendLoading">
+              <div class="state-message state-message--loading">
+                <div class="state-message__icon">
+                  <div class="spinner spinner--large" role="status"><span class="sr-only">Generating AI
+                      recommendation</span></div>
+                </div>
+                <p class="state-message__text" id="recommendLoadingText">Generating AI recommendation via local LLM...
+                </p>
+              </div>
+            </div>
+            <div class="hidden" id="recommendError">
+              <div class="state-message state-message--error" role="alert">
+                <div class="state-message__icon" aria-hidden="true">
+                  <svg viewBox="0 0 40 40" fill="none">
+                    <circle cx="20" cy="20" r="16" stroke="currentColor" stroke-width="2" />
+                    <path d="M14 14l12 12M26 14L14 26" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                  </svg>
+                </div>
+                <p class="state-message__text"><span id="recommendErrorText">Failed to generate recommendation.</span>
+                  <a href="#" id="recommendRetry"
+                    style="color:var(--accent-blue);text-decoration:underline;cursor:pointer;margin-left:6px">Retry</a>
+                </p>
+              </div>
+            </div>
+            <div class="hidden" id="recommendResults" role="region" aria-label="AI recommendation"></div>
+          </div>
+        </div>
+      </section>
 
     </div><!-- tabLookup -->
 
@@ -2909,7 +3240,10 @@
           <div class="card__header">
             <div class="card__header-left">
               <span class="card__header-icon" aria-hidden="true">
-                <svg viewBox="0 0 18 18" fill="none"><path d="M2 14l4-8 3 4 2-3 5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path d="M2 14l4-8 3 4 2-3 5 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+                </svg>
               </span>
               <h2 class="card__title" id="tpdr-candidates-heading">TPDR Candidates</h2>
             </div>
@@ -2917,7 +3251,10 @@
           </div>
           <div class="card__body" id="tpdrCandidatesBody">
             <div class="state-message" id="tpdrLoading">
-              <div class="state-message__icon"><div class="spinner spinner--large" role="status"><span class="sr-only">Loading TPDR analysis</span></div></div>
+              <div class="state-message__icon">
+                <div class="spinner spinner--large" role="status"><span class="sr-only">Loading TPDR analysis</span>
+                </div>
+              </div>
               <p class="state-message__text">Loading TPDR analysis data...</p>
             </div>
             <div class="hidden" id="tpdrError">
@@ -2936,7 +3273,10 @@
           <div class="card__header">
             <div class="card__header-left">
               <span class="card__header-icon" aria-hidden="true">
-                <svg viewBox="0 0 18 18" fill="none"><path d="M2 16V2M2 14h14M5 11l3-4 3 3 4-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg viewBox="0 0 18 18" fill="none">
+                  <path d="M2 16V2M2 14h14M5 11l3-4 3 3 4-6" stroke="currentColor" stroke-width="1.5"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
               </span>
               <h2 class="card__title" id="tpdr-trends-heading">Fleet Trend Overview</h2>
             </div>
@@ -2964,7 +3304,8 @@
       <span class="footer-separator" aria-hidden="true">|</span>
       <span class="tech-badge">deepseek-r1:32b</span>
     </div>
-    <div class="footer-classification">V-22 TAR Intelligence System v1.0 -- All processing performed on local infrastructure</div>
+    <div class="footer-classification">V-22 TAR Intelligence System v1.0 -- All processing performed on local
+      infrastructure</div>
   </footer>
 
   <!-- ================================================================
@@ -2983,17 +3324,17 @@
       var INITIAL_CASES_SHOWN = 3;
 
       // localStorage helper with fallback
-      var storage = (function() {
+      var storage = (function () {
         var mem = {};
         var ls = null;
-        try { ls = window.localStorage; ls.setItem('_test', '1'); ls.removeItem('_test'); } catch(e) { ls = null; }
+        try { ls = window.localStorage; ls.setItem('_test', '1'); ls.removeItem('_test'); } catch (e) { ls = null; }
         return {
-          get: function(key) {
-            if (ls) { try { var v = ls.getItem(key); return v ? JSON.parse(v) : null; } catch(e) { return mem[key] || null; } }
+          get: function (key) {
+            if (ls) { try { var v = ls.getItem(key); return v ? JSON.parse(v) : null; } catch (e) { return mem[key] || null; } }
             return mem[key] || null;
           },
-          set: function(key, val) {
-            if (ls) { try { ls.setItem(key, JSON.stringify(val)); } catch(e) { mem[key] = val; } }
+          set: function (key, val) {
+            if (ls) { try { ls.setItem(key, JSON.stringify(val)); } catch (e) { mem[key] = val; } }
             else { mem[key] = val; }
           }
         };
@@ -3628,7 +3969,7 @@
 
           if (metaItems.length > 0) {
             var metaRow = h("div", { className: "case-meta-row" });
-            metaItems.forEach(function(item) {
+            metaItems.forEach(function (item) {
               metaRow.appendChild(h("div", { className: "case-meta-item" }, [
                 h("span", { className: "case-meta-item__label" }, [item.label + ":"]),
                 h("span", { className: "case-meta-item__value" }, [item.value])
@@ -3644,7 +3985,7 @@
               h("div", { className: "maf-actions__title" }, ["All Corrective Actions (" + allMafs.length + ")"])
             ]);
 
-            allMafs.forEach(function(maf) {
+            allMafs.forEach(function (maf) {
               var corr = maf.corr_act || maf.discrepancy || "";
               var hours = maf.manhours || "";
               var parts = [];
@@ -3680,8 +4021,8 @@
           var caseCard = h("div", { className: "case-card" + (isFlagged ? " case-card--flagged" : ""), role: "listitem" }, [cardHeader, cardBody, detailsDiv]);
 
           // Header click → toggle expand (but not when clicking flag button)
-          (function(header, card, bodyEl) {
-            header.addEventListener("click", function(e) {
+          (function (header, card, bodyEl) {
+            header.addEventListener("click", function (e) {
               if (e.target.closest(".flag-btn")) return;
               card.classList.toggle("case-card--expanded");
               // When expanded, hide collapsed MAF preview; when collapsed, show it
@@ -3693,8 +4034,8 @@
           })(cardHeader, caseCard, cardBody);
 
           // Analyze button click handler
-          (function(btn, tarData) {
-            btn.addEventListener("click", function(e) {
+          (function (btn, tarData) {
+            btn.addEventListener("click", function (e) {
               e.stopPropagation();
               var fullText = (tarData.subject || "").trim();
               if (tarData.issue) fullText += "\n" + tarData.issue.trim();
@@ -3702,7 +4043,7 @@
               performSearch();
               var diagSection = document.getElementById("diagnosisSection");
               if (diagSection) {
-                setTimeout(function() {
+                setTimeout(function () {
                   diagSection.scrollIntoView({ behavior: "smooth", block: "start" });
                 }, 100);
               }
@@ -3710,8 +4051,8 @@
           })(analyzeBtn, tar);
 
           // Flag button click handler
-          (function(btn, card, caseJcn) {
-            btn.addEventListener("click", function(e) {
+          (function (btn, card, caseJcn) {
+            btn.addEventListener("click", function (e) {
               e.stopPropagation();
               var allFlags = storage.get("tars_tarFlags") || {};
               allFlags[caseJcn] = { flagged: true, timestamp: new Date().toISOString() };
@@ -3784,7 +4125,7 @@
           className: "rec-footer-link",
           "aria-label": "Scroll to similar cases"
         }, [nTars + " similar TAR" + (nTars !== 1 ? "s" : "")]);
-        tarsLink.addEventListener("click", function(e) {
+        tarsLink.addEventListener("click", function (e) {
           e.preventDefault();
           document.getElementById("casesSection").scrollIntoView({ behavior: "smooth", block: "start" });
         });
@@ -3797,7 +4138,7 @@
           className: "rec-footer-link",
           "aria-label": "Scroll to MAF actions in similar cases"
         }, [mActions + " MAF action" + (mActions !== 1 ? "s" : "")]);
-        mafLink.addEventListener("click", function(e) {
+        mafLink.addEventListener("click", function (e) {
           e.preventDefault();
           document.getElementById("casesSection").scrollIntoView({ behavior: "smooth", block: "start" });
         });
@@ -3824,7 +4165,7 @@
           var sec2 = h("div", {});
           sec2.appendChild(h("div", { className: "rec-section__label" }, ["Recommended Actions"]));
           var ol = h("ol", { className: "rec-actions-list" });
-          actions.forEach(function(a) { ol.appendChild(h("li", {}, [a])); });
+          actions.forEach(function (a) { ol.appendChild(h("li", {}, [a])); });
           sec2.appendChild(ol);
           card.appendChild(sec2);
         }
@@ -3835,7 +4176,7 @@
           var sec3 = h("div", {});
           sec3.appendChild(h("div", { className: "rec-section__label" }, ["Parts Needed"]));
           var wrap = h("div", { className: "rec-parts-wrap" });
-          parts.forEach(function(p) { wrap.appendChild(h("span", { className: "rec-part-chip" }, [p])); });
+          parts.forEach(function (p) { wrap.appendChild(h("span", { className: "rec-part-chip" }, [p])); });
           sec3.appendChild(wrap);
           card.appendChild(sec3);
         }
@@ -3865,7 +4206,7 @@
           var sec6 = h("div", {});
           sec6.appendChild(h("div", { className: "rec-section__label" }, ["References"]));
           var refWrap = h("div", { className: "rec-ref-wrap" });
-          refs.forEach(function(r) { refWrap.appendChild(h("span", { className: "rec-ref-chip" }, [r])); });
+          refs.forEach(function (r) { refWrap.appendChild(h("span", { className: "rec-ref-chip" }, [r])); });
           sec6.appendChild(refWrap);
           card.appendChild(sec6);
         }
@@ -3878,7 +4219,7 @@
         var container = h("div", { className: "rec-fallback" });
         // Split into blocks by double newline
         var blocks = rawText.split(/\n\n+/);
-        blocks.forEach(function(block) {
+        blocks.forEach(function (block) {
           block = block.trim();
           if (!block) return;
 
@@ -3890,10 +4231,10 @@
           }
 
           // Numbered list block: lines starting with digits
-          var numberedLines = block.split("\n").filter(function(l) { return /^\d+[\.\)]\s/.test(l.trim()); });
-          if (numberedLines.length > 0 && numberedLines.length === block.split("\n").filter(function(l) { return l.trim(); }).length) {
+          var numberedLines = block.split("\n").filter(function (l) { return /^\d+[\.\)]\s/.test(l.trim()); });
+          if (numberedLines.length > 0 && numberedLines.length === block.split("\n").filter(function (l) { return l.trim(); }).length) {
             var ol = h("ol", {});
-            numberedLines.forEach(function(line, idx) {
+            numberedLines.forEach(function (line, idx) {
               var text = line.replace(/^\d+[\.\)]\s*/, "");
               var li = h("li", { "data-marker": String(idx + 1) + "." });
               appendInlineMarkdown(li, text);
@@ -3904,10 +4245,10 @@
           }
 
           // Bullet list block: lines starting with - or *
-          var bulletLines = block.split("\n").filter(function(l) { return /^[\-\*]\s/.test(l.trim()); });
-          if (bulletLines.length > 0 && bulletLines.length === block.split("\n").filter(function(l) { return l.trim(); }).length) {
+          var bulletLines = block.split("\n").filter(function (l) { return /^[\-\*]\s/.test(l.trim()); });
+          if (bulletLines.length > 0 && bulletLines.length === block.split("\n").filter(function (l) { return l.trim(); }).length) {
             var ul = h("ul", {});
-            bulletLines.forEach(function(line) {
+            bulletLines.forEach(function (line) {
               var text = line.replace(/^[\-\*]\s*/, "");
               var li = h("li", { "data-marker": "\u2022" });
               appendInlineMarkdown(li, text);
@@ -3920,7 +4261,7 @@
           // Regular paragraph
           var p = h("p", {});
           var lines = block.split("\n");
-          lines.forEach(function(line, li) {
+          lines.forEach(function (line, li) {
             if (li > 0) p.appendChild(document.createElement("br"));
             appendInlineMarkdown(p, line);
           });
@@ -3934,7 +4275,7 @@
       function appendInlineMarkdown(parent, text) {
         // Handle **bold** spans within text
         var parts = text.split(/(\*\*[^*]+\*\*)/g);
-        parts.forEach(function(part) {
+        parts.forEach(function (part) {
           if (part.indexOf("**") === 0 && part.lastIndexOf("**") === part.length - 2) {
             parent.appendChild(h("strong", {}, [part.slice(2, -2)]));
           } else {
@@ -3967,41 +4308,41 @@
           headers: { "Content-Type": "application/json" },
           body: body
         })
-        .then(function(response) {
-          if (gen !== recommendGeneration) return null;
-          if (!response.ok) return response.text().then(function(t) { throw new Error("HTTP " + response.status + ": " + t); });
-          return response.json();
-        })
-        .then(function(data) {
-          if (!data || gen !== recommendGeneration) return;
+          .then(function (response) {
+            if (gen !== recommendGeneration) return null;
+            if (!response.ok) return response.text().then(function (t) { throw new Error("HTTP " + response.status + ": " + t); });
+            return response.json();
+          })
+          .then(function (data) {
+            if (!data || gen !== recommendGeneration) return;
 
-          var elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
-          hide(dom.recommendLoading);
+            var elapsed = ((performance.now() - startTime) / 1000).toFixed(1);
+            hide(dom.recommendLoading);
 
-          var rec = data.recommendation || {};
+            var rec = data.recommendation || {};
 
-          while (dom.recommendResults.firstChild) {
-            dom.recommendResults.removeChild(dom.recommendResults.firstChild);
-          }
+            while (dom.recommendResults.firstChild) {
+              dom.recommendResults.removeChild(dom.recommendResults.firstChild);
+            }
 
-          var rendered;
-          if (rec.structured) {
-            rendered = renderStructuredRec(rec, nTars, mActions, elapsed);
-          } else {
-            var rawText = rec.raw_text || "No recommendation generated.";
-            rendered = renderFallbackRec(rawText, nTars, mActions, elapsed);
-          }
+            var rendered;
+            if (rec.structured) {
+              rendered = renderStructuredRec(rec, nTars, mActions, elapsed);
+            } else {
+              var rawText = rec.raw_text || "No recommendation generated.";
+              rendered = renderFallbackRec(rawText, nTars, mActions, elapsed);
+            }
 
-          dom.recommendResults.appendChild(rendered);
-          show(dom.recommendResults);
-          hide(dom.recommendTimer);
-        })
-        .catch(function(e) {
-          if (gen !== recommendGeneration) return;
-          hide(dom.recommendLoading);
-          dom.recommendErrorText.textContent = "Recommendation failed: " + e.message;
-          show(dom.recommendError);
-        });
+            dom.recommendResults.appendChild(rendered);
+            show(dom.recommendResults);
+            hide(dom.recommendTimer);
+          })
+          .catch(function (e) {
+            if (gen !== recommendGeneration) return;
+            hide(dom.recommendLoading);
+            dom.recommendErrorText.textContent = "Recommendation failed: " + e.message;
+            show(dom.recommendError);
+          });
       }
 
       /* ----------------------------------------------------------------
@@ -4025,6 +4366,13 @@
         priority: document.getElementById("tarQueuePriority"),
         clearBtn: document.getElementById("tarQueueClearBtn"),
         tbody: document.getElementById("tarQueueTableBody"),
+        headers: {
+          jcn: document.getElementById("th-jcn"),
+          date: document.getElementById("th-date"),
+          priority: document.getElementById("th-priority"),
+          system: document.getElementById("th-system"),
+          subject: document.getElementById("th-subject")
+        },
         showing: document.getElementById("tarQueueShowing"),
         loadMore: document.getElementById("tarQueueLoadMore")
       };
@@ -4042,6 +4390,80 @@
         if (!uns) return "";
         var parts = uns.match(/^\d+\s+(.+)/);
         return parts ? parts[1] : uns;
+      }
+
+      var tqSortCol = "date";
+      var tqSortDir = "desc";
+
+      function tqPriorityLevel(p) {
+        if (!p) return 0;
+        var pl = p.toLowerCase();
+        if (pl === "urgent" || pl.indexOf("1") === 0 || pl === "1") return 3;
+        if (pl === "priority" || pl.indexOf("2") === 0 || pl === "2") return 2;
+        if (pl === "routine" || pl.indexOf("3") === 0 || pl === "3") return 1;
+        return 0;
+      }
+
+      function tqSortData(data) {
+        var col = tqSortCol;
+        var dir = tqSortDir === "asc" ? 1 : -1;
+
+        data.sort(function (a, b) {
+          // Primary sort
+          var valA, valB;
+          if (col === "priority") {
+            valA = tqPriorityLevel(a.priority);
+            valB = tqPriorityLevel(b.priority);
+          } else if (col === "date") {
+            valA = new Date(a.submit_date || 0).getTime();
+            valB = new Date(b.submit_date || 0).getTime();
+          } else if (col === "system") {
+            valA = (a.uns || "").toLowerCase();
+            valB = (b.uns || "").toLowerCase();
+          } else {
+            valA = (a[col] || "").toLowerCase();
+            valB = (b[col] || "").toLowerCase();
+          }
+
+          if (valA < valB) return -1 * dir;
+          if (valA > valB) return 1 * dir;
+
+          // Secondary sort: Date DESC
+          var dateA = new Date(a.submit_date || 0).getTime();
+          var dateB = new Date(b.submit_date || 0).getTime();
+          if (dateA !== dateB) return dateB - dateA;
+
+          // Tertiary sort: Priority DESC
+          var priA = tqPriorityLevel(a.priority);
+          var priB = tqPriorityLevel(b.priority);
+          if (priA !== priB) return priB - priA;
+
+          // Quaternary sort: JCN ASC
+          var jcnA = (a.jcn || "").toLowerCase();
+          var jcnB = (b.jcn || "").toLowerCase();
+          return jcnA < jcnB ? -1 : (jcnA > jcnB ? 1 : 0);
+        });
+      }
+
+      function tqUpdateSortUI() {
+        Object.keys(tqDom.headers).forEach(function (key) {
+          var th = tqDom.headers[key];
+          th.classList.remove("sorted-asc", "sorted-desc");
+          if (key === tqSortCol) {
+            th.classList.add(tqSortDir === "asc" ? "sorted-asc" : "sorted-desc");
+          }
+        });
+      }
+
+      function tqHandleSort(col) {
+        if (tqSortCol === col) {
+          tqSortDir = tqSortDir === "asc" ? "desc" : "asc";
+        } else {
+          tqSortCol = col;
+          tqSortDir = "desc"; // Default to DESC for new column
+        }
+        tqUpdateSortUI();
+        tqRenderRows(tarQueueData);
       }
 
       function tqPriorityInfo(p) {
@@ -4076,6 +4498,8 @@
 
       function tqRenderRows(data) {
         tarQueueData = data;
+        tqSortData(data);
+        tqUpdateSortUI();
         while (tqDom.tbody.firstChild) tqDom.tbody.removeChild(tqDom.tbody.firstChild);
 
         if (data.length === 0) {
@@ -4088,7 +4512,7 @@
           return;
         }
 
-        data.forEach(function(tar) {
+        data.forEach(function (tar) {
           var pri = tqPriorityInfo(tar.priority);
           var sysName = tqSystemName(tar.uns);
           var subjectDisplay = tar.subject || "";
@@ -4108,8 +4532,8 @@
             h("td", { className: "tq-subject", title: tar.subject }, [subjectDisplay])
           ]);
 
-          (function(r, t) {
-            r.addEventListener("click", function() {
+          (function (r, t) {
+            r.addEventListener("click", function () {
               tqSelectRow(r, t);
             });
           })(row, tar);
@@ -4148,7 +4572,7 @@
         // Smooth scroll to diagnosis
         var diagSection = document.getElementById("diagnosisSection");
         if (diagSection) {
-          setTimeout(function() {
+          setTimeout(function () {
             diagSection.scrollIntoView({ behavior: "smooth", block: "start" });
           }, 100);
         }
@@ -4165,7 +4589,7 @@
 
       function tqDebouncedRefresh() {
         if (tarQueueDebounceTimer) clearTimeout(tarQueueDebounceTimer);
-        tarQueueDebounceTimer = setTimeout(function() {
+        tarQueueDebounceTimer = setTimeout(function () {
           tarQueueCurrentLimit = 50;
           tqRefresh();
         }, 300);
@@ -4187,7 +4611,7 @@
           // Populate filter dropdowns
           function populateSelect(selectEl, values, allLabel) {
             while (selectEl.options.length > 1) selectEl.remove(1);
-            values.forEach(function(v) {
+            values.forEach(function (v) {
               var opt = document.createElement("option");
               opt.value = v;
               opt.textContent = v;
@@ -4217,11 +4641,17 @@
       }
 
       // Wire up TAR Queue events
+      Object.keys(tqDom.headers).forEach(function (col) {
+        tqDom.headers[col].addEventListener("click", function () {
+          tqHandleSort(col);
+        });
+      });
+
       tqDom.search.addEventListener("input", tqDebouncedRefresh);
-      tqDom.workCenter.addEventListener("change", function() { tarQueueCurrentLimit = 50; tqRefresh(); });
-      tqDom.activity.addEventListener("change", function() { tarQueueCurrentLimit = 50; tqRefresh(); });
-      tqDom.priority.addEventListener("change", function() { tarQueueCurrentLimit = 50; tqRefresh(); });
-      tqDom.clearBtn.addEventListener("click", function() {
+      tqDom.workCenter.addEventListener("change", function () { tarQueueCurrentLimit = 50; tqRefresh(); });
+      tqDom.activity.addEventListener("change", function () { tarQueueCurrentLimit = 50; tqRefresh(); });
+      tqDom.priority.addEventListener("change", function () { tarQueueCurrentLimit = 50; tqRefresh(); });
+      tqDom.clearBtn.addEventListener("click", function () {
         tqDom.search.value = "";
         tqDom.workCenter.value = "";
         tqDom.activity.value = "";
@@ -4230,7 +4660,7 @@
         tarQueueSelectedJcn = null;
         tqRefresh();
       });
-      tqDom.loadMore.addEventListener("click", function() {
+      tqDom.loadMore.addEventListener("click", function () {
         tarQueueCurrentLimit = 200;
         tqRefresh();
       });
@@ -4278,11 +4708,11 @@
          ---------------------------------------------------------------- */
       function switchTab(tabName) {
         var tabs = {
-          fleet:  { btn: tpdrDom.tabBtnFleet,  panel: tpdrDom.tabFleetAnalytics },
+          fleet: { btn: tpdrDom.tabBtnFleet, panel: tpdrDom.tabFleetAnalytics },
           lookup: { btn: tpdrDom.tabBtnLookup, panel: tpdrDom.tabLookup },
-          tpdr:   { btn: tpdrDom.tabBtnTPDR,   panel: tpdrDom.tabTPDR }
+          tpdr: { btn: tpdrDom.tabBtnTPDR, panel: tpdrDom.tabTPDR }
         };
-        Object.keys(tabs).forEach(function(key) {
+        Object.keys(tabs).forEach(function (key) {
           if (key === tabName) {
             tabs[key].btn.classList.add("tab-btn--active");
             tabs[key].btn.setAttribute("aria-selected", "true");
@@ -4312,7 +4742,7 @@
         svg.setAttribute("viewBox", "0 0 " + width + " " + height);
         svg.style.display = "block";
 
-        var points = data.map(function(val, i) {
+        var points = data.map(function (val, i) {
           var x = (i / Math.max(data.length - 1, 1)) * (width - 2) + 1;
           var y = height - 2 - ((val / max) * (height - 4));
           return x + "," + y;
@@ -4451,6 +4881,44 @@
         return true;
       }
 
+      function getThresholdFailures(rec, thresholds) {
+        var failures = [];
+        var tars = rec.total_tars || 0;
+        if (tars < thresholds.minTotalTars) {
+          failures.push("only " + tars + " TARs (needs " + thresholds.minTotalTars + ")");
+        }
+        var ac = rec.aircraft_count || 0;
+        if (ac < thresholds.minAircraft) {
+          failures.push("only " + ac + " aircraft affected (needs " + thresholds.minAircraft + ")");
+        }
+        var accel = rec.acceleration_ratio || 0;
+        if (accel < thresholds.minAcceleration) {
+          failures.push("acceleration " + accel + "x (needs " + thresholds.minAcceleration + "x)");
+        }
+        var cb = rec.comeback_count || 0;
+        if (cb < thresholds.minComebacks) {
+          failures.push(cb + " comebacks (needs " + thresholds.minComebacks + ")");
+        }
+        if (thresholds.minMonthlyRate > 0) {
+          var rate = getMonthlyRate(rec, thresholds.recentWindow);
+          if (rate < thresholds.minMonthlyRate) {
+            failures.push("monthly rate " + rate.toFixed(1) + " (needs " + thresholds.minMonthlyRate + ")");
+          }
+        }
+        var selActs = getSelectedActivities();
+        if (selActs && selActs.length > 0) {
+          var recActs = rec.activities || [];
+          var hasMatch = false;
+          for (var i = 0; i < recActs.length; i++) {
+            if (selActs.indexOf(recActs[i]) !== -1) { hasMatch = true; break; }
+          }
+          if (!hasMatch) {
+            failures.push("no matching activity/unit");
+          }
+        }
+        return failures;
+      }
+
       /* ----------------------------------------------------------------
          RENDER TPDR CANDIDATES
          ---------------------------------------------------------------- */
@@ -4477,16 +4945,24 @@
             activeRecs.push(rec);
           }
         }
-        var filteredActive = activeRecs.filter(function(rec) {
-          return passesThresholds(rec, thresholds);
+        var filteredActive = [];
+        var belowThreshold = [];
+        activeRecs.forEach(function (rec) {
+          if (passesThresholds(rec, thresholds)) {
+            filteredActive.push(rec);
+          } else {
+            belowThreshold.push(rec);
+          }
         });
         return {
           workflowStates: workflowStates,
+          thresholds: thresholds,
           displayCount: displayCount,
           activeRecs: activeRecs,
           deferredRecs: deferredRecs,
           filedRecs: filedRecs,
-          filteredActive: filteredActive
+          filteredActive: filteredActive,
+          belowThreshold: belowThreshold
         };
       }
 
@@ -4496,18 +4972,21 @@
         var cardsZone = p.cardsZone;
         while (cardsZone.firstChild) cardsZone.removeChild(cardsZone.firstChild);
 
-        // Update stats bar counts
-        p.statsFiled.textContent = String(lists.filedRecs.length);
-        p.statsDeferred.textContent = String(lists.deferredRecs.length);
-        p.statsActive.textContent = String(lists.filteredActive.length);
+        // Update stats bar
+        var totalCandidates = lists.displayCount;
+        var aboveCount = lists.filteredActive.length;
+        var filedCount = lists.filedRecs.length;
+        p.statsCandidates.textContent = String(totalCandidates);
+        p.statsAbove.textContent = String(aboveCount);
+        p.statsFiled.textContent = String(filedCount);
 
         // Update threshold count text
         p.countFiltered.textContent = String(lists.filteredActive.length);
         p.countTotal.textContent = String(lists.activeRecs.length);
 
-        // Active candidates
+        // Active candidates (above threshold)
         if (lists.filteredActive.length > 0) {
-          lists.filteredActive.forEach(function(rec) {
+          lists.filteredActive.forEach(function (rec) {
             cardsZone.appendChild(buildCandidateCard(rec, "active", lists.workflowStates));
           });
         } else if (lists.activeRecs.length > 0) {
@@ -4516,12 +4995,40 @@
           ]));
         }
 
+        // Below-threshold section (collapsible)
+        if (lists.belowThreshold.length > 0) {
+          var belowContainer = h("div", { className: "hidden" });
+          lists.belowThreshold.forEach(function (rec) {
+            belowContainer.appendChild(buildCandidateCard(rec, "below-threshold", lists.workflowStates, lists.thresholds));
+          });
+
+          var belowToggle = h("button", {
+            type: "button",
+            className: "tpdr-below-toggle"
+          }, ["Show " + lists.belowThreshold.length + " more below threshold"]);
+
+          (function (btn, container) {
+            btn.addEventListener("click", function () {
+              if (container.classList.contains("hidden")) {
+                show(container);
+                btn.textContent = "Hide " + lists.belowThreshold.length + " below threshold";
+              } else {
+                hide(container);
+                btn.textContent = "Show " + lists.belowThreshold.length + " more below threshold";
+              }
+            });
+          })(belowToggle, belowContainer);
+
+          cardsZone.appendChild(belowToggle);
+          cardsZone.appendChild(belowContainer);
+        }
+
         // Deferred section
         if (lists.deferredRecs.length > 0) {
           cardsZone.appendChild(h("div", { className: "tpdr-section-header tpdr-section-header--deferred" }, [
             "Deferred Candidates (" + lists.deferredRecs.length + ")"
           ]));
-          lists.deferredRecs.forEach(function(rec) {
+          lists.deferredRecs.forEach(function (rec) {
             cardsZone.appendChild(buildCandidateCard(rec, "deferred", lists.workflowStates));
           });
         }
@@ -4531,7 +5038,7 @@
           cardsZone.appendChild(h("div", { className: "tpdr-section-header tpdr-section-header--filed" }, [
             "Filed TPDRs (" + lists.filedRecs.length + ")"
           ]));
-          lists.filedRecs.forEach(function(rec) {
+          lists.filedRecs.forEach(function (rec) {
             cardsZone.appendChild(buildFiledCard(rec, lists.workflowStates));
           });
         }
@@ -4563,18 +5070,15 @@
         var lists = _tpdrComputeLists(recs);
 
         // Stats bar with updatable spans
+        var statsCandidates = h("span", null, [String(lists.displayCount)]);
+        var statsAbove = h("span", null, [String(lists.filteredActive.length)]);
         var statsFiled = h("span", null, [String(lists.filedRecs.length)]);
-        var statsDeferred = h("span", null, [String(lists.deferredRecs.length)]);
-        var statsActive = h("span", null, [String(lists.filteredActive.length)]);
         var statsBar = h("div", { className: "tpdr-stats-bar" }, [
-          h("span", null, [String(lists.displayCount)]),
-          " candidates",
-          h("span", { style: { marginLeft: "8px" } }, [statsFiled]),
-          " filed",
-          h("span", { style: { marginLeft: "8px" } }, [statsDeferred]),
-          " deferred",
-          h("span", { style: { marginLeft: "8px" } }, [statsActive]),
-          " active"
+          statsCandidates, " candidates",
+          " \u00b7 ",
+          statsAbove, " above threshold",
+          " \u00b7 ",
+          statsFiled, " filed"
         ]);
         container.appendChild(statsBar);
 
@@ -4584,9 +5088,9 @@
         // Store persistent refs before buildThresholdPanel so it can wire up count spans
         _tpdrPersist = {
           cardsZone: cardsZone,
+          statsCandidates: statsCandidates,
+          statsAbove: statsAbove,
           statsFiled: statsFiled,
-          statsDeferred: statsDeferred,
-          statsActive: statsActive,
           countFiltered: null,
           countTotal: null
         };
@@ -4604,7 +5108,7 @@
       /* ----------------------------------------------------------------
          BUILD CANDIDATE CARD (active or deferred)
          ---------------------------------------------------------------- */
-      function buildCandidateCard(rec, state, workflowStates) {
+      function buildCandidateCard(rec, state, workflowStates, thresholds) {
         var colors = accelColor(rec.acceleration_ratio);
         var cardId = "tpdr-detail-" + rec._origRank;
 
@@ -4616,7 +5120,7 @@
           ])
         ];
 
-        if (state === "active") {
+        if (state === "active" || state === "below-threshold") {
           var fileBtn = h("button", {
             type: "button",
             className: "tpdr-workflow-btn tpdr-workflow-btn--file"
@@ -4626,13 +5130,13 @@
             className: "tpdr-workflow-btn tpdr-workflow-btn--defer"
           }, ["Defer"]);
 
-          (function(uns, fb, db) {
-            fb.addEventListener("click", function(e) {
+          (function (uns, fb, db) {
+            fb.addEventListener("click", function (e) {
               e.stopPropagation();
               setWorkflowState(uns, "filed");
               renderTPDRCandidates(tpdrData.recommendations);
             });
-            db.addEventListener("click", function(e) {
+            db.addEventListener("click", function (e) {
               e.stopPropagation();
               showDeferInput(uns, card);
             });
@@ -4644,8 +5148,8 @@
             type: "button",
             className: "tpdr-undo-link"
           }, ["Undo"]);
-          (function(uns, btn) {
-            btn.addEventListener("click", function(e) {
+          (function (uns, btn) {
+            btn.addEventListener("click", function (e) {
               e.stopPropagation();
               setWorkflowState(uns, "active");
               renderTPDRCandidates(tpdrData.recommendations);
@@ -4703,8 +5207,8 @@
         var detailSection = h("div", { id: cardId, className: "tpdr-detail hidden" });
         buildDetailContent(detailSection, rec);
 
-        (function(btn, detail) {
-          btn.addEventListener("click", function() {
+        (function (btn, detail) {
+          btn.addEventListener("click", function () {
             if (detail.classList.contains("hidden")) {
               show(detail);
               btn.textContent = "Hide Details";
@@ -4715,7 +5219,20 @@
           });
         })(toggleBtn, detailSection);
 
-        var cardChildren = [header, title, statsGrid, sparklineRow];
+        var cardChildren = [header, title];
+
+        // Threshold failure reasons for below-threshold candidates
+        if (state === "below-threshold" && thresholds) {
+          var failures = getThresholdFailures(rec, thresholds);
+          if (failures.length > 0) {
+            var reasonTags = failures.map(function (f) {
+              return h("span", { className: "tpdr-threshold-reason" }, ["Below minimum: " + f]);
+            });
+            cardChildren.push(h("div", { className: "tpdr-threshold-reasons" }, reasonTags));
+          }
+        }
+
+        cardChildren.push(statsGrid, sparklineRow);
         if (justificationEl) cardChildren.push(justificationEl);
 
         // Deferred note
@@ -4730,6 +5247,7 @@
 
         var cardClass = "tpdr-candidate";
         if (state === "deferred") cardClass += " tpdr-candidate--deferred";
+        if (state === "below-threshold") cardClass += " tpdr-candidate--below-threshold";
 
         var card = h("div", { className: cardClass }, cardChildren);
         return card;
@@ -4746,8 +5264,8 @@
           type: "button",
           className: "tpdr-undo-link"
         }, ["Undo"]);
-        (function(uns, btn) {
-          btn.addEventListener("click", function(e) {
+        (function (uns, btn) {
+          btn.addEventListener("click", function (e) {
             e.stopPropagation();
             setWorkflowState(uns, "active");
             renderTPDRCandidates(tpdrData.recommendations);
@@ -4784,12 +5302,12 @@
         });
         var saveBtn = h("button", { type: "button" }, ["Save"]);
 
-        (function(u, inp, btn) {
-          btn.addEventListener("click", function() {
+        (function (u, inp, btn) {
+          btn.addEventListener("click", function () {
             setWorkflowState(u, "deferred", inp.value || "");
             renderTPDRCandidates(tpdrData.recommendations);
           });
-          inp.addEventListener("keydown", function(e) {
+          inp.addEventListener("keydown", function (e) {
             if (e.key === "Enter") {
               setWorkflowState(u, "deferred", inp.value || "");
               renderTPDRCandidates(tpdrData.recommendations);
@@ -4824,7 +5342,7 @@
             actMap[acts[j]] = (actMap[acts[j]] || 0) + 1;
           }
         }
-        return Object.keys(actMap).sort(function(a, b) {
+        return Object.keys(actMap).sort(function (a, b) {
           return actMap[b] - actMap[a];
         });
       }
@@ -4836,8 +5354,8 @@
           className: "threshold-toggle"
         }, ["Configure Thresholds"]);
 
-        (function(btn, content) {
-          btn.addEventListener("click", function() {
+        (function (btn, content) {
+          btn.addEventListener("click", function () {
             if (content.classList.contains("hidden")) {
               show(content);
               btn.textContent = "Hide Thresholds";
@@ -4899,7 +5417,7 @@
         var grid = h("div", { className: "threshold-grid" });
         var inputs = {};
 
-        fields.forEach(function(f) {
+        fields.forEach(function (f) {
           var inp = h("input", {
             type: "number",
             min: String(f.min),
@@ -4909,8 +5427,8 @@
           });
           inputs[f.key] = inp;
 
-          (function(input, key) {
-            input.addEventListener("change", function() {
+          (function (input, key) {
+            input.addEventListener("change", function () {
               var val = parseFloat(input.value);
               if (isNaN(val)) return;
               var current = getThresholds();
@@ -4928,12 +5446,12 @@
         });
 
         var windowSelect = h("select", null);
-        [3, 6, 12].forEach(function(m) {
+        [3, 6, 12].forEach(function (m) {
           var opt = h("option", { value: String(m) }, [m + " months"]);
           if (m === (thresholds.recentWindow || 6)) opt.selected = true;
           windowSelect.appendChild(opt);
         });
-        windowSelect.addEventListener("change", function() {
+        windowSelect.addEventListener("change", function () {
           var current = getThresholds();
           current.recentWindow = parseInt(windowSelect.value, 10);
           setThresholds(current);
@@ -4957,15 +5475,15 @@
 
           chipContainer = h("div", { className: "threshold-multiselect" });
 
-          allActivities.forEach(function(act) {
+          allActivities.forEach(function (act) {
             var isActive = selActs.indexOf(act) !== -1;
             var chip = h("button", {
               type: "button",
               className: "threshold-chip" + (isActive ? " threshold-chip--active" : "")
             }, [act]);
 
-            (function(activity, chipEl) {
-              chipEl.addEventListener("click", function() {
+            (function (activity, chipEl) {
+              chipEl.addEventListener("click", function () {
                 chipEl.classList.toggle("threshold-chip--active");
                 var current = getSelectedActivities() || [];
                 var idx = current.indexOf(activity);
@@ -4987,12 +5505,12 @@
           var selectAllBtn = h("button", { type: "button", className: "threshold-link-btn" }, ["Select All"]);
           var clearAllBtn = h("button", { type: "button", className: "threshold-link-btn" }, ["Clear All"]);
 
-          selectAllBtn.addEventListener("click", function() {
+          selectAllBtn.addEventListener("click", function () {
             setSelectedActivities(allActivities.slice());
             syncChipVisuals(chipContainer, allActivities);
             _tpdrRenderCards(tpdrData.recommendations);
           });
-          clearAllBtn.addEventListener("click", function() {
+          clearAllBtn.addEventListener("click", function () {
             setSelectedActivities(null);
             syncChipVisuals(chipContainer, null);
             _tpdrRenderCards(tpdrData.recommendations);
@@ -5019,12 +5537,12 @@
           style: { color: "var(--text-secondary)", borderColor: "var(--border-color)" }
         }, ["Reset to Defaults"]);
 
-        resetBtn.addEventListener("click", function() {
+        resetBtn.addEventListener("click", function () {
           var defaults = Object.assign({}, TPDR_THRESHOLD_DEFAULTS);
           setThresholds(defaults);
           setSelectedActivities(null);
           // Reset input values in place
-          Object.keys(inputs).forEach(function(key) {
+          Object.keys(inputs).forEach(function (key) {
             inputs[key].value = String(defaults[key]);
           });
           // Reset window select
@@ -5068,7 +5586,7 @@
           var barContainer = h("div", { className: "tpdr-bar-chart" });
           var labelsContainer = h("div", { className: "tpdr-bar-labels" });
 
-          rec.monthly_counts.forEach(function(count, idx) {
+          rec.monthly_counts.forEach(function (count, idx) {
             var heightPct = (count / maxVal) * 100;
             var bar = h("div", {
               className: "tpdr-bar",
@@ -5077,7 +5595,8 @@
             });
             barContainer.appendChild(bar);
 
-            var label = rec.months_labels && rec.months_labels[idx] ? rec.months_labels[idx].slice(-2) : "";
+            var rawLabel = rec.months_labels && rec.months_labels[idx] ? rec.months_labels[idx] : "";
+            var label = rawLabel.length >= 7 ? rawLabel.slice(5, 7) + "/" + rawLabel.slice(2, 4) : rawLabel.slice(-2);
             labelsContainer.appendChild(h("div", { className: "tpdr-bar-label" }, [label]));
           });
 
@@ -5091,7 +5610,7 @@
             h("div", { className: "tpdr-detail__section-title" }, ["Affected Aircraft (" + rec.aircraft_count + ")"])
           ]);
           var aircraftList = h("div", { className: "tpdr-aircraft-list" });
-          rec.affected_aircraft.forEach(function(buno) {
+          rec.affected_aircraft.forEach(function (buno) {
             aircraftList.appendChild(h("span", { className: "tpdr-aircraft-badge" }, [buno]));
           });
           aircraftSection.appendChild(aircraftList);
@@ -5113,7 +5632,7 @@
           ]);
           table.appendChild(thead);
           var tbody = h("tbody");
-          rec.example_comebacks.forEach(function(cb) {
+          rec.example_comebacks.forEach(function (cb) {
             tbody.appendChild(h("tr", null, [
               h("td", null, [cb.buno || ""]),
               h("td", null, [cb.date_first || ""]),
@@ -5131,7 +5650,7 @@
             h("div", { className: "tpdr-detail__section-title" }, ["Units Affected"])
           ]);
           var unitsList = h("div", { className: "tpdr-aircraft-list" });
-          rec.activities.forEach(function(unit) {
+          rec.activities.forEach(function (unit) {
             unitsList.appendChild(h("span", { className: "tpdr-aircraft-badge" }, [unit]));
           });
           unitsSection.appendChild(unitsList);
@@ -5149,7 +5668,7 @@
           var sampleSection = h("div", { className: "tpdr-detail__section" }, [
             h("div", { className: "tpdr-detail__section-title" }, ["Sample TARs"])
           ]);
-          rec.sample_tars.forEach(function(tar) {
+          rec.sample_tars.forEach(function (tar) {
             sampleSection.appendChild(h("div", { style: { marginBottom: "8px", padding: "8px 12px", background: "var(--bg-secondary)", borderRadius: "var(--radius-sm)", fontSize: "0.8125rem" } }, [
               h("span", { style: { color: "var(--accent-cyan)", fontFamily: "var(--font-mono)", marginRight: "8px" } }, ["JCN: " + (tar.jcn || "N/A")]),
               h("span", { style: { color: "var(--text-secondary)" } }, [tar.subject || ""]),
@@ -5172,14 +5691,14 @@
           return;
         }
 
-        var accelerating = trends.filter(function(t) { return t.acceleration_ratio >= 2.0; });
-        var declining = trends.filter(function(t) { return t.acceleration_ratio < 1.0; });
+        var accelerating = trends.filter(function (t) { return t.acceleration_ratio >= 2.0; });
+        var declining = trends.filter(function (t) { return t.acceleration_ratio < 1.0; });
 
         if (accelerating.length > 0) {
           var accelSection = h("div", { className: "tpdr-trend-section" }, [
             h("div", { className: "tpdr-trend-section__title" }, ["Accelerating Systems"])
           ]);
-          accelerating.slice(0, 15).forEach(function(t) {
+          accelerating.slice(0, 15).forEach(function (t) {
             var colors = accelColor(t.acceleration_ratio);
             accelSection.appendChild(h("div", { className: "tpdr-trend-item" }, [
               h("span", { className: "tpdr-trend-dot " + colors.dot }),
@@ -5192,11 +5711,11 @@
         }
 
         if (declining.length > 0) {
-          declining.sort(function(a, b) { return a.acceleration_ratio - b.acceleration_ratio; });
+          declining.sort(function (a, b) { return a.acceleration_ratio - b.acceleration_ratio; });
           var declineSection = h("div", { className: "tpdr-trend-section" }, [
             h("div", { className: "tpdr-trend-section__title" }, ["Declining Systems"])
           ]);
-          declining.slice(0, 10).forEach(function(t) {
+          declining.slice(0, 10).forEach(function (t) {
             var colors = accelColor(t.acceleration_ratio);
             declineSection.appendChild(h("div", { className: "tpdr-trend-item" }, [
               h("span", { className: "tpdr-trend-dot " + colors.dot }),
@@ -5299,8 +5818,8 @@
           }
         }
 
-        btnSystem.addEventListener("click", function() { showView("system"); });
-        btnClusters.addEventListener("click", function() { showView("clusters"); });
+        btnSystem.addEventListener("click", function () { showView("system"); });
+        btnClusters.addEventListener("click", function () { showView("clusters"); });
 
         // Set initial state to match default (System View active)
         if (systemsData) {
@@ -5343,7 +5862,7 @@
           "var(--accent-purple)"
         ];
 
-        systems.forEach(function(sys, idx) {
+        systems.forEach(function (sys, idx) {
           var pct = (sys.total_tars / maxCount) * 100;
           var color = chartColors[idx % chartColors.length];
           var detailId = "fleet-system-detail-" + idx;
@@ -5376,7 +5895,7 @@
           var detail = h("div", { id: detailId, className: "fleet-detail hidden" });
           buildSystemDetail(detail, sys);
 
-          (function(r, d) {
+          (function (r, d) {
             function toggle() {
               if (d.classList.contains("hidden")) {
                 show(d);
@@ -5387,7 +5906,7 @@
               }
             }
             r.addEventListener("click", toggle);
-            r.addEventListener("keydown", function(e) {
+            r.addEventListener("keydown", function (e) {
               if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
             });
           })(row, detail);
@@ -5421,7 +5940,7 @@
           }
           fmSection.appendChild(fmHeader);
 
-          sys.failure_modes.forEach(function(mode) {
+          sys.failure_modes.forEach(function (mode) {
             var modeCard = h("div", { className: "sys-mode-card" });
             modeCard.appendChild(h("div", { className: "sys-mode-card__header" }, [
               h("span", { className: "sys-mode-card__label" }, [mode.label || "Mode " + mode.mode_id]),
@@ -5430,7 +5949,7 @@
 
             if (mode.top_actions && mode.top_actions.length > 0) {
               var actList = h("div", { className: "sys-mode-card__action-list" });
-              mode.top_actions.forEach(function(act, ai) {
+              mode.top_actions.forEach(function (act, ai) {
                 var actionText = "";
                 var metaText = "";
                 // Handle both old format (string) and new format (object)
@@ -5465,7 +5984,7 @@
             h("div", { className: "fleet-detail__section-title" }, ["Top Corrective Actions"])
           ]);
 
-          sys.top_corrective_actions.forEach(function(act, i) {
+          sys.top_corrective_actions.forEach(function (act, i) {
             var metaParts = [act.count + "x"];
             if (act.avg_manhours > 0) metaParts.push("avg " + act.avg_manhours + " hrs");
 
@@ -5490,7 +6009,7 @@
           var first = sys.date_range.first.substring(0, 7).replace("-", " ");
           var last = sys.date_range.last.substring(0, 7).replace("-", " ");
           // Format as "Sep 2020 – Sep 2024"
-          var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+          var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
           function fmtYM(ds) {
             var p = ds.split("-");
             if (p.length >= 2) {
@@ -5525,7 +6044,7 @@
         // Parts chips
         if (sys.top_parts && sys.top_parts.length > 0) {
           var partsRow = h("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "10px" } });
-          sys.top_parts.forEach(function(p) {
+          sys.top_parts.forEach(function (p) {
             partsRow.appendChild(h("span", { className: "fleet-parts-badge" }, [
               p.part_number + " (" + p.count + ")"
             ]));
@@ -5553,7 +6072,7 @@
           { value: String(stats.parts_tracked), label: "Parts Tracked", id: null }
         ];
 
-        items.forEach(function(item) {
+        items.forEach(function (item) {
           var valEl = h("div", { className: "fleet-stat-box__value" }, [item.value]);
           var labelEl = h("div", { className: "fleet-stat-box__label" }, [item.label]);
           if (item.id) {
@@ -5573,7 +6092,7 @@
         while (container.firstChild) container.removeChild(container.firstChild);
         if (!clusters || clusters.length === 0) return;
 
-        var sorted = clusters.slice().sort(function(a, b) { return b.occurrences - a.occurrences; });
+        var sorted = clusters.slice().sort(function (a, b) { return b.occurrences - a.occurrences; });
         var maxCount = sorted[0].occurrences;
 
         var chartColors = [
@@ -5583,7 +6102,7 @@
           "var(--accent-purple)"
         ];
 
-        sorted.forEach(function(cluster, idx) {
+        sorted.forEach(function (cluster, idx) {
           var pct = (cluster.occurrences / maxCount) * 100;
           var color = chartColors[idx % chartColors.length];
           var detailId = "fleet-cluster-detail-" + idx;
@@ -5605,7 +6124,7 @@
           var detail = h("div", { id: detailId, className: "fleet-detail hidden" });
           buildFleetClusterDetail(detail, cluster);
 
-          (function(r, d) {
+          (function (r, d) {
             function toggle() {
               if (d.classList.contains("hidden")) {
                 show(d);
@@ -5616,7 +6135,7 @@
               }
             }
             r.addEventListener("click", toggle);
-            r.addEventListener("keydown", function(e) {
+            r.addEventListener("keydown", function (e) {
               if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
             });
           })(row, detail);
@@ -5640,11 +6159,11 @@
             h("div", { className: "fleet-detail__section-title" }, ["Solution Breakdown"])
           ]);
 
-          var entries = Object.keys(cluster.solution_breakdown).map(function(key) {
+          var entries = Object.keys(cluster.solution_breakdown).map(function (key) {
             return { action: key, pct: cluster.solution_breakdown[key] };
-          }).sort(function(a, b) { return b.pct - a.pct; });
+          }).sort(function (a, b) { return b.pct - a.pct; });
 
-          entries.forEach(function(entry, idx) {
+          entries.forEach(function (entry, idx) {
             breakdownSection.appendChild(h("div", { className: "solution-item" }, [
               h("span", { className: "solution-item__label" }, [entry.action]),
               h("div", { className: "solution-item__bar-track" }, [
@@ -5685,7 +6204,7 @@
             h("div", { className: "fleet-detail__section-title" }, ["Parts Commonly Involved"])
           ]);
           var partsList = h("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px" } });
-          cluster.parts_commonly_involved.forEach(function(p) {
+          cluster.parts_commonly_involved.forEach(function (p) {
             partsList.appendChild(h("span", { className: "fleet-parts-badge" }, [p]));
           });
           partsSection.appendChild(partsList);
@@ -5697,7 +6216,7 @@
             h("div", { className: "fleet-detail__section-title" }, ["Sample JCNs"])
           ]);
           var jcnList = h("ul", { className: "fleet-jcn-list" });
-          cluster.sample_tar_jcns.forEach(function(jcn) {
+          cluster.sample_tar_jcns.forEach(function (jcn) {
             jcnList.appendChild(h("li", null, [jcn]));
           });
           jcnSection.appendChild(jcnList);
@@ -5764,7 +6283,7 @@
 
         var maxCount = parts[0].failure_count;
 
-        parts.forEach(function(part, idx) {
+        parts.forEach(function (part, idx) {
           var pct = (part.failure_count / maxCount) * 100;
           var opacity = 0.4 + (pct / 100) * 0.6;
           var detailId = "fleet-part-detail-" + idx;
@@ -5794,7 +6313,7 @@
             detail.appendChild(h("div", { style: { fontSize: "0.875rem", color: "var(--text-secondary)", lineHeight: "1.6" } }, [part.ai_summary]));
           }
 
-          (function(r, d) {
+          (function (r, d) {
             function toggle() {
               if (d.classList.contains("hidden")) {
                 show(d);
@@ -5805,7 +6324,7 @@
               }
             }
             r.addEventListener("click", toggle);
-            r.addEventListener("keydown", function(e) {
+            r.addEventListener("keydown", function (e) {
               if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
             });
           })(row, detail);
@@ -5822,7 +6341,7 @@
       dom.btnSearch.addEventListener("click", performSearch);
 
       // Retry link in AI Recommendation error state
-      dom.recommendRetry.addEventListener("click", function(e) {
+      dom.recommendRetry.addEventListener("click", function (e) {
         e.preventDefault();
         if (searchResults && searchText) {
           fireAutoRecommendation(searchText, searchResults);
@@ -5847,11 +6366,11 @@
       });
 
       // Tab navigation
-      tpdrDom.tabBtnFleet.addEventListener("click", function() { switchTab("fleet"); });
-      tpdrDom.tabBtnLookup.addEventListener("click", function() { switchTab("lookup"); });
-      tpdrDom.tabBtnTPDR.addEventListener("click", function() { switchTab("tpdr"); });
+      tpdrDom.tabBtnFleet.addEventListener("click", function () { switchTab("fleet"); });
+      tpdrDom.tabBtnLookup.addEventListener("click", function () { switchTab("lookup"); });
+      tpdrDom.tabBtnTPDR.addEventListener("click", function () { switchTab("tpdr"); });
       if (tpdrDom.tpdrRefreshBtn) {
-        tpdrDom.tpdrRefreshBtn.addEventListener("click", function() {
+        tpdrDom.tpdrRefreshBtn.addEventListener("click", function () {
           tpdrLoaded = false;
           _tpdrPersist = null;
           loadTPDRData();
@@ -5869,4 +6388,5 @@
     })();
   </script>
 </body>
+
 </html>

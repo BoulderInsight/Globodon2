@@ -40,6 +40,7 @@ class SearchIndex:
 
     # Stats
     total_maf_records: int = 0
+    unique_parts_count: int = 0
     loaded: bool = False
 
 
@@ -145,13 +146,14 @@ def _assign_clusters(tar_df: pd.DataFrame, embeddings: np.ndarray,
     return assignments
 
 
-def _build_maf_index(tar_jcns: set[str]) -> tuple[dict[str, list[dict]], int]:
+def _build_maf_index(tar_jcns: set[str]) -> tuple[dict[str, list[dict]], int, int]:
     maf_file = DATA_DIR / "maf.csv"
     print(f"  Building MAF index from {maf_file}...")
     cols = ["jcn", "discrepancy", "corr_act", "action_taken",
             "inst_partno", "rmvd_partno", "manhours", "wuc"]
 
     maf_idx: dict[str, list[dict]] = {}
+    unique_parts: set[str] = set()
     total = 0
 
     for chunk in pd.read_csv(maf_file, usecols=cols, dtype=str, chunksize=100_000):
@@ -161,21 +163,27 @@ def _build_maf_index(tar_jcns: set[str]) -> tuple[dict[str, list[dict]], int]:
         total += len(matched)
         for _, row in matched.iterrows():
             jcn = row["jcn"]
+            inst = row["inst_partno"].strip()
+            rmvd = row["rmvd_partno"].strip()
             record = {
                 "corr_act": row["corr_act"].strip(),
                 "action_taken": row["action_taken"].strip(),
                 "manhours": row["manhours"].strip(),
-                "inst_partno": row["inst_partno"].strip(),
-                "rmvd_partno": row["rmvd_partno"].strip(),
+                "inst_partno": inst,
+                "rmvd_partno": rmvd,
                 "discrepancy": row["discrepancy"].strip(),
                 "wuc": row["wuc"].strip(),
             }
+            if inst:
+                unique_parts.add(inst)
+            if rmvd:
+                unique_parts.add(rmvd)
             if jcn not in maf_idx:
                 maf_idx[jcn] = []
             maf_idx[jcn].append(record)
 
-    print(f"  MAF index: {len(maf_idx)} JCNs, {total} total records")
-    return maf_idx, total
+    print(f"  MAF index: {len(maf_idx)} JCNs, {total} total records, {len(unique_parts)} unique parts")
+    return maf_idx, total, len(unique_parts)
 
 
 def load_index() -> None:
@@ -233,7 +241,7 @@ def load_index() -> None:
 
     # 6. MAF JCN index
     tar_jcns = set(index.tar_df["jcn"].dropna().str.strip())
-    index.maf_index, index.total_maf_records = _build_maf_index(tar_jcns)
+    index.maf_index, index.total_maf_records, index.unique_parts_count = _build_maf_index(tar_jcns)
 
     # 7. Parse submit_date for TPDR analysis
     print("  Parsing TAR dates for TPDR analysis...")
@@ -248,5 +256,5 @@ def load_index() -> None:
     print(f"  TARs: {len(index.tar_df)}")
     print(f"  MAF records indexed: {index.total_maf_records}")
     print(f"  Clusters: {len(index.cluster_profiles)}")
-    print(f"  Parts tracked: {len(index.part_failures)}")
+    print(f"  Unique parts tracked: {index.unique_parts_count}")
     print("=" * 60)

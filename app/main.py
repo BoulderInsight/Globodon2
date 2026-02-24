@@ -98,7 +98,7 @@ async def api_stats():
         total_tars=len(index.tar_df) if index.loaded else 0,
         total_mafs=index.total_maf_records,
         cluster_count=len(index.cluster_profiles),
-        parts_tracked=len(index.part_failures),
+        parts_tracked=index.unique_parts_count,
         index_loaded=index.loaded,
     )
 
