@@ -24,7 +24,7 @@ def search_tar(text: str, top_k: int = 10) -> SearchResponse:
     # 3. Build similar TARs list and collect cluster votes
     similar_tars: list[SimilarTAR] = []
     cluster_votes: list[int] = []
-    all_part_numbers: set[str] = set()
+    part_jcn_counts: dict[str, set] = {}  # part_number -> set of JCNs it appears in
 
     for idx in top_indices:
         row = index.tar_df.iloc[idx]
@@ -51,15 +51,18 @@ def search_tar(text: str, top_k: int = 10) -> SearchResponse:
             for m in maf_records
         ]
 
-        # Collect part numbers
+        # Collect part numbers, tracking which JCNs each part appears in
+        def _track_part(pn: str, jcn: str):
+            if pn and pn.lower() not in ("", "nan", "n/a", "none"):
+                if pn not in part_jcn_counts:
+                    part_jcn_counts[pn] = set()
+                part_jcn_counts[pn].add(jcn)
+
         part_no = str(row.get("part_number", "")).strip()
-        if part_no and part_no.lower() not in ("", "nan", "n/a", "none"):
-            all_part_numbers.add(part_no)
+        _track_part(part_no, jcn)
         for m in maf_records:
             for key in ("inst_partno", "rmvd_partno"):
-                pn = m[key]
-                if pn and pn.lower() not in ("", "nan", "n/a", "none"):
-                    all_part_numbers.add(pn)
+                _track_part(m[key], jcn)
 
         similar_tars.append(SimilarTAR(
             jcn=jcn,
@@ -93,15 +96,26 @@ def search_tar(text: str, top_k: int = 10) -> SearchResponse:
             parts_commonly_involved=profile.get("parts_commonly_involved", []),
         )
 
-    # 5. Cross-reference parts against known high-failure parts
+    # 5. Build parts list from similar TARs' MAFs
+    # Parts appearing in 2+ similar TARs' JCNs are likely relevant to this problem type.
+    # Cross-reference against known high-failure parts for enriched data, but also include
+    # frequently-appearing parts even if they're not in the top-20 tracked list.
     related_parts: list[RelatedPart] = []
-    for pn in all_part_numbers:
+    frequent_parts = {pn: len(jcns) for pn, jcns in part_jcn_counts.items() if len(jcns) >= 2}
+    for pn, jcn_count in frequent_parts.items():
         if pn in index.part_by_number:
             p = index.part_by_number[pn]
             related_parts.append(RelatedPart(
                 part_number=p["part_number"],
                 failure_count=p["failure_count"],
                 ai_summary=p.get("ai_summary", ""),
+            ))
+        else:
+            # Part not in top-20 tracked list but appears across multiple similar TARs
+            related_parts.append(RelatedPart(
+                part_number=pn,
+                failure_count=0,
+                ai_summary="Seen in " + str(jcn_count) + " similar TARs",
             ))
 
     # Also include parts from the matched cluster that are in part_failures

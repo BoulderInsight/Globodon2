@@ -2597,7 +2597,7 @@
       <div class="stats-divider" aria-hidden="true"></div>
       <div class="stat-item">
         <span class="stat-item__value" id="statClusters">--</span>
-        <span class="stat-item__label">Problem Categories</span>
+        <span class="stat-item__label" id="statClustersLabel">Problem Categories</span>
       </div>
       <div class="stats-divider" aria-hidden="true"></div>
       <div class="stat-item">
@@ -3159,11 +3159,16 @@
           dom.statMafs.textContent = formatNumber(stats.total_mafs);
           dom.statParts.textContent = String(stats.parts_tracked);
 
-          // Only set cluster count if System View isn't active (toggle manages this stat)
-          var sysBtn = document.getElementById("fleetViewBtnSystem");
-          var isSystemView = sysBtn && sysBtn.classList.contains("fleet-view-toggle__btn--active");
-          if (!isSystemView) {
+          // Default to Systems Tracked since System View is the default active toggle
+          var clusterLabel = document.getElementById("statClustersLabel");
+          try {
+            var sysResp = await apiGet("/api/systems?limit=30");
+            dom.statClusters.textContent = String(sysResp.total_systems);
+            if (clusterLabel) clusterLabel.textContent = "Systems Tracked";
+          } catch (_) {
+            // Fallback to cluster count if systems endpoint unavailable
             dom.statClusters.textContent = String(stats.cluster_count);
+            if (clusterLabel) clusterLabel.textContent = "Problem Categories";
           }
 
           if (stats.index_loaded) {
@@ -5256,7 +5261,7 @@
         var systemView = tpdrDom.fleetSystemView;
         var clustersView = tpdrDom.fleetClustersView;
         var statValue = document.getElementById("statClusters");
-        var statLabel = statValue ? statValue.nextElementSibling : null;
+        var statLabel = document.getElementById("statClustersLabel");
 
         function showView(view) {
           var fVal = document.getElementById("fleetStatClusterVal");
