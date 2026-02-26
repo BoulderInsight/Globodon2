@@ -146,15 +146,39 @@ def _assign_clusters(tar_df: pd.DataFrame, embeddings: np.ndarray,
     return assignments
 
 
+def _extract_nomenclature(text: str, pn: str) -> str:
+    """Extract nomenclature from discrepancy text.
+    Look for patterns like 'COMPONENT NOMENCLATURE 123-456 NAME; PART NO: 123-456'
+    """
+    import re
+    if not text or not pn:
+        return ""
+    
+    # Try to find COMPONENT NOMENCLATURE followed by part number and name
+    # Example: "REMOVE AND REPLACE COMPONENT NOMENCLATURE 901-011-420-101 LEFT RED PITCH LINK ASSEMBLY; PART NO: 901-011-420-101"
+    # We escape the pn but handle flexible whitespace
+    pn_pattern = re.escape(pn)
+    pattern = rf"COMPONENT NOMENCLATURE\s+{pn_pattern}\s+([^;]+)"
+    match = re.search(pattern, text, re.IGNORECASE)
+    if match:
+        name = match.group(1).strip()
+        # Clean up common suffixes like "PART NO: ..."
+        name = re.sub(r"\s+PART\s+NO:.*$", "", name, flags=re.IGNORECASE)
+        return name
+    
+    return ""
+
+
 def _build_maf_index(tar_jcns: set[str]) -> tuple[dict[str, list[dict]], int, int]:
     maf_file = DATA_DIR / "maf.csv"
     print(f"  Building MAF index from {maf_file}...")
     cols = ["jcn", "discrepancy", "corr_act", "action_taken",
-            "inst_partno", "rmvd_partno", "manhours", "wuc"]
+            "inst_partno", "rmvd_partno", "manhours", "wuc", "rmvd_niin_hof_desc"]
 
     maf_idx: dict[str, list[dict]] = {}
     unique_parts: set[str] = set()
     total = 0
+    nomenclature_map: dict[str, str] = {}
 
     for chunk in pd.read_csv(maf_file, usecols=cols, dtype=str, chunksize=100_000):
         chunk = chunk.fillna("")
@@ -165,15 +189,34 @@ def _build_maf_index(tar_jcns: set[str]) -> tuple[dict[str, list[dict]], int, in
             jcn = row["jcn"]
             inst = row["inst_partno"].strip()
             rmvd = row["rmvd_partno"].strip()
+            discrepancy = row["discrepancy"].strip()
+            
             record = {
                 "corr_act": row["corr_act"].strip(),
                 "action_taken": row["action_taken"].strip(),
                 "manhours": row["manhours"].strip(),
                 "inst_partno": inst,
                 "rmvd_partno": rmvd,
-                "discrepancy": row["discrepancy"].strip(),
+                "discrepancy": discrepancy,
                 "wuc": row["wuc"].strip(),
             }
+            
+            # Extract nomenclature if we don't have it yet for these parts
+            niin_desc = row["rmvd_niin_hof_desc"].strip()
+            for pn in (inst, rmvd):
+                if pn and pn not in nomenclature_map:
+                    # Priority 1: Official NIIN description
+                    if pn == rmvd and niin_desc:
+                        nomenclature_map[pn] = niin_desc
+                    else:
+                        # Priority 2: Extract from discrepancy text
+                        name = _extract_nomenclature(discrepancy, pn)
+                        if not name:
+                            # Priority 3: Extract from action taken
+                            name = _extract_nomenclature(row["action_taken"].strip(), pn)
+                        if name:
+                            nomenclature_map[pn] = name
+
             if inst:
                 unique_parts.add(inst)
             if rmvd:
@@ -182,7 +225,28 @@ def _build_maf_index(tar_jcns: set[str]) -> tuple[dict[str, list[dict]], int, in
                 maf_idx[jcn] = []
             maf_idx[jcn].append(record)
 
+    # Populate global index with extracted names
+    for pn, name in nomenclature_map.items():
+        if pn in index.part_by_number:
+            # Update existing (static) part with a short nomenclature if it doesn't have one
+            if not index.part_by_number[pn].get("nomenclature"):
+                index.part_by_number[pn]["nomenclature"] = name
+            
+            # BACKWARD COMPATIBILITY: If summary is empty, put name there too for old clients
+            if not index.part_by_number[pn].get("ai_summary"):
+                index.part_by_number[pn]["ai_summary"] = name
+        else:
+            # New part found in MAF
+            index.part_by_number[pn] = {
+                "part_number": pn,
+                "nomenclature": name,
+                "ai_summary": name, # Populate both for compatibility
+                "failure_count": 0,
+                "is_extracted": True
+            }
+
     print(f"  MAF index: {len(maf_idx)} JCNs, {total} total records, {len(unique_parts)} unique parts")
+    print(f"  Extracted nomenclature for {len(nomenclature_map)} parts")
     return maf_idx, total, len(unique_parts)
 
 
@@ -212,14 +276,18 @@ def load_index() -> None:
         index.cluster_by_name[p["problem"]] = p
     print(f"  {len(index.cluster_profiles)} cluster profiles loaded")
 
-    # 4. Part failure data
+    # 4. Part failure data (initial load from static file)
     parts_file = DATA_DIR / "part_failure_analysis.json"
-    print(f"  Loading part failure data from {parts_file.name}...")
+    print(f"  Loading part failure analysis from {parts_file.name}...")
     with open(parts_file) as f:
-        index.part_failures = json.load(f)
-    for p in index.part_failures:
-        index.part_by_number[p["part_number"]] = p
-    print(f"  {len(index.part_failures)} parts tracked")
+        static_parts = json.load(f)
+    for p in static_parts:
+        pn = p["part_number"]
+        index.part_by_number[pn] = p
+        # Ensure it has the new field
+        if "nomenclature" not in index.part_by_number[pn]:
+            index.part_by_number[pn]["nomenclature"] = ""
+    print(f"  {len(static_parts)} pre-analyzed parts loaded")
 
     # 5. Cluster assignments (try cached first)
     cached_assignments = CACHE_DIR / "cluster_assignments.npy"
@@ -243,7 +311,11 @@ def load_index() -> None:
     tar_jcns = set(index.tar_df["jcn"].dropna().str.strip())
     index.maf_index, index.total_maf_records, index.unique_parts_count = _build_maf_index(tar_jcns)
 
-    # 7. Parse submit_date for TPDR analysis
+    # 7. Finalize part profiles
+    index.part_failures = list(index.part_by_number.values())
+    print(f"  Final parts list compiled: {len(index.part_failures)} part profiles available")
+
+    # 8. Parse submit_date for TPDR analysis
     print("  Parsing TAR dates for TPDR analysis...")
     index.tar_df["submit_dt"] = pd.to_datetime(index.tar_df["submit_date"], errors="coerce")
     valid_dates = index.tar_df["submit_dt"].notna().sum()

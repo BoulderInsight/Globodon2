@@ -112,6 +112,19 @@ def _analyze_trends() -> list[dict]:
         bunos = [b for b in bunos if b.strip() and "i-level" not in b.lower()]
         aircraft_count = len(bunos)
 
+        # Aircraft occurrence frequency: how many TARs each buno has
+        buno_series = group["buno"].dropna()
+        buno_series = buno_series[~buno_series.str.lower().str.contains("i-level")]
+        buno_tar_counts = buno_series.value_counts()  # buno -> count of TARs
+        # Build frequency buckets: {occurrence_count: [list of bunos]}
+        freq_buckets = {}
+        for buno_val, cnt in buno_tar_counts.items():
+            bucket = min(cnt, 5)  # 5 means "5+"
+            if bucket not in freq_buckets:
+                freq_buckets[bucket] = []
+            freq_buckets[bucket].append(str(buno_val))
+        aircraft_frequency = {str(k): v for k, v in sorted(freq_buckets.items(), reverse=True)}
+
         # Activities
         activities = group["activity"].dropna().unique().tolist()
         activities = [a for a in activities if a.strip()]
@@ -158,8 +171,9 @@ def _analyze_trends() -> list[dict]:
             "acceleration_ratio": round(acceleration_ratio, 2),
             "months_labels": months_labels,
             "monthly_counts": monthly_counts,
-            "affected_aircraft": bunos[:20],  # cap display
+            "affected_aircraft": bunos,
             "aircraft_count": aircraft_count,
+            "aircraft_frequency": aircraft_frequency,
             "activities": activities[:10],
             "priority_breakdown": {str(k): int(v) for k, v in priority_counts.items()},
             "urgent_priority_count": urgent_count,
@@ -321,6 +335,7 @@ def _score_and_justify(trends: list[dict], comebacks: list[dict]) -> list[dict]:
             "months_labels": trend.get("months_labels", []),
             "monthly_counts": trend.get("monthly_counts", []),
             "affected_aircraft": trend.get("affected_aircraft", []),
+            "aircraft_frequency": trend.get("aircraft_frequency", {}),
             "activities": trend.get("activities", []),
             "priority_breakdown": trend.get("priority_breakdown", {}),
             "sample_tars": trend.get("sample_tars", []),

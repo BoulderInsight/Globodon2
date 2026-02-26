@@ -107,13 +107,15 @@ def search_tar(text: str, top_k: int = 10) -> SearchResponse:
             p = index.part_by_number[pn]
             related_parts.append(RelatedPart(
                 part_number=p["part_number"],
-                failure_count=p["failure_count"],
+                nomenclature=p.get("nomenclature", ""),
+                failure_count=p.get("failure_count", 0),
                 ai_summary=p.get("ai_summary", ""),
             ))
         else:
             # Part not in top-20 tracked list but appears across multiple similar TARs
             related_parts.append(RelatedPart(
                 part_number=pn,
+                nomenclature="",
                 failure_count=0,
                 ai_summary="Seen in " + str(jcn_count) + " similar TARs",
             ))

@@ -1705,7 +1705,75 @@
       border-radius: var(--radius-sm);
       font-size: 0.6875rem;
       font-family: var(--font-mono);
+      color: #ccc;
+    }
+
+    .tpdr-freq-chart {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .tpdr-freq-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      padding: 4px 0;
+      border-radius: var(--radius-sm);
+    }
+
+    .tpdr-freq-row:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .tpdr-freq-row__label {
+      width: 110px;
+      flex-shrink: 0;
+      font-size: 0.75rem;
       color: var(--text-secondary);
+      font-family: var(--font-mono);
+      text-align: right;
+    }
+
+    .tpdr-freq-row__bar-wrap {
+      flex: 1;
+      height: 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+
+    .tpdr-freq-row__bar {
+      height: 100%;
+      border-radius: var(--radius-sm);
+      transition: width 0.3s ease;
+    }
+
+    .tpdr-freq-row__count {
+      width: 90px;
+      flex-shrink: 0;
+      font-size: 0.6875rem;
+      color: #ccc;
+      font-family: var(--font-mono);
+      white-space: nowrap;
+    }
+
+    .tpdr-freq-row__expand {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.25s ease;
+    }
+
+    .tpdr-freq-row__expand--open {
+      max-height: 500px;
+    }
+
+    .tpdr-freq-row__bunos {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 8px 0 4px 120px;
     }
 
     .tpdr-comeback-table {
@@ -1729,6 +1797,7 @@
       padding: 6px 8px;
       color: var(--text-secondary);
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      vertical-align: top;
     }
 
     /* Fleet Trend Overview */
@@ -1838,6 +1907,320 @@
       .tab-btn {
         font-size: 0.8125rem;
         padding: 10px 14px;
+      }
+    }
+
+    /* ===================================================================
+       PARTS FORECAST TAB (Concept Preview)
+       =================================================================== */
+    .forecast-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 24px;
+    }
+
+    .forecast-header__text h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .forecast-header__text p {
+      font-size: 0.875rem;
+      color: var(--text-label);
+    }
+
+    .badge-concept {
+      background: rgba(167, 139, 250, 0.15);
+      color: var(--accent-purple);
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 4px 12px;
+      font-size: 0.6875rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .forecast-datasources {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+
+    .datasource-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 8px 14px;
+      font-size: 0.8125rem;
+    }
+
+    .datasource-badge__dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .datasource-badge__dot--active {
+      background: var(--accent-green);
+    }
+
+    .datasource-badge__dot--planned {
+      background: var(--text-muted);
+    }
+
+    .datasource-badge--planned {
+      opacity: 0.65;
+    }
+
+    .datasource-badge__name {
+      font-weight: 600;
+      color: var(--text-label);
+    }
+
+    .datasource-badge__count {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+    }
+
+    .forecast-summary-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .forecast-summary-card {
+      background: var(--bg-tertiary);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      text-align: center;
+    }
+
+    .forecast-summary-card__value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      font-family: var(--font-mono);
+      line-height: 1.2;
+    }
+
+    .forecast-summary-card__label {
+      font-size: 0.75rem;
+      color: var(--text-label);
+      margin-top: 4px;
+    }
+
+    .forecast-table-wrap {
+      overflow-x: auto;
+      margin-bottom: 24px;
+    }
+
+    .forecast-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+    }
+
+    .forecast-table th {
+      text-align: left;
+      padding: 10px 14px;
+      font-size: 0.6875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      border-bottom: 1px solid var(--border-color);
+      white-space: nowrap;
+    }
+
+    .forecast-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-label);
+      vertical-align: middle;
+    }
+
+    .forecast-table tbody tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .forecast-table .part-name {
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .forecast-table .trend-up {
+      color: var(--accent-red);
+      font-weight: 600;
+    }
+
+    .forecast-table .trend-flat {
+      color: var(--text-secondary);
+    }
+
+    .forecast-table .trend-down {
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    .forecast-table .status-stockup {
+      color: var(--accent-amber);
+      font-weight: 600;
+    }
+
+    .forecast-table .status-adequate {
+      color: var(--accent-green);
+    }
+
+    .forecast-table .status-monitor {
+      color: var(--accent-blue);
+    }
+
+    .forecast-table .confidence-high {
+      color: var(--accent-green);
+      font-weight: 600;
+    }
+
+    .forecast-table .confidence-med {
+      color: var(--accent-amber);
+    }
+
+    .forecast-table .confidence-low {
+      color: var(--text-secondary);
+    }
+
+    .forecast-table .failure-mode {
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
+      font-style: italic;
+    }
+
+    .forecast-callout {
+      background: rgba(56, 189, 248, 0.06);
+      border: 1px solid rgba(56, 189, 248, 0.15);
+      border-radius: var(--radius-lg);
+      padding: 20px 24px;
+      margin-bottom: 24px;
+    }
+
+    .forecast-callout__title {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--accent-blue);
+      margin-bottom: 16px;
+    }
+
+    .forecast-callout__steps {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .forecast-callout__step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .forecast-callout__step-num {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--accent-blue);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .forecast-callout__step-text {
+      font-size: 0.8125rem;
+      color: var(--text-label);
+      line-height: 1.5;
+    }
+
+    .forecast-callout__step-text strong {
+      color: var(--text-primary);
+    }
+
+    .forecast-coming-soon {
+      margin-top: 8px;
+    }
+
+    .forecast-coming-soon__title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-secondary);
+      margin-bottom: 14px;
+    }
+
+    .forecast-coming-soon__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .forecast-coming-soon__card {
+      background: var(--bg-tertiary);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      opacity: 0.85;
+    }
+
+    .forecast-coming-soon__card-title {
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 6px;
+    }
+
+    .forecast-coming-soon__card-desc {
+      font-size: 0.75rem;
+      color: var(--text-label);
+      line-height: 1.5;
+    }
+
+    @media (max-width: 900px) {
+      .forecast-summary-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .forecast-callout__steps {
+        grid-template-columns: 1fr;
+      }
+
+      .forecast-coming-soon__grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .forecast-summary-row {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .forecast-datasources {
+        flex-direction: column;
       }
     }
 
@@ -1988,6 +2371,52 @@
       font-size: 0.6875rem;
       font-family: var(--font-mono);
       color: var(--accent-amber);
+      cursor: help;
+    }
+
+    /* Fast Tooltip Styles */
+    #global-tooltip {
+      position: fixed;
+      z-index: 10000;
+      padding: 8px 12px;
+      background: #1e293b;
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: var(--radius-md);
+      color: #f1f5f9;
+      font-size: 0.8125rem;
+      max-width: 320px;
+      pointer-events: none;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+      font-family: var(--font-sans);
+      line-height: 1.4;
+      display: none;
+      transition: opacity 0.1s ease-out;
+      opacity: 0;
+    }
+
+    #global-tooltip strong {
+      display: block;
+      color: var(--accent-blue);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.2);
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+    }
+
+    .tooltip-nomenclature {
+      font-weight: 700;
+      color: #f8fafc;
+      font-size: 0.875rem;
+      margin-bottom: 8px;
+      line-height: 1.2;
+    }
+
+    .tooltip-analysis {
+      color: #94a3b8;
+      font-size: 0.75rem;
+      line-height: 1.5;
     }
 
     .fleet-jcn-list {
@@ -2826,6 +3255,8 @@
 </head>
 
 <body>
+  <!-- Custom Tooltip for Immediate Hovers -->
+  <div id="global-tooltip"></div>
   <!-- Skip link for keyboard navigation -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
@@ -2900,6 +3331,14 @@
           stroke-linejoin="round" />
       </svg>
       TPDR Intelligence
+    </button>
+    <button class="tab-btn" id="tabBtnForecast" role="tab" aria-selected="false" aria-controls="tabForecast">
+      <svg viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M1 14L5 6l3 4 3-6 4 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
+          stroke-linejoin="round" stroke-dasharray="2 2" />
+        <circle cx="14" cy="4" r="2" fill="currentColor" opacity="0.6" />
+      </svg>
+      Parts Forecast
     </button>
   </nav>
 
@@ -3288,6 +3727,191 @@
       </section>
     </div><!-- tabTPDR -->
 
+    <div id="tabForecast" class="hidden" role="tabpanel" aria-labelledby="tabBtnForecast">
+      <section class="section">
+        <div class="card">
+          <div class="card__body">
+
+            <!-- Header -->
+            <div class="forecast-header">
+              <div class="forecast-header__text">
+                <h2>Parts Forecast</h2>
+                <p>Predictive inventory intelligence based on historical maintenance patterns</p>
+              </div>
+              <span class="badge-concept">CONCEPT PREVIEW</span>
+            </div>
+
+            <!-- Data Sources -->
+            <div class="forecast-datasources">
+              <div class="datasource-badge">
+                <span class="datasource-badge__dot datasource-badge__dot--active"></span>
+                <span class="datasource-badge__name">TAR History</span>
+                <span class="datasource-badge__count">14,925 records</span>
+              </div>
+              <div class="datasource-badge">
+                <span class="datasource-badge__dot datasource-badge__dot--active"></span>
+                <span class="datasource-badge__name">MAF Records</span>
+                <span class="datasource-badge__count">28,061 records</span>
+              </div>
+              <div class="datasource-badge datasource-badge--planned">
+                <span class="datasource-badge__dot datasource-badge__dot--planned"></span>
+                <span class="datasource-badge__name">Aircraft Flight Hours</span>
+                <span class="datasource-badge__count">Planned Integration</span>
+              </div>
+              <div class="datasource-badge datasource-badge--planned">
+                <span class="datasource-badge__dot datasource-badge__dot--planned"></span>
+                <span class="datasource-badge__name">Fleet Age Data</span>
+                <span class="datasource-badge__count">Planned Integration</span>
+              </div>
+            </div>
+
+            <!-- Summary Cards -->
+            <div class="forecast-summary-row">
+              <div class="forecast-summary-card">
+                <div class="forecast-summary-card__value">2</div>
+                <div class="forecast-summary-card__label">Parts to Stock Up</div>
+              </div>
+              <div class="forecast-summary-card">
+                <div class="forecast-summary-card__value">2</div>
+                <div class="forecast-summary-card__label">Parts to Monitor</div>
+              </div>
+              <div class="forecast-summary-card">
+                <div class="forecast-summary-card__value">90</div>
+                <div class="forecast-summary-card__label">Day Forecast Window</div>
+              </div>
+              <div class="forecast-summary-card">
+                <div class="forecast-summary-card__value">6</div>
+                <div class="forecast-summary-card__label">Failure Modes Tracked</div>
+              </div>
+            </div>
+
+            <!-- Main Table -->
+            <div class="forecast-table-wrap">
+              <table class="forecast-table">
+                <thead>
+                  <tr>
+                    <th>Part</th>
+                    <th>System</th>
+                    <th>Current Trend</th>
+                    <th>Projected Need (90 days)</th>
+                    <th>Confidence</th>
+                    <th>Status</th>
+                    <th>Linked Failure Mode</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="part-name">FADEC Control Module</td>
+                    <td>Propulsion</td>
+                    <td class="trend-up">&uarr; +35%</td>
+                    <td>~12 units</td>
+                    <td class="confidence-high">High</td>
+                    <td class="status-stockup">&#9888;&#65039; Stock Up</td>
+                    <td class="failure-mode">FADEC Communication Faults</td>
+                  </tr>
+                  <tr>
+                    <td class="part-name">PCA Ball Screw Assembly</td>
+                    <td>Flight Controls</td>
+                    <td class="trend-flat">&rarr; 0%</td>
+                    <td>~4 units</td>
+                    <td class="confidence-med">Medium</td>
+                    <td class="status-adequate">&#10003; Adequate</td>
+                    <td class="failure-mode">PCA Actuator Binding</td>
+                  </tr>
+                  <tr>
+                    <td class="part-name">PRGB Chip Detector Filter</td>
+                    <td>Drive System</td>
+                    <td class="trend-down">&darr; -18%</td>
+                    <td>~2 units</td>
+                    <td class="confidence-high">High</td>
+                    <td class="status-adequate">&#10003; Adequate</td>
+                    <td class="failure-mode">PRGB Debris Detection</td>
+                  </tr>
+                  <tr>
+                    <td class="part-name">Hydraulic Actuator Seal Kit</td>
+                    <td>Hydraulics</td>
+                    <td class="trend-up">&uarr; +22%</td>
+                    <td>~8 units</td>
+                    <td class="confidence-med">Medium</td>
+                    <td class="status-stockup">&#9888;&#65039; Stock Up</td>
+                    <td class="failure-mode">Hydraulic System Leaks</td>
+                  </tr>
+                  <tr>
+                    <td class="part-name">Engine Oil Cooler Assembly</td>
+                    <td>Propulsion</td>
+                    <td class="trend-up">&uarr; +15%</td>
+                    <td>~3 units</td>
+                    <td class="confidence-low">Low</td>
+                    <td class="status-monitor">&#128065; Monitor</td>
+                    <td class="failure-mode">Engine Overtemp Events</td>
+                  </tr>
+                  <tr>
+                    <td class="part-name">Swashplate Bearing</td>
+                    <td>Drive System</td>
+                    <td class="trend-flat">&rarr; +3%</td>
+                    <td>~2 units</td>
+                    <td class="confidence-high">High</td>
+                    <td class="status-adequate">&#10003; Adequate</td>
+                    <td class="failure-mode">Swashplate Vibration</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- How This Works -->
+            <div class="forecast-callout">
+              <div class="forecast-callout__title">How This Forecast Works</div>
+              <ol class="forecast-callout__steps">
+                <li class="forecast-callout__step">
+                  <span class="forecast-callout__step-num">1</span>
+                  <span class="forecast-callout__step-text"><strong>Failure Pattern Analysis</strong> &mdash; Identify
+                    which parts are consumed for specific failure modes using TAR-to-MAF correlation</span>
+                </li>
+                <li class="forecast-callout__step">
+                  <span class="forecast-callout__step-num">2</span>
+                  <span class="forecast-callout__step-text"><strong>Trend Detection</strong> &mdash; Track how failure
+                    cluster frequency changes over time</span>
+                </li>
+                <li class="forecast-callout__step">
+                  <span class="forecast-callout__step-num">3</span>
+                  <span class="forecast-callout__step-text"><strong>Demand Projection</strong> &mdash; Combine trends
+                    with historical parts-per-incident rates</span>
+                </li>
+                <li class="forecast-callout__step">
+                  <span class="forecast-callout__step-num">4</span>
+                  <span class="forecast-callout__step-text"><strong>Enhanced with Utilization Data</strong> &mdash; When
+                    integrated with flight hours and age data, projections become aircraft-specific</span>
+                </li>
+              </ol>
+            </div>
+
+            <!-- Coming Soon -->
+            <div class="forecast-coming-soon">
+              <div class="forecast-coming-soon__title">Coming Soon</div>
+              <div class="forecast-coming-soon__grid">
+                <div class="forecast-coming-soon__card">
+                  <div class="forecast-coming-soon__card-title">Aircraft-Specific Forecasts</div>
+                  <div class="forecast-coming-soon__card-desc">Tail number level predictions based on individual
+                    aircraft utilization and maintenance history</div>
+                </div>
+                <div class="forecast-coming-soon__card">
+                  <div class="forecast-coming-soon__card-title">Location-Based Positioning</div>
+                  <div class="forecast-coming-soon__card-desc">Which bases should stock which parts based on local fleet
+                    composition and failure patterns</div>
+                </div>
+                <div class="forecast-coming-soon__card">
+                  <div class="forecast-coming-soon__card-title">Lead Time Integration</div>
+                  <div class="forecast-coming-soon__card-desc">Factor in supplier lead times for reorder alerts before
+                    stock runs critically low</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div><!-- tabForecast -->
+
   </main>
 
   <!-- ================================================================
@@ -3463,6 +4087,84 @@
           });
         }
         return el;
+      }
+
+      /**
+       * Unified UI component for part number badges with hovers.
+       * @param {string} pn - Part number
+       * @param {string|number} [count] - Optional count to show in parentheses
+       * @returns {HTMLElement}
+       */
+      /**
+       * Unified UI component for part number badges with fast hovers.
+       * @param {string} pn - Part number
+       * @param {string|number} [count] - Optional count to show in parentheses
+       * @returns {HTMLElement}
+       */
+      function renderPartBadge(pn, count) {
+        var partInfo = window.fleetPartsMap ? window.fleetPartsMap[pn] : null;
+        var name = partInfo ? partInfo.nomenclature : "";
+        var summary = partInfo ? partInfo.ai_summary : "";
+        var label = pn + (count ? " (" + count + ")" : "");
+
+        var el = h("span", {
+          className: "fleet-parts-badge",
+          style: { cursor: "help" }
+        }, [label]);
+
+        el.addEventListener("mouseenter", function () {
+          showGlobalTooltip(pn, name, summary);
+        });
+        el.addEventListener("mousemove", function (e) {
+          moveGlobalTooltip(e);
+        });
+        el.addEventListener("mouseleave", function () {
+          hideGlobalTooltip();
+        });
+
+        return el;
+      }
+
+      function showGlobalTooltip(pn, name, text) {
+        var tt = document.getElementById("global-tooltip");
+        if (!tt) return;
+
+        var content = "<strong>" + pn + "</strong>";
+        if (name) {
+          content += "<div class='tooltip-nomenclature'>" + name + "</div>";
+        }
+
+        // Only show analysis if it exists AND isn't just a repeat of the nomenclature
+        if (text && text !== name) {
+          content += "<div class='tooltip-analysis'>" + text + "</div>";
+        } else if (!name) {
+          content += "<div class='tooltip-analysis'>Details: No additional AI analysis available for this component.</div>";
+        }
+
+        tt.innerHTML = content;
+        tt.style.display = "block";
+        setTimeout(function () { tt.style.opacity = "1"; }, 10);
+      }
+
+      function moveGlobalTooltip(e) {
+        var tt = document.getElementById("global-tooltip");
+        if (!tt) return;
+        var x = e.clientX + 15;
+        var y = e.clientY + 15;
+
+        // Prevent overflow
+        if (x + 320 > window.innerWidth) x = e.clientX - 335;
+        if (y + 150 > window.innerHeight) y = e.clientY - 165;
+
+        tt.style.left = x + "px";
+        tt.style.top = y + "px";
+      }
+
+      function hideGlobalTooltip() {
+        var tt = document.getElementById("global-tooltip");
+        if (!tt) return;
+        tt.style.opacity = "0";
+        setTimeout(function () { tt.style.display = "none"; }, 100);
       }
 
       /* ----------------------------------------------------------------
@@ -3699,7 +4401,7 @@
           var ul = h("ul");
           partsToShow.forEach(function (p) {
             var liChildren = [
-              h("span", { className: "part-number" }, [p.part_number])
+              renderPartBadge(p.part_number)
             ];
             if (p.failure_count > 0) {
               liChildren.push(
@@ -3938,9 +4640,16 @@
               actionChildren.push(
                 hours ? h("span", { className: "maf-action__hours" }, [hours + " hrs"]) : h("span")
               );
-              actionChildren.push(
-                partsStr ? h("span", { className: "maf-action__parts" }, [partsStr]) : h("span")
-              );
+
+              var partsContainer = h("span", { className: "maf-action__parts" });
+              if (maf.rmvd_partno) {
+                partsContainer.appendChild(renderPartBadge(maf.rmvd_partno));
+              }
+              if (maf.inst_partno && maf.inst_partno !== maf.rmvd_partno) {
+                if (maf.rmvd_partno) partsContainer.appendChild(document.createTextNode(", "));
+                partsContainer.appendChild(renderPartBadge(maf.inst_partno));
+              }
+              actionChildren.push(partsContainer);
 
               mafContainer.appendChild(h("div", { className: "maf-action" }, actionChildren));
             });
@@ -4681,9 +5390,11 @@
         tabBtnFleet: document.getElementById("tabBtnFleet"),
         tabBtnLookup: document.getElementById("tabBtnLookup"),
         tabBtnTPDR: document.getElementById("tabBtnTPDR"),
+        tabBtnForecast: document.getElementById("tabBtnForecast"),
         tabFleetAnalytics: document.getElementById("tabFleetAnalytics"),
         tabLookup: document.getElementById("tabLookup"),
         tabTPDR: document.getElementById("tabTPDR"),
+        tabForecast: document.getElementById("tabForecast"),
         fleetLoading: document.getElementById("fleetLoading"),
         fleetError: document.getElementById("fleetError"),
         fleetErrorText: document.getElementById("fleetErrorText"),
@@ -4710,7 +5421,8 @@
         var tabs = {
           fleet: { btn: tpdrDom.tabBtnFleet, panel: tpdrDom.tabFleetAnalytics },
           lookup: { btn: tpdrDom.tabBtnLookup, panel: tpdrDom.tabLookup },
-          tpdr: { btn: tpdrDom.tabBtnTPDR, panel: tpdrDom.tabTPDR }
+          tpdr: { btn: tpdrDom.tabBtnTPDR, panel: tpdrDom.tabTPDR },
+          forecast: { btn: tpdrDom.tabBtnForecast, panel: tpdrDom.tabForecast }
         };
         Object.keys(tabs).forEach(function (key) {
           if (key === tabName) {
@@ -5605,16 +6317,85 @@
           container.appendChild(chartSection);
         }
 
-        if (rec.affected_aircraft && rec.affected_aircraft.length > 0) {
-          var aircraftSection = h("div", { className: "tpdr-detail__section" }, [
-            h("div", { className: "tpdr-detail__section-title" }, ["Affected Aircraft (" + rec.aircraft_count + ")"])
-          ]);
-          var aircraftList = h("div", { className: "tpdr-aircraft-list" });
-          rec.affected_aircraft.forEach(function (buno) {
-            aircraftList.appendChild(h("span", { className: "tpdr-aircraft-badge" }, [buno]));
-          });
-          aircraftSection.appendChild(aircraftList);
-          container.appendChild(aircraftSection);
+        if (rec.aircraft_count > 0) {
+          // --- Repeat Occurrence Distribution chart ---
+          var freq = rec.aircraft_frequency || {};
+          var bucketKeys = Object.keys(freq).sort(function (a, b) { return parseInt(b) - parseInt(a); });
+
+          if (bucketKeys.length > 0) {
+            var freqSection = h("div", { className: "tpdr-detail__section" }, [
+              h("div", { className: "tpdr-detail__section-title" }, ["Repeat Occurrence Distribution"])
+            ]);
+
+            var maxBucket = 0;
+            bucketKeys.forEach(function (k) { maxBucket = Math.max(maxBucket, freq[k].length); });
+
+            var chart = h("div", { className: "tpdr-freq-chart" });
+
+            var barColors = {
+              "5": "rgba(248, 113, 113, 1)",
+              "4": "rgba(248, 113, 113, 0.8)",
+              "3": "rgba(248, 113, 113, 0.6)",
+              "2": "rgba(248, 113, 113, 0.4)",
+              "1": "rgba(248, 113, 113, 0.25)"
+            };
+
+            bucketKeys.forEach(function (k) {
+              var count = parseInt(k);
+              var bunos = freq[k];
+              var label = count >= 5 ? "5+ times" : count + " time" + (count !== 1 ? "s" : "");
+              var widthPct = (bunos.length / maxBucket) * 100;
+              var barColor = barColors[String(Math.min(count, 5))] || "rgba(248, 113, 113, 0.3)";
+
+              var expandZone = h("div", { className: "tpdr-freq-row__expand" });
+              var bunoWrap = h("div", { className: "tpdr-freq-row__bunos" });
+              bunos.forEach(function (b) {
+                bunoWrap.appendChild(h("span", { className: "tpdr-aircraft-badge" }, [b]));
+              });
+              expandZone.appendChild(bunoWrap);
+
+              var row = h("div", { className: "tpdr-freq-row" }, [
+                h("div", { className: "tpdr-freq-row__label" }, [label]),
+                h("div", { className: "tpdr-freq-row__bar-wrap" }, [
+                  h("div", { className: "tpdr-freq-row__bar", style: { width: widthPct + "%", background: barColor } })
+                ]),
+                h("div", { className: "tpdr-freq-row__count" }, [bunos.length + " aircraft"])
+              ]);
+
+              (function (r, ez) {
+                r.addEventListener("click", function () {
+                  ez.classList.toggle("tpdr-freq-row__expand--open");
+                });
+              })(row, expandZone);
+
+              chart.appendChild(h("div", null, [row, expandZone]));
+            });
+
+            freqSection.appendChild(chart);
+            container.appendChild(freqSection);
+          }
+
+          // --- Affected Aircraft tags list (always shown) ---
+          if (rec.affected_aircraft && rec.affected_aircraft.length > 0) {
+            var aircraftSection = h("div", { className: "tpdr-detail__section" }, [
+              h("div", { className: "tpdr-detail__section-title" }, ["Affected Aircraft (" + rec.aircraft_count + ")"])
+            ]);
+            var aircraftList = h("div", { className: "tpdr-aircraft-list" });
+            var showLimit = 20;
+            var total = rec.aircraft_count;
+            var displayBunos = total > 25 ? rec.affected_aircraft.slice(0, showLimit) : rec.affected_aircraft;
+            displayBunos.forEach(function (buno) {
+              aircraftList.appendChild(h("span", { className: "tpdr-aircraft-badge" }, [buno]));
+            });
+            if (total > 25) {
+              aircraftList.appendChild(h("span", {
+                className: "tpdr-aircraft-badge",
+                style: { color: "var(--text-muted)", fontStyle: "italic", borderStyle: "dashed" }
+              }, ["+ " + (total - showLimit) + " more"]));
+            }
+            aircraftSection.appendChild(aircraftList);
+            container.appendChild(aircraftSection);
+          }
         }
 
         if (rec.example_comebacks && rec.example_comebacks.length > 0) {
@@ -5744,6 +6525,8 @@
           var stats = await apiGet("/api/stats");
 
           fleetData = { clusters: clusters, parts: parts, stats: stats };
+          window.fleetPartsMap = {};
+          parts.forEach(function (p) { window.fleetPartsMap[p.part_number] = p; });
           fleetLoaded = true;
 
           hide(tpdrDom.fleetLoading);
@@ -6045,9 +6828,7 @@
         if (sys.top_parts && sys.top_parts.length > 0) {
           var partsRow = h("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "10px" } });
           sys.top_parts.forEach(function (p) {
-            partsRow.appendChild(h("span", { className: "fleet-parts-badge" }, [
-              p.part_number + " (" + p.count + ")"
-            ]));
+            partsRow.appendChild(renderPartBadge(p.part_number, p.count));
           });
           container.appendChild(partsRow);
         }
@@ -6205,7 +6986,7 @@
           ]);
           var partsList = h("div", { style: { display: "flex", flexWrap: "wrap", gap: "6px" } });
           cluster.parts_commonly_involved.forEach(function (p) {
-            partsList.appendChild(h("span", { className: "fleet-parts-badge" }, [p]));
+            partsList.appendChild(renderPartBadge(p));
           });
           partsSection.appendChild(partsList);
           rightCol.appendChild(partsSection);
@@ -6369,6 +7150,7 @@
       tpdrDom.tabBtnFleet.addEventListener("click", function () { switchTab("fleet"); });
       tpdrDom.tabBtnLookup.addEventListener("click", function () { switchTab("lookup"); });
       tpdrDom.tabBtnTPDR.addEventListener("click", function () { switchTab("tpdr"); });
+      tpdrDom.tabBtnForecast.addEventListener("click", function () { switchTab("forecast"); });
       if (tpdrDom.tpdrRefreshBtn) {
         tpdrDom.tpdrRefreshBtn.addEventListener("click", function () {
           tpdrLoaded = false;

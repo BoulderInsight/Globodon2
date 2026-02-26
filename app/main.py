@@ -1,4 +1,4 @@
-"""FastAPI application — TAR Intelligence System."""
+"""FastAPI application — TAR Intelligence System. Updated to force reload."""
 
 from contextlib import asynccontextmanager
 

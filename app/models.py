@@ -51,6 +51,7 @@ class MatchedCluster(BaseModel):
 
 class RelatedPart(BaseModel):
     part_number: str = ""
+    nomenclature: str = ""
     failure_count: int = 0
     ai_summary: str = ""
 
